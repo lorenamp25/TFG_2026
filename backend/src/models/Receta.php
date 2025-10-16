@@ -6,6 +6,7 @@ class Receta {
 
     public $id;
     public $titulo;
+    public $descripcion;
     public $ingredientes;
     public $instrucciones;
     public $tiempo_preparacion;

@@ -27,3 +27,13 @@ Para crear las imagenes y ejecutar el proyecto:
 
 Revisar que cambios se hicieron antes de enviarlos a la nube
  `git status`
+
+Agrega los cambios realizados localmente
+`git add ./`
+
+Genera en el git local una version del codigo
+`git commit -m "Configuracion del docker"`
+
+Envia todos los cambios al repositorio remoto
+`git push`
+

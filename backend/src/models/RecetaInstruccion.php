@@ -6,7 +6,7 @@ class RecetaInstruccion {
 
     public $receta_id;
     public $orden;
-    public $instruccion;
+    public $descripcion;
     public $imagen_url;
 
     public function __construct($db) {
