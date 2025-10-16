@@ -1,0 +1,24 @@
+# pull official base image
+FROM node:22.12.0-alpine
+
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# set host
+ENV HOST 0.0.0.0
+ENV PORT 5173
+
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install --silent
+
+# add app
+COPY . ./
+
+# start app
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
+
