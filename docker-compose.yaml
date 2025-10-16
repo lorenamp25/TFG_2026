@@ -1,0 +1,29 @@
+services:
+  db:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_USER=receta
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=receta
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: ['CMD', 'pg_isready', '--username', 'receta', '-d', 'receta']
+      retries: 3
+      timeout: 30s
+
+  web:
+    build: ./recetashare-app
+
+    ports:
+      - 5173:5173
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: ng serve --host 0.0.0.0 --port 5173
+
+    volumes:
+      - ./recetashare-app/src:/app/src
+
+volumes:
+  postgres_data:

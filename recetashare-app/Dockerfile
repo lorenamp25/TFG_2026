@@ -20,5 +20,5 @@ RUN npm install --silent
 COPY . ./
 
 # start app
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "5173"]
 
