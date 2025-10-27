@@ -1,0 +1,13 @@
+<h1>🍱 Categorías de Comida</h1>
+
+<div class="container">
+  @defer (when categorias.length > 0){
+    <categoria-index
+      [categorias]="categorias"
+      (editCategoriaEvent)="onEditCategoria($event)"
+      (deleteCategoriaEvent)="onDeleteCategoria($event)"
+    ></categoria-index>
+  } @placeholder {
+    <p>Cargando categorias...</p>
+  }
+</div>

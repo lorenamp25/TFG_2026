@@ -1,4 +1,4 @@
-# lorena_tfg
+# Lorena TFG
 
 # Modelo de datos
 ## Entidades
@@ -18,22 +18,6 @@
 
 
 
-Para crear las imagenes y ejecutar el proyecto:
-`docker-compose up --build`
-
-
-
-# GIT
-
-Revisar que cambios se hicieron antes de enviarlos a la nube
- `git status`
-
-Agrega los cambios realizados localmente
-`git add ./`
-
-Genera en el git local una version del codigo
-`git commit -m "Configuracion del docker"`
-
-Envia todos los cambios al repositorio remoto
-`git push`
-
+# Preguntas
+1. Formulario de creacion/edicion vale la pena crear otro componente?
+2. 

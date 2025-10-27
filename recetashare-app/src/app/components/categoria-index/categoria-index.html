@@ -1,0 +1,15 @@
+  <div class="container">
+
+    <ul id="categoryList">
+      @for (categoria of categorias; track $index) {
+      <li>
+        <span class="category-name">{{ categoria.nombre }}</span>
+        <div class="actions">
+          <button class="edit" (click)="onEdit(categoria)">✏️</button>
+          <button class="delete" (click)="onDelete(categoria)">🗑️</button>
+        </div>
+      </li>
+      }
+    </ul>
+
+  </div>

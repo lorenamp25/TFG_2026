@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-ingrediente',
   imports: [],
   templateUrl: './ingrediente.html',
-  styleUrl: './ingrediente.css'
+  styleUrls: ['./ingrediente.css']
 })
 export class Ingrediente {
 

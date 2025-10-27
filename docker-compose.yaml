@@ -14,7 +14,7 @@ services:
 
   web:
     build: ./recetashare-app
-
+    container_name: recetashare-frontend
     ports:
       - 5173:5173
     environment:
@@ -27,7 +27,7 @@ services:
 
   api:
     build: ./backend
-    container_name: php-rest-app
+    container_name: recetashare-backend
     ports:
       - "8000:80"
     volumes:

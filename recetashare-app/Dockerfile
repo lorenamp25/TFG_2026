@@ -13,7 +13,6 @@ ENV PORT 5173
 
 # install app dependencies
 COPY package.json ./
-COPY package-lock.json ./
 RUN npm install --silent
 
 # add app
