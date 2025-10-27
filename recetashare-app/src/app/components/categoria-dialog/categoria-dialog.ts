@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-categoria-dialog',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './categoria-dialog.html',
-  styleUrl: './categoria-dialog.css'
+  styleUrls: ['./categoria-dialog.css']
 })
 export class CategoriaDialog {
 

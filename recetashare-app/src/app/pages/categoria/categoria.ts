@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { CategoriaService } from '../../services/categoria.service';
+import { Categoria } from '../../models/categoria.model';
+import { CategoriaComponent } from '../../components/categoria-index/categoria-index';
 
 @Component({
+  standalone: true,
   selector: 'app-categoria',
-  imports: [],
+  imports: [CommonModule, CategoriaComponent],
   templateUrl: './categoria.html',
-  styleUrl: './categoria.css'
+  styleUrls: ['./categoria.css']
 })
-export class Categoria {
+export class CategoriaPage {
   categorias: Categoria[] = []
 
   constructor(private categoriaService: CategoriaService) { }
@@ -20,12 +24,12 @@ export class Categoria {
     )
   }
 
-  onEditCategoria(categoria: Categoria) {
+  onEditCategoria(categoria: any) {
     console.log("Editando")
     console.log(categoria)
   }
 
-  onDeleteCategoria(categoria: Categoria) {
+  onDeleteCategoria(categoria: any) {
     console.log("Borrando")
     console.log(categoria)
   }

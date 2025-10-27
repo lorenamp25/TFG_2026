@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Categoria } from '../../models/categoria.model';
 
 @Component({
-  selector: 'app-categoria',
-  imports: [],
-  templateUrl: './categoria.html',
-  styleUrl: './categoria.css'
+  standalone: true,
+  selector: 'app-categoria-index',
+  imports: [CommonModule],
+  templateUrl: './categoria-index.html',
+  styleUrls: ['./categoria-index.css']
 })
 export class CategoriaComponent {
   @Input() categorias: Categoria[] = []

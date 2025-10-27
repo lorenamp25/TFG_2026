@@ -2,11 +2,11 @@
 
 <div class="container">
   @defer (when categorias.length > 0){
-    <categoria-index
+    <app-categoria-index
       [categorias]="categorias"
       (editCategoriaEvent)="onEditCategoria($event)"
       (deleteCategoriaEvent)="onDeleteCategoria($event)"
-    ></categoria-index>
+    ></app-categoria-index>
   } @placeholder {
     <p>Cargando categorias...</p>
   }

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-receta-detallada',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './receta-detallada.html',
-  styleUrl: './receta-detallada.css'
+  styleUrls: ['./receta-detallada.css']
 })
 export class RecetaDetallada {
 
