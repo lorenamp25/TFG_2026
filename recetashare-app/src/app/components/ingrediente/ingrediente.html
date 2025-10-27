@@ -1,1 +1,99 @@
-<p>ingrediente works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingredientes 🥦</title>
+  <link rel="stylesheet" href="css/style-ingredientes.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>🥕 Lista de Ingredientes</h1>
+
+    <form id="ingredientForm">
+      <input type="text" id="ingredientInput" placeholder="Nuevo ingrediente...">
+      <button type="submit" class="add-btn">Agregar</button>
+    </form>
+
+    <ul id="ingredientList"></ul>
+  </div>
+
+  <script>
+  // === FUNCIONALIDAD ===
+  const form = document.getElementById('ingredientForm');
+  const input = document.getElementById('ingredientInput');
+  const list = document.getElementById('ingredientList');
+
+  let ingredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+  let editingIndex = null;
+
+  renderIngredients();
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = input.value.trim();
+    if (!name) return;
+
+    if (editingIndex !== null) {
+      ingredients[editingIndex] = name;
+      editingIndex = null;
+      form.querySelector('button').textContent = "Agregar";
+    } else {
+      ingredients.push(name);
+    }
+
+    input.value = "";
+    saveAndRender();
+  });
+
+  function saveAndRender() {
+    localStorage.setItem('ingredients', JSON.stringify(ingredients));
+    renderIngredients();
+  }
+
+  function renderIngredients() {
+    list.innerHTML = "";
+    ingredients.forEach((ing, i) => {
+      const li = document.createElement('li');
+      li.classList.add("fade-in");
+
+      const span = document.createElement('span');
+      span.textContent = ing;
+      span.classList.add("ingredient-name");
+
+      const actions = document.createElement('div');
+      actions.classList.add("actions");
+
+      const editBtn = document.createElement('button');
+      editBtn.textContent = "✏️";
+      editBtn.classList.add("edit");
+      editBtn.onclick = () => editIngredient(i);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = "🗑️";
+      deleteBtn.classList.add("delete");
+      deleteBtn.onclick = () => deleteIngredient(i);
+
+      actions.append(editBtn, deleteBtn);
+      li.append(span, actions);
+      list.appendChild(li);
+    });
+  }
+
+  function editIngredient(index) {
+    input.value = ingredients[index];
+    editingIndex = index;
+    form.querySelector('button').textContent = "Guardar";
+    input.focus();
+  }
+
+  function deleteIngredient(index) {
+    if (confirm("¿Eliminar este ingrediente?")) {
+      ingredients.splice(index, 1);
+      saveAndRender();
+    }
+  }
+  </script>
+</body>
+</html>

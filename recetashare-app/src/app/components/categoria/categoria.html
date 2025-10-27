@@ -1,1 +1,100 @@
-<p>categoria works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categorías de Comida 🍔</title>
+  <link rel="stylesheet" href="css/style.css"> <!-- 🔗 enlace al CSS -->
+</head>
+<body>
+
+  <div class="container">
+    <h1>🍱 Categorías de Comida</h1>
+
+    <form id="categoryForm">
+      <input type="text" id="categoryInput" placeholder="Nueva categoría...">
+      <button type="submit" class="add-btn">Agregar</button>
+    </form>
+
+    <ul id="categoryList"></ul>
+  </div>
+
+  <script>
+  /* === FUNCIONALIDAD === */
+  const form = document.getElementById('categoryForm');
+  const input = document.getElementById('categoryInput');
+  const list = document.getElementById('categoryList');
+
+  let categories = JSON.parse(localStorage.getItem('categories')) || [];
+  let editingIndex = null;
+
+  // Mostrar lista inicial
+  renderCategories();
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = input.value.trim();
+    if (!name) return;
+
+    if (editingIndex !== null) {
+      categories[editingIndex] = name;
+      editingIndex = null;
+      form.querySelector('button').textContent = "Agregar";
+    } else {
+      categories.push(name);
+    }
+
+    input.value = "";
+    saveAndRender();
+  });
+
+  function saveAndRender() {
+    localStorage.setItem('categories', JSON.stringify(categories));
+    renderCategories();
+  }
+
+  function renderCategories() {
+    list.innerHTML = "";
+    categories.forEach((cat, i) => {
+      const li = document.createElement('li');
+      li.classList.add("fade-in");
+
+      const span = document.createElement('span');
+      span.textContent = cat;
+      span.classList.add("category-name");
+
+      const actions = document.createElement('div');
+      actions.classList.add("actions");
+
+      const editBtn = document.createElement('button');
+      editBtn.textContent = "✏️";
+      editBtn.classList.add("edit");
+      editBtn.onclick = () => editCategory(i);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = "🗑️";
+      deleteBtn.classList.add("delete");
+      deleteBtn.onclick = () => deleteCategory(i);
+
+      actions.append(editBtn, deleteBtn);
+      li.append(span, actions);
+      list.appendChild(li);
+    });
+  }
+
+  function editCategory(index) {
+    input.value = categories[index];
+    editingIndex = index;
+    form.querySelector('button').textContent = "Guardar";
+    input.focus();
+  }
+
+  function deleteCategory(index) {
+    if (confirm("¿Eliminar esta categoría?")) {
+      categories.splice(index, 1);
+      saveAndRender();
+    }
+  }
+  </script>
+</body>
+</html>

@@ -1,4 +1,267 @@
-<p>index works!</p>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Recetario — Entrantes, Primeros, Segundos y Postres</title>
+<link rel="stylesheet" href="index.css">
+<meta name="description" content="Recetario interactivo con modo claro/oscuro, pestañas por categoría y pasos detallados."/>
 
+</head>
+<body>
+
+<nav aria-label="Barra de navegación">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="url(#g)"/>
+        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ff6b6b"/></linearGradient></defs>
+      </svg>
+      <h1>Sabores & Movimiento</h1>
+    </div>
+
+    <div class="nav-links" role="navigation" aria-label="Enlaces principales">
+      <button id="nav-recetas">Recetas</button>
+      <button id="nav-subir">Subir receta</button>
+      <button id="nav-logout">Cerrar sesión</button>
+    </div>
+
+    <div class="nav-actions">
+      <!-- espacio para futuras acciones -->
+    </div>
+  </div>
+</nav>
+
+<main class="wrap" id="app">
+  <header class="page-top" aria-label="Controles">
+    <div class="search-row">
+      <label class="search" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.9;margin-right:8px"><path d="M21 21l-4.35-4.35" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="11" cy="11" r="6" stroke="white" stroke-width="1.6"/></svg>
+        <input id="search" placeholder="Busca por nombre o ingrediente (ej. quinoa, chocolate)" aria-label="Buscar recetas">
+      </label>
+      <div class="controls-small muted">Modo rápido: filtrar por pestaña</div>
+    </div>
+
+    <nav class="tabs" role="tablist" aria-label="Categorías">
+      <button class="tab active" data-tab="Todos" role="tab" aria-selected="true">Todos</button>
+      <button class="tab" data-tab="Entrante" role="tab">Entrantes</button>
+      <button class="tab" data-tab="Primero" role="tab">Primeros</button>
+      <button class="tab" data-tab="Segundo" role="tab">Segundos</button>
+      <button class="tab" data-tab="Postre" role="tab">Postres</button>
+    </nav>
+  </header>
+
+  <section class="grid" id="grid" aria-live="polite">
+    <!-- tarjetas se renderizan por JS -->
+  </section>
+</main>
+
+<footer>© 2025 — Recetario interactivo • Hecho con cariño</footer>
+
+<!-- MODAL DETALLES -->
+<div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="modal" role="document">
+    <div style="display:flex;gap:12px;align-items:flex-start;justify-content:space-between;">
+      <div style="flex:1">
+        <h2 id="m-title">Título receta</h2>
+        <div class="m-meta"><span id="m-time">-</span> • <span id="m-difficulty">-</span></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="close" id="close">Cerrar ✕</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+      <div>
+        <img id="m-img" alt="Imagen receta">
+      </div>
+      <div class="m-body">
+        <h4>Ingredientes</h4>
+        <ul id="m-ing" class="m-list"></ul>
+        <h4>Pasos</h4>
+        <ol id="m-steps" class="m-list"></ol>
+        <div class="actions" style="margin-top:10px">
+          <button id="favBtn" title="Marcar como favorito">❤ Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING THEME TOGGLE (sol/luna) -->
+<div class="theme-toggle" id="themeToggle" title="Cambiar tema">
+  <svg viewBox="0 0 24 24" id="themeIcon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- icon will be toggled by JS (sun/moon shapes) -->
+  </svg>
+</div>
+
+<script>
+/* ---------- Datos: recetas (varias por categoría) ---------- */
+const recetas = [
+  {id:1,t:"Bruschetta clásica (tomate y albahaca)", tipo:"Entrante", time:"12 min", diff:"Fácil",
+   img:"https://images.unsplash.com/photo-1546554137-f86b9593a222?auto=format&fit=crop&w=1200&q=60",
+   ing:["Pan rústico","Tomates cherry","Ajo","Albahaca","Aceite de oliva","Sal y pimienta"],
+   steps:["Tostar rebanadas de pan.", "Frotar ajo sobre el pan caliente.", "Mezclar tomates con albahaca y aceite.", "Colocar la mezcla sobre el pan y servir."]
+  },
+  {id:2,t:"Crema de calabaza suave", tipo:"Primero", time:"35 min", diff:"Media",
+   img:"https://images.unsplash.com/photo-1604908177522-4e4a3b1a3d8d?auto=format&fit=crop&w=1200&q=60",
+   ing:["Calabaza","Cebolla","Caldo de verduras","Nata (opcional)","Nuez moscada"],
+   steps:["Sofreír cebolla hasta transparente.","Añadir calabaza y caldo; cocer 20 min.","Triturar hasta obtener crema.","Ajustar textura con nata y especias."]
+  },
+  {id:3,t:"Pasta cremosa al limón y albahaca", tipo:"Primero", time:"20 min", diff:"Fácil",
+   img:"https://images.unsplash.com/photo-1601312372970-bda9fc61f7d0?auto=format&fit=crop&w=1200&q=60",
+   ing:["200g pasta","Limón (ralladura y zumo)","Nata o yogur griego","Albahaca","Parmesano opcional"],
+   steps:["Cocer la pasta.","Mezclar nata, ralladura y zumo de limón.","Escurrir la pasta y combinar con la salsa y albahaca.","Servir con parmesano."]
+  },
+  {id:4,t:"Pollo al horno con limón y hierbas", tipo:"Segundo", time:"1 h", diff:"Media",
+   img:"https://images.unsplash.com/photo-1546069901-eacef0df6022?auto=format&fit=crop&w=1200&q=60",
+   ing:["Pollo troceado","Limones","Romero","Tomillo","Aceite, sal y pimienta"],
+   steps:["Marinar el pollo con limón y hierbas.","Hornear a 200°C 40-50 min.","Dejar reposar 10 min antes de cortar."]
+  },
+  {id:5,t:"Salmón glaseado con miso", tipo:"Segundo", time:"30 min", diff:"Media",
+   img:"https://images.unsplash.com/photo-1604908177516-df8d8a8a2a3f?auto=format&fit=crop&w=1200&q=60",
+   ing:["Filetes de salmón","Pasta de miso","Salsa de soja","Miel","Jengibre"],
+   steps:["Mezclar miso, soja y miel.","Marinar el salmón 10 min.","Hornear o sellar en sartén 8-10 min."]
+  },
+  {id:6,t:"Ensalada mediterránea fresca", tipo:"Entrante", time:"15 min", diff:"Fácil",
+   img:"https://images.unsplash.com/photo-1565958011705-44e211b61123?auto=format&fit=crop&w=1200&q=60",
+   ing:["Lechuga","Tomate","Aceitunas","Pepino","Queso feta","Aceite y limón"],
+   steps:["Cortar ingredientes.","Aliñar con aceite y limón.","Servir fría."]
+  },
+  {id:7,t:"Brownie de chocolate (tradicional)", tipo:"Postre", time:"40 min", diff:"Media",
+   img:"https://images.unsplash.com/photo-1604908812197-5a3b4b3e8bde?auto=format&fit=crop&w=1200&q=60",
+   ing:["Chocolate","Mantequilla","Azúcar","Harina","Huevos"],
+   steps:["Derretir chocolate y mantequilla.","Mezclar huevo y azúcar; añadir harina.","Hornear 20-25 min.","Dejar enfriar y cortar."]
+  },
+  {id:8,t:"Mousse de mango vegana", tipo:"Postre", time:"25 min", diff:"Fácil",
+   img:"https://images.unsplash.com/photo-1542444459-db7bd19d5b5b?auto=format&fit=crop&w=1200&q=60",
+   ing:["Mango maduro","Leche de coco","Agar-agar o gelatina vegana","Azúcar al gusto"],
+   steps:["Triturar mango con leche de coco.","Calentar una parte con agar-agar y mezclar.","Refrigerar hasta cuajar."]
+  },
+  {id:9,t:"Risotto de setas cremoso", tipo:"Primero", time:"50 min", diff:"Media",
+   img:"https://images.unsplash.com/photo-1604908177531-2f2b5b2f1b59?auto=format&fit=crop&w=1200&q=60",
+   ing:["Arroz para risotto","Setas variadas","Caldo caliente","Cebolla","Vino blanco","Parmesano"],
+   steps:["Sofreír cebolla y setas.","Añadir arroz y vino, luego caldo gradualmente.","Remover hasta cremoso y añadir parmesano."]
+  }
+];
+
+/* ---------- DOM references ---------- */
+const grid = document.getElementById('grid');
+const tabs = document.querySelectorAll('.tab');
+const searchInput = document.getElementById('search');
+const modalBg = document.getElementById('modal');
+const mTitle = document.getElementById('m-title');
+const mImg = document.getElementById('m-img');
+const mTime = document.getElementById('m-time');
+const mDiff = document.getElementById('m-difficulty');
+const mIng = document.getElementById('m-ing');
+const mSteps = document.getElementById('m-steps');
+const closeBtn = document.getElementById('close');
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
+/* ---------- render tarjetas ---------- */
+let activeTab = 'Todos';
+function renderCards(list){
+  if(!list.length){ grid.innerHTML = `<p class="muted">No se han encontrado recetas.</p>`; return }
+  grid.innerHTML = list.map(r=>`
+    <article class="card" role="button" tabindex="0" data-id="${r.id}">
+      <div class="card-media"><img src="${r.img}" alt="${r.t}"></div>
+      <div class="card-body">
+        <h3>${r.t}</h3>
+        <div class="meta"><span class="badge">${r.tipo}</span><span>${r.time}</span></div>
+      </div>
+    </article>
+  `).join('');
+}
+
+/* initial render */
+renderCards(recetas);
+
+/* ---------- filtrado por pestañas y búsqueda ---------- */
+tabs.forEach(t=>{
+  t.addEventListener('click', ()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    activeTab = t.dataset.tab;
+    applyFilters();
+  });
+});
+function applyFilters(){
+  const q = searchInput.value.trim().toLowerCase();
+  const filtered = recetas.filter(r=>{
+    const matchTab = (activeTab === 'Todos') ? true : (r.tipo === activeTab);
+    const matchQuery = q === '' ? true : (r.t.toLowerCase().includes(q) || r.ing.join(' ').toLowerCase().includes(q));
+    return matchTab && matchQuery;
+  });
+  renderCards(filtered);
+}
+searchInput.addEventListener('input', applyFilters);
+
+/* ---------- mostrar modal con detalles ---------- */
+grid.addEventListener('click', (e)=>{
+  const card = e.target.closest('.card'); if(!card) return;
+  openModal(Number(card.dataset.id));
+});
+grid.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ const card = e.target.closest('.card'); if(card) openModal(Number(card.dataset.id)); }});
+
+function openModal(id){
+  const r = recetas.find(x=>x.id===id); if(!r) return;
+  mTitle.textContent = r.t;
+  mImg.src = r.img;
+  mTime.textContent = r.time;
+  mDiff.textContent = r.diff || '—';
+  mIng.innerHTML = r.ing.map(i=>`<li>${i}</li>`).join('');
+  mSteps.innerHTML = r.steps.map(s=>`<li>${s}</li>`).join('');
+  modalBg.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+closeBtn.addEventListener('click', closeModal);
+modalBg.addEventListener('click', (e)=>{ if(e.target===modalBg) closeModal(); });
+window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+function closeModal(){ modalBg.style.display='none'; document.body.style.overflow=''; }
+
+/* ---------- THEME toggle (sol / luna) ---------- */
+function setIcon(isDark){
+  // draw simple sun or moon in SVG
+  if(isDark){
+    themeIcon.innerHTML = `<path fill="none" stroke="#fff" stroke-width="1.2" d="M12 3v2M12 19v2M3 12h2M19 12h2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4" fill="#fff" opacity="0.95"/>`;
+  }else{
+    themeIcon.innerHTML = `<path d="M21 12.8A8.2 8.2 0 1 1 11.2 3a.5.5 0 0 0 .2.9A6.8 6.8 0 1 0 20.1 12.1a.5.5 0 0 0 .9.2z" fill="#08101a"/>`;
+  }
+}
+
+function loadTheme(){
+  const saved = localStorage.getItem('recetario-theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = saved ? (saved==='dark') : prefersDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  setIcon(isDark);
+}
+loadTheme();
+
+themeToggle.addEventListener('click', ()=>{
+  const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('recetario-theme', next);
+  // animate button
+  themeToggle.style.transform = 'rotate(360deg)';
+  setTimeout(()=> themeToggle.style.transform = '', 350);
+  setIcon(next === 'dark');
+});
+
+/* ---------- accesos nav (demo) ---------- */
+document.getElementById('nav-recetas').addEventListener('click', ()=>{ window.scrollTo({top:0,behavior:'smooth'}); });
+document.getElementById('nav-subir').addEventListener('click', ()=>{ alert('Función subir receta - demo'); });
+document.getElementById('nav-logout').addEventListener('click', ()=>{ alert('Cerrar sesión - demo'); });
+
+/* ---------- inicializar: seleccionar pestaña Todos ---------- */
+document.querySelector('.tab.active')?.click();
+
+</script>
+</body>
+</html>
 
 <router-outlet />
+
