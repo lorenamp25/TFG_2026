@@ -1,0 +1,13 @@
+# Evita servir archivos/directorios reales y redirige todo a index.php
+RewriteEngine On
+RewriteBase /
+
+# No reescribir si ya estamos en index.php (evita bucle)
+RewriteCond %{REQUEST_URI} !^/index\.php
+
+# Si es un archivo o directorio real, servirlo
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirigir todo lo demás a index.php manteniendo la ruta
+RewriteRule ^(.*)$ /index.php/$1 [L,QSA]
