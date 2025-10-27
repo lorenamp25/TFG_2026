@@ -25,5 +25,21 @@ services:
     volumes:
       - ./recetashare-app/src:/app/src
 
+  api:
+    build: ./backend
+    container_name: php-rest-app
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend/src:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=receta
+      - DB_USER=receta
+      - DB_PASS=1234
+
+
 volumes:
   postgres_data:
