@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoriaDialog } from './categoria-dialog';
+import { CategoriaTablaComponent } from './categoria-tabla';
 
-describe('CategoriaDialog', () => {
-  let component: CategoriaDialog;
-  let fixture: ComponentFixture<CategoriaDialog>;
+describe('CategoriaTablaComponent', () => {
+  let component: CategoriaTablaComponent;
+  let fixture: ComponentFixture<CategoriaTablaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CategoriaDialog]
+      imports: [CategoriaTablaComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CategoriaDialog);
+    fixture = TestBed.createComponent(CategoriaTablaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

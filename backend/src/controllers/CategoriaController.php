@@ -28,6 +28,17 @@ class CategoriaController {
         }
     }
 
+    // OPTIONS /categorias (CORS preflight)
+    public function options() {
+        // Allow any origin (adjust to your needs)
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Authorization');
+        // No content for preflight
+        http_response_code(204);
+        exit;
+    }
+
     // POST /categorias
     public function create($input) {
         if (!isset($input['nombre']) || empty(trim($input['nombre']))) {

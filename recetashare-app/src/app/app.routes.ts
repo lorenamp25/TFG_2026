@@ -4,6 +4,6 @@ export const routes: Routes = [
   {
     path: 'categoria',
     loadComponent: () =>
-      import('./components/categoria-index/categoria-index').then((m) => m.CategoriaComponent),
+      import('./pages/categoria/categoria').then((m) => m.CategoriaPage),
   },
 ];

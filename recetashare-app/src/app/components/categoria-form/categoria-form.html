@@ -1,1 +1,31 @@
-<p>categoria-form works!</p>
+<form [formGroup]="form" (ngSubmit)="onGrabar()">
+  <div>
+    <input
+      id="id"
+      type="text"
+      formControlName="id"
+      hidden="true"
+    />
+
+    <div>
+      <label for="nombre">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        formControlName="nombre"
+        placeholder="Ingrese nombre de categoria"
+      />
+      @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
+        <div>
+          @if (form.get('nombre')?.errors?.['required']) { Nombre obligatorio }
+          @if (form.get('nombre')?.errors?.['minlength']) { Min 3 letras }
+        </div>
+      }
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Confirmar</button>
+  <button type="button" (click)="onCancelar()">Cancelar</button>
+</form>
+
+
