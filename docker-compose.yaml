@@ -39,6 +39,7 @@ services:
       - DB_NAME=receta
       - DB_USER=receta
       - DB_PASS=1234
+      - DB_INIT=1
 
 
 volumes:

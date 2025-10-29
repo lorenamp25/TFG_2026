@@ -34,20 +34,18 @@ $router = new Router();
 
 // Registrar rutas de cada módulo
 require_once __DIR__ . '/routers/categoria.routes.php';
-
-
+require_once __DIR__ . '/routers/comentario.routes.php';
+require_once __DIR__ . '/routers/ingrediente.routes.php';
+require_once __DIR__ . '/routers/mensaje.routes.php';
+require_once __DIR__ . '/routers/receta.routes.php';
+require_once __DIR__ . '/routers/usuario.routes.php';
 
 registerCategoriaRoutes($router, $db);
-
-require_once __DIR__ . '/routers/ingrediente.routes.php';
-require_once __DIR__ . '/routers/comentario.routes.php';
-require_once __DIR__ . '/routers/mensaje.routes.php';
-
-registerIngredienteRoutes($router, $db);
 registerComentarioRoutes($router, $db);
+registerIngredienteRoutes($router, $db);
 registerMensajeRoutes($router, $db);
-
-
+registerRecetaRoutes($router, $db);
+registerUsuarioRoutes($router, $db);
 
 // Resolver la solicitud
 $router->resolve($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
