@@ -19,7 +19,15 @@ require_once __DIR__ . '/db/Database.php';
 require_once __DIR__ . '/routers/Router.php';
 
 // Conexión DB
-$db = (new Database())->getConnection();
+$database = new Database();
+$db = $database->getConnection();
+
+// Crear tablas automáticamente al iniciar, a menos que DB_INIT=0
+$dbInit = getenv('DB_INIT');
+if ($db && $dbInit !== '0' && strtolower($dbInit) !== 'false') {
+	// createTables devuelve true/false
+	$database->createTables();
+}
 
 // Router principal
 $router = new Router();
@@ -30,6 +38,14 @@ require_once __DIR__ . '/routers/categoria.routes.php';
 
 
 registerCategoriaRoutes($router, $db);
+
+require_once __DIR__ . '/routers/ingrediente.routes.php';
+require_once __DIR__ . '/routers/comentario.routes.php';
+require_once __DIR__ . '/routers/mensaje.routes.php';
+
+registerIngredienteRoutes($router, $db);
+registerComentarioRoutes($router, $db);
+registerMensajeRoutes($router, $db);
 
 
 
