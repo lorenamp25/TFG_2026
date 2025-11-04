@@ -133,7 +133,7 @@
 
     </div>
   </section>
-<h1>🍱 Categorías de Comida</h1>
+<!-- <h1>🍱 Categorías de Comida</h1>
 <div class="container">
   @defer (when categorias.length > 0){
     <app-categoria-index
@@ -145,7 +145,7 @@
     <p>Cargando categorias...</p>
   }
 </div>
-
+-->
 <footer class="pie">
     <div class="contenido-pie contenedor">
       <div class="logo-pie">🍳 RecetasApp</div>
@@ -189,3 +189,53 @@
   </script>
 </body>
 </html>
+<div>
+  <button (click)="agregarCategoria()">Agregar Categoria</button>
+</div>
+
+@switch (estado) {
+  @case (0) {
+    <div class="container">
+      <div>Categorias disponibles</div>
+      @defer (when categorias.length > 0){
+        <app-categoria-tabla
+          [categorias]="categorias"
+          (editarCategoriaEvent)="onEditarCategoria($event)"
+          (eliminarCategoriaEvent)="onEliminarCategoria($event)"
+        ></app-categoria-tabla>
+      } @placeholder {
+        <p>Cargando categorias...</p>
+      }
+    </div>
+  }
+  @case (1) {
+    <div class="container">
+      <div>Agregando</div>
+      <app-categoria-form
+          (guardarCategoria)="onGuardar($event)"
+          (cancelarAccion)="onCancelar()"
+          [categoria]="categoria"
+      ></app-categoria-form>
+    </div>
+  }
+  @case (2) {
+    <div class="container">
+      <div>Editando</div>
+      <app-categoria-form
+          (guardarCategoria)="onGuardar($event)"
+          (cancelarAccion)="onCancelar()"
+          [categoria]="categoria"
+      ></app-categoria-form>
+    </div>
+  }
+  @case (3) {
+    <div class="container">
+      <div>Confirmar Eliminacion</div>
+      <app-categoria-form
+          (guardarCategoria)="onGuardar($event)"
+          (cancelarAccion)="onCancelar()"
+          [categoria]="categoria"
+      ></app-categoria-form>
+    </div>
+  }
+}

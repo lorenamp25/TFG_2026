@@ -8,6 +8,71 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <app-index></app-index>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="left">
+      <span class="logo-sm">🍴</span>
+      <span class="brand-name">RecetasMágicas</span>
+      <nav class="nav">
+        <a href="home.html">Inicio</a>
+        <a href="recetas.html">Recetas</a>
+        <a href="categoria.html">Categorías</a>
+        <a href="#">Mis Favoritas</a>
+      </nav>
+    </div>
+    <div class="right">
+      <input id="search" class="search" placeholder="Buscar recetas...">
+      <button id="btnProfile" class="btn small">Perfil</button>
+      <button id="btnLogout" class="btn ghost">Salir</button>
+      <button id="themeToggle" class="btn ghost">🌙</button>
+    </div>
+  </header>
+
+
+
+
+  <app-root></app-root>
+
+
+
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content container">
+      <div class="footer-section about">
+        <h3 class="logo">🍴 RecetasMágicas</h3>
+        <p>Tu comunidad culinaria donde cada plato cuenta una historia. Descubre, comparte y disfruta recetas del mundo.</p>
+      </div>
+      <div class="footer-section links">
+        <h4>Enlaces Rápidos</h4>
+        <ul>
+          <li><a href="home.html">Inicio</a></li>
+          <li><a href="recetas.html">Recetas</a></li>
+          <li><a href="Categorias.html">Categorías</a></li>
+          <li><a href="#">Favoritos</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-section social">
+        <h4>Síguenos</h4>
+        <div class="social-icons">
+          <a href="#"><img src="" alt="Facebook"></a>
+          <a href="#"><img src="" alt="Instagram"></a>
+          <a href="#"><img src="" alt="Twitter"></a>
+          <a href="#"><img src="" alt="YouTube"></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 RecetasMágicas — Todos los derechos reservados 🍲</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/theme.js"></script>
+
 </body>
 </html>
