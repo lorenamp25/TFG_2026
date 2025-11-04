@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="es" data-tema="claro">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RecetasApp - Cocina con estilo</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
   <!-- 🧭 Encabezado -->
   <header class="encabezado">
     <div class="contenido-encabezado contenedor">
@@ -16,22 +6,21 @@
       </div>
 
       <nav class="navegacion">
-        <a href="index.html">Inicio</a>
-        <a href="categorias.html">Categorías</a>
-        <a href="recetas.html">Recetas</a>
-        <a href="contacto.html">Contacto</a>
+        <a href="">Inicio</a>
+        <a href="categoria">Categorías</a>
+        <a href="receta">Recetas</a>
+        <a href="contacto">Contacto</a>
       </nav>
 
-        <div class="acciones-encabezado">
+      <div class="acciones-encabezado">
         <button class="cambiar-tema" id="boton-tema">
             <span class="icono-sol">☀️</span>
             <span class="icono-luna">🌙</span>
         </button>
 
         <a href="subireceta.html" class="boton-principal">➕ Subir receta</a>
-        </div>
-        <a href="login.html" class="boton-secundario">👤 Iniciar sesión</a>
-        </div>
+      </div>
+      <a href="login.html" class="boton-secundario">👤 Iniciar sesión</a>
     </div>
   </header>
 
@@ -51,7 +40,7 @@
 
       <div class="imagen-portada">
         <div class="tarjeta-flotante tarjeta-1">
-          <img src="/ensalada-cesar.jpg" alt="Receta 1">
+          <img src="/assets/images/ensalada-cesar.jpg" alt="Receta 1">
           <div class="contenido-tarjeta">
             <h3>Tarta de frutas</h3>
             <div class="valoracion">
@@ -127,8 +116,8 @@
       <p>Las más valoradas por nuestra comunidad ⭐</p>
     </div>
 
-    
-      <div class="rejilla-recetas contenedor">
+
+    <div class="rejilla-recetas contenedor">
       <div class="tarjeta-receta">
         <div class="imagen-receta">
           <img src="/tacos.jpg" alt="Tacos de pollo">
@@ -192,6 +181,7 @@
             <div class="valoracion-receta">⭐️ 4.9</div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </section>
@@ -263,14 +253,3 @@
     </div>
   </footer>
 
-  <script>
-    const botonTema = document.getElementById("boton-tema");
-    const cuerpo = document.documentElement;
-
-    botonTema.addEventListener("click", () => {
-      const temaActual = cuerpo.getAttribute("data-tema");
-      cuerpo.setAttribute("data-tema", temaActual === "claro" ? "oscuro" : "claro");
-    });
-  </script>
-</body>
-</html>
