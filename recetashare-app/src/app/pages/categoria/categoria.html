@@ -1,5 +1,139 @@
-<h1>🍱 Categorías de Comida</h1>
 
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categorías | RecetasApp</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="categorias.css">
+</head>
+<body>
+
+  <!-- 🧭 Encabezado -->
+  <header class="encabezado">
+    <div class="contenido-encabezado contenedor">
+      <div class="logo">🍳 <span>RecetasApp</span></div>
+
+      <nav class="navegacion">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html" class="activo">Categorías</a>
+        <a href="recetas.html">Recetas</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+
+      <div class="acciones-encabezado">
+        <button class="cambiar-tema" id="boton-tema">
+          <span class="icono-sol">☀️</span>
+          <span class="icono-luna">🌙</span>
+        </button>
+        <a href="subireceta.html" class="boton-principal">➕ Subir receta</a>
+        <a href="login.html" class="boton-secundario">👤 Iniciar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 🧂 Contenido principal -->
+  <section class="categorias-pagina contenedor">
+    <h1 class="titulo-seccion">🍴 Categorías de recetas</h1>
+    <p class="descripcion-seccion">Explora nuestras categorías y encuentra el tipo de receta que más te gusta.</p>
+
+    <div class="rejilla-categorias">
+
+      <!-- Cada tarjeta enlaza a su página de categoría -->
+      <a href="italiana.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🍝</div>
+        <h3>Italiana</h3>
+        <p>Pasta, pizzas y sabores mediterráneos irresistibles.</p>
+      </a>
+
+      <a href="mexicana.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🌮</div>
+        <h3>Mexicana</h3>
+        <p>Sabores picantes y coloridos que despiertan tus sentidos.</p>
+      </a>
+
+      <a href="saludable.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🥗</div>
+        <h3>Saludables</h3>
+        <p>Recetas ligeras y nutritivas para un estilo de vida equilibrado.</p>
+      </a>
+
+      <a href="desayunos.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🍳</div>
+        <h3>Desayunos</h3>
+        <p>Comienza el día con energía y sabor.</p>
+      </a>
+
+      <a href="carnes.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🍗</div>
+        <h3>Carnes</h3>
+        <p>Platos jugosos y sabrosos para cualquier ocasión.</p>
+      </a>
+
+      <a href="pescados.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🐟</div>
+        <h3>Pescados & Mariscos</h3>
+        <p>Delicias frescas del mar con recetas fáciles y rápidas.</p>
+      </a>
+
+      <a href="panaderia.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🥖</div>
+        <h3>Panadería</h3>
+        <p>Pan, bollos y dulces recién horneados en casa.</p>
+      </a>
+
+      <a href="postres.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🍰</div>
+        <h3>Postres</h3>
+        <p>Dulces y tentaciones irresistibles para todos los gustos.</p>
+      </a>
+
+      <a href="bebidas.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🍹</div>
+        <h3>Bebidas</h3>
+        <p>Jugos, smoothies, cócteles y bebidas refrescantes.</p>
+      </a>
+
+      <a href="vegana.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🥬</div>
+        <h3>Vegana</h3>
+        <p>Platos 100% vegetales llenos de sabor y creatividad.</p>
+      </a>
+
+      <a href="sopas.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🥣</div>
+        <h3>Sopas & Cremas</h3>
+        <p>Recetas reconfortantes para cualquier momento del día.</p>
+      </a>
+
+      <a href="ensaladas.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🥗</div>
+        <h3>Ensaladas</h3>
+        <p>Frescas, coloridas y deliciosas combinaciones de ingredientes.</p>
+      </a>
+
+      <a href="rapidas.html" class="tarjeta-categoria">
+        <div class="icono-categoria">⚡</div>
+        <h3>Rápidas & Fáciles</h3>
+        <p>Platos listos en menos de 30 minutos.</p>
+      </a>
+
+      <a href="fiestas.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🎉</div>
+        <h3>Fiestas & Eventos</h3>
+        <p>Recetas especiales para sorprender a tus invitados.</p>
+      </a>
+
+      <a href="infantil.html" class="tarjeta-categoria">
+        <div class="icono-categoria">🧒</div>
+        <h3>Infantiles</h3>
+        <p>Recetas divertidas y nutritivas para los más pequeños.</p>
+      </a>
+
+    </div>
+  </section>
+<h1>🍱 Categorías de Comida</h1>
 <div class="container">
   @defer (when categorias.length > 0){
     <app-categoria-index
@@ -11,3 +145,47 @@
     <p>Cargando categorias...</p>
   }
 </div>
+
+<footer class="pie">
+    <div class="contenido-pie contenedor">
+      <div class="logo-pie">🍳 RecetasApp</div>
+      <div class="seccion-pie">
+        <h4>Sobre nosotros</h4>
+        <p>RecetasApp es tu comunidad culinaria para compartir y descubrir nuevas ideas de cocina.</p>
+      </div>
+      <div class="seccion-pie">
+        <h4>Enlaces útiles</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="categorias.html">Categorías</a></li>
+          <li><a href="recetas.html">Recetas</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="seccion-pie">
+        <h4>Síguenos</h4>
+        <div class="redes-sociales">
+          <a href="#">📘</a>
+          <a href="#">📸</a>
+          <a href="#">🎵</a>
+          <a href="#">🐦</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pie-inferior contenedor">
+      <p>© 2025 RecetasApp. Todos los derechos reservados.</p>
+      <p>Hecho con ❤️ para amantes de la cocina.</p>
+    </div>
+  </footer>
+
+  <script>
+    const botonTema = document.getElementById("boton-tema");
+    const cuerpo = document.documentElement;
+    botonTema.addEventListener("click", () => {
+      const temaActual = cuerpo.getAttribute("data-tema");
+      cuerpo.setAttribute("data-tema", temaActual === "claro" ? "oscuro" : "claro");
+    });
+  </script>
+</body>
+</html>

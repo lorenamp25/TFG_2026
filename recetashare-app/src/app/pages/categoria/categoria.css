@@ -1,0 +1,93 @@
+@import url('estilos.css');
+
+/* 🌟 Contenedor principal de la página de categorías */
+.categorias-pagina {
+  padding: var(--espaciado-xl) 0;
+  text-align: center;
+}
+
+/* 🏷️ Título y descripción */
+.titulo-seccion {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: var(--espaciado-md);
+  background: var(--degradado-principal);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.descripcion-seccion {
+  color: var(--texto-secundario);
+  margin-bottom: var(--espaciado-xl);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* 📦 Rejilla de categorías */
+.rejilla-categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--espaciado-lg);
+}
+
+/* 🃏 Tarjetas de categoría */
+.tarjeta-categoria {
+  background: var(--fondo-principal);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  box-shadow: 0 4px 15px var(--sombra);
+  padding: var(--espaciado-lg);
+  transition: var(--transicion);
+  cursor: pointer;
+  text-decoration: none; /* Para cuando se usen <a> */
+  color: var(--texto-principal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tarjeta-categoria:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 12px 30px var(--sombra-grande);
+  border-color: var(--color-principal);
+}
+
+/* 🎨 Icono de categoría */
+.icono-categoria {
+  font-size: 3rem;
+  margin-bottom: var(--espaciado-sm);
+  transition: var(--transicion);
+}
+
+.tarjeta-categoria:hover .icono-categoria {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* 📝 Título y descripción dentro de la tarjeta */
+.tarjeta-categoria h3 {
+  font-size: 1.4rem;
+  margin-bottom: var(--espaciado-xs);
+  font-weight: 700;
+}
+
+.tarjeta-categoria p {
+  color: var(--texto-secundario);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* 📱 Responsive para móviles */
+@media (max-width: 640px) {
+  .titulo-seccion {
+    font-size: 2rem;
+  }
+
+  .descripcion-seccion {
+    font-size: 1rem;
+  }
+
+  .rejilla-categorias {
+    grid-template-columns: 1fr;
+  }
+}

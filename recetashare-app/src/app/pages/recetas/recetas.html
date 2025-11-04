@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recetas | RecetasApp</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="recetas.css">
+</head>
+<body>
+
+  <!-- 🧭 Encabezado -->
+  <header class="encabezado">
+    <div class="contenido-encabezado contenedor">
+      <div class="logo">🍳 <span>RecetasApp</span></div>
+
+      <nav class="navegacion">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="recetas.html" class="activo">Recetas</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+
+      <div class="acciones-encabezado">
+        <button class="cambiar-tema" id="boton-tema">
+          <span class="icono-sol">☀️</span>
+          <span class="icono-luna">🌙</span>
+        </button>
+        <a href="subireceta.html" class="boton-principal">➕ Subir receta</a>
+        <a href="login.html" class="boton-secundario">👤 Iniciar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 📖 Contenido principal -->
+  <section class="recetas-pagina contenedor">
+    <h1 class="titulo-seccion">🍲 Todas las recetas</h1>
+    <p class="descripcion-seccion">Explora una amplia selección de recetas deliciosas creadas por nuestra comunidad de chefs.</p>
+
+    <div class="rejilla-recetas">
+      <div class="tarjeta-receta">
+        <div class="imagen-receta">
+          <img src="/ensalada-cesar.jpg" alt="Tacos de pollo">
+          <div class="etiqueta-receta">Nuevo</div>
+        </div>
+        <div class="contenido-receta">
+          <h3>Tacos de pollo</h3>
+          <p>Jugosos tacos de pollo con guacamole y verduras frescas 🌮</p>
+          <div class="meta-receta">
+            <span>⏱️ 25 min</span> | <span>Fácil</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tarjeta-receta">
+        <div class="imagen-receta">
+          <img src="/Espaguetis-Carbonara-1.jpg" alt="Brownie de chocolate">
+          <div class="etiqueta-receta nueva">Dulce</div>
+        </div>
+        <div class="contenido-receta">
+          <h3>Brownie de chocolate</h3>
+          <p>Delicioso y esponjoso brownie casero con trozos de nuez 🍫</p>
+          <div class="meta-receta">
+            <span>⏱️ 40 min</span> | <span>Media</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tarjeta-receta">
+        <div class="imagen-receta">
+          <img src="/susi.jpg" alt="Pasta Alfredo">
+        </div>
+        <div class="contenido-receta">
+          <h3>Pasta Alfredo</h3>
+          <p>Cremosa pasta al estilo italiano con parmesano y ajo 🧄</p>
+          <div class="meta-receta">
+            <span>⏱️ 30 min</span> | <span>Media</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⚙️ Pie de página -->
+  <footer class="pie">
+    <div class="contenido-pie contenedor">
+      <div class="logo-pie">🍳 RecetasApp</div>
+      <div class="seccion-pie">
+        <h4>Sobre nosotros</h4>
+        <p>RecetasApp es tu comunidad culinaria para compartir y descubrir nuevas ideas de cocina.</p>
+      </div>
+      <div class="seccion-pie">
+        <h4>Enlaces útiles</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="categorias.html">Categorías</a></li>
+          <li><a href="recetas.html">Recetas</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="seccion-pie">
+        <h4>Síguenos</h4>
+        <div class="redes-sociales">
+          <a href="#">📘</a>
+          <a href="#">📸</a>
+          <a href="#">🎵</a>
+          <a href="#">🐦</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pie-inferior contenedor">
+      <p>© 2025 RecetasApp. Todos los derechos reservados.</p>
+      <p>Hecho con ❤️ para amantes de la cocina.</p>
+    </div>
+  </footer>
+
+  <script>
+    const botonTema = document.getElementById("boton-tema");
+    const cuerpo = document.documentElement;
+    botonTema.addEventListener("click", () => {
+      const temaActual = cuerpo.getAttribute("data-tema");
+      cuerpo.setAttribute("data-tema", temaActual === "claro" ? "oscuro" : "claro");
+    });
+  </script>
+</body>
+</html>

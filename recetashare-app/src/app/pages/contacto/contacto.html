@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | RecetasApp</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="contacto.css">
+</head>
+<body>
+
+  <!-- 🧭 Encabezado -->
+  <header class="encabezado">
+    <div class="contenido-encabezado contenedor">
+      <div class="logo">🍳 <span>RecetasApp</span></div>
+
+      <nav class="navegacion">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="recetas.html">Recetas</a>
+        <a href="contacto.html" class="activo">Contacto</a>
+      </nav>
+
+      <div class="acciones-encabezado">
+        <button class="cambiar-tema" id="boton-tema">
+          <span class="icono-sol">☀️</span>
+          <span class="icono-luna">🌙</span>
+        </button>
+        <a href="subireceta.html" class="boton-principal">➕ Subir receta</a>
+        <a href="login.html" class="boton-secundario">👤 Iniciar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 💌 Sección de contacto -->
+  <section class="contacto contenedor">
+    <h1 class="titulo-seccion">📞 Contáctanos</h1>
+    <p class="descripcion-seccion">
+      ¿Tienes alguna duda, sugerencia o receta que quieras compartir?  
+      ¡Envíanos un mensaje y te responderemos lo antes posible!
+    </p>
+
+    <div class="formulario-contacto">
+      <form action="#" method="post">
+        <div class="grupo-formulario">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="asunto">Asunto</label>
+          <input type="text" id="asunto" name="asunto" placeholder="Motivo del mensaje" required>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="6" placeholder="Escribe tu mensaje aquí..." required></textarea>
+        </div>
+
+        <button type="submit" class="boton-principal btn-grande">📨 Enviar mensaje</button>
+      </form>
+
+      <div class="info-contacto">
+        <h3>📍 Información</h3>
+        <p><strong>Dirección:</strong> Calle Sabor 123, Madrid, España</p>
+        <p><strong>Correo:</strong> contacto@recetasapp.com</p>
+        <p><strong>Teléfono:</strong> +34 600 123 456</p>
+        <p><strong>Horario:</strong> Lunes a Viernes - 9:00 a 18:00</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⚙️ Pie de página -->
+  <footer class="pie">
+    <div class="contenido-pie contenedor">
+      <div class="logo-pie">🍳 RecetasApp</div>
+      <div class="seccion-pie">
+        <h4>Sobre nosotros</h4>
+        <p>RecetasApp es tu comunidad culinaria para compartir y descubrir nuevas ideas de cocina.</p>
+      </div>
+      <div class="seccion-pie">
+        <h4>Enlaces útiles</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="categorias.html">Categorías</a></li>
+          <li><a href="recetas.html">Recetas</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="seccion-pie">
+        <h4>Síguenos</h4>
+        <div class="redes-sociales">
+          <a href="#">📘</a>
+          <a href="#">📸</a>
+          <a href="#">🎵</a>
+          <a href="#">🐦</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pie-inferior contenedor">
+      <p>© 2025 RecetasApp. Todos los derechos reservados.</p>
+      <p>Hecho con ❤️ para amantes de la cocina.</p>
+    </div>
+  </footer>
+
+  <script>
+    const botonTema = document.getElementById("boton-tema");
+    const cuerpo = document.documentElement;
+    botonTema.addEventListener("click", () => {
+      const temaActual = cuerpo.getAttribute("data-tema");
+      cuerpo.setAttribute("data-tema", temaActual === "claro" ? "oscuro" : "claro");
+    });
+  </script>
+</body>
+</html>

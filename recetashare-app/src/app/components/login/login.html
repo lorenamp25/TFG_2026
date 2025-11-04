@@ -1,40 +1,91 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Recetas Mágicas — Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión | RecetasApp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  
 </head>
-<body class="bg-page">
-  <main class="centered-card">
-    <div class="brand">
-      <div class="logo">🍴</div>
-      <h1>RecetasMágicas</h1>
-      <p class="subtitle">Tu comunidad culinaria favorita</p>
+<body>
+  <div class="contenedor-login">
+    <div class="logo">🍪</div>
+    <h1>RecetasApp</h1>
+    <p id="texto-form">Inicia sesión para descubrir nuevas recetas cada día.</p>
+
+    <form id="form-login">
+      <input type="email" placeholder="Correo electrónico" required>
+      <input type="password" placeholder="Contraseña" required>
+      <button type="submit" class="boton-formulario">Iniciar sesión</button>
+    </form>
+
+    <div class="alternar">
+      ¿No tienes cuenta? <a href="#" id="link-registrar">Regístrate</a>
     </div>
+  </div>
 
-    <div class="card">
-      <h2>Iniciar Sesión</h2>
-      <p class="muted">Bienvenido de vuelta</p>
+  <footer>© 2025 RecetasApp — Hecho con ❤️ para amantes de la cocina</footer>
 
-      <label for="email">Correo electrónico</label>
-      <input id="email" type="email" placeholder="tucorreo@ejemplo.com">
+  <script>
+    const linkRegistrar = document.getElementById("link-registrar");
+    const formLogin = document.getElementById("form-login");
+    const textoForm = document.getElementById("texto-form");
+    let esRegistro = false;
 
-      <label for="password">Contraseña</label>
-      <input id="password" type="password" placeholder="••••••••">
+    linkRegistrar.addEventListener("click", (e) => {
+      e.preventDefault();
+      esRegistro = !esRegistro;
 
-      <div class="row between">
-        <label><input id="remember" type="checkbox"> Recordarme</label>
-        <a class="link" href="#">¿Olvidaste tu contraseña?</a>
-      </div>
+      if (esRegistro) {
+        textoForm.textContent = "Crea una cuenta para guardar tus recetas favoritas 🧁";
+        formLogin.innerHTML = `
+          <input type="text" placeholder="Nombre completo" required>
+          <input type="email" placeholder="Correo electrónico" required>
+          <input type="password" placeholder="Contraseña" required>
+          <button type="submit" class="boton-formulario">Registrarme</button>
+        `;
+        linkRegistrar.textContent = "¿Ya tienes cuenta? Inicia sesión";
+      } else {
+        textoForm.textContent = "Inicia sesión para descubrir nuevas recetas cada día.";
+        formLogin.innerHTML = `
+          <input type="email" placeholder="Correo electrónico" required>
+          <input type="password" placeholder="Contraseña" required>
+          <button type="submit" class="boton-formulario">Iniciar sesión</button>
+        `;
+        linkRegistrar.textContent = "Regístrate";
+      }
+    });
 
-      <button id="btnLogin" class="btn primary">Iniciar Sesión</button>
+    formLogin.addEventListener("submit", function(e) {
+      e.preventDefault();
 
-      <p class="small">¿No tienes cuenta? <a href="#" class="link">Regístrate aquí</a></p>
-    </div>
-  </main>
+      const email = formLogin.querySelector("input[type='email']").value.trim();
+      const password = formLogin.querySelector("input[type='password']").value.trim();
+      const nombre = formLogin.querySelector("input[type='text']")?.value.trim();
 
-  <script src="js/auth.js"></script>
-  <script src="js/theme.js"></script>
+      const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+      if (esRegistro) {
+        if (!email || !password || !nombre) return alert("Completa todos los campos.");
+
+        if (usuarios.find(u => u.email === email)) {
+          alert("Este correo ya está registrado.");
+        } else {
+          usuarios.push({ nombre, email, password });
+          localStorage.setItem('usuarios', JSON.stringify(usuarios));
+          alert("✅ Cuenta creada con éxito. Ahora puedes iniciar sesión.");
+          location.reload();
+        }
+      } else {
+        const usuario = usuarios.find(u => u.email === email && u.password === password);
+        if (usuario) {
+          window.location.href = "index.html";
+        } else {
+          alert("Correo o contraseña incorrectos ❌");
+        }
+      }
+    });
+  </script>
 </body>
 </html>
+

@@ -1,284 +1,276 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Recetas Mágicas — Inicio</title>
-  <style>
-    /* HERO CON VIDEO DE FONDO Y OVERLAY */
-    .hero {
-      position: relative;
-      height: 80vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-    }
-
-    .hero-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3));
-      z-index: 1;
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-      padding: 0 20px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      text-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      text-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-
-    .hero-actions .btn {
-      padding: 12px 25px;
-      font-size: 1rem;
-      margin: 0 10px;
-      border-radius: 30px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .hero-actions .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-    }
-
-    .topbar {
-      position: relative;
-      z-index: 3;
-      background: rgba(0,0,0,0.5);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .topbar .nav a {
-      color: white;
-      margin-right: 15px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .topbar .nav a:hover {
-      color: #ffd700;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecetasApp - Cocina con estilo</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="topbar">
-    <div class="left">
-      <span class="logo-sm">🍴</span>
-      <span class="brand-name">RecetasMágicas</span>
-      <nav class="nav">
-        <a href="home.html">Inicio</a>
+
+  <!-- 🧭 Encabezado -->
+  <header class="encabezado">
+    <div class="contenido-encabezado contenedor">
+      <div class="logo">
+        🍳 <span>RecetasApp</span>
+      </div>
+
+      <nav class="navegacion">
+        <a href="index.html">Inicio</a>
+        <a href="categorias.html">Categorías</a>
         <a href="recetas.html">Recetas</a>
-        <a href="categoria.html">Categorías</a>
-        <a href="#">Mis Favoritas</a>
+        <a href="contacto.html">Contacto</a>
       </nav>
-    </div>
-    <div class="right">
-      <input id="search" class="search" placeholder="Buscar recetas...">
-      <button id="btnProfile" class="btn small">Perfil</button>
-      <button id="btnLogout" class="btn ghost">Salir</button>
-      <button id="themeToggle" class="btn ghost">🌙</button>
+
+        <div class="acciones-encabezado">
+        <button class="cambiar-tema" id="boton-tema">
+            <span class="icono-sol">☀️</span>
+            <span class="icono-luna">🌙</span>
+        </button>
+
+        <a href="subireceta.html" class="boton-principal">➕ Subir receta</a>
+        </div>
+        <a href="login.html" class="boton-secundario">👤 Iniciar sesión</a>
+        </div>
     </div>
   </header>
 
-  <!-- HERO CON VIDEO -->
-  <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline>
-      <source src="/219971_small.mp4" type="video/mp4">
-      Tu navegador no soporta videos de fondo.
-    </video>
-    <div class="hero-inner">
-      <h1>Descubre Sabores <span class="highlight">Extraordinarios</span></h1>
-      <p>Explora miles de recetas deliciosas, desde platos tradicionales hasta creaciones innovadoras.</p>
-      <div class="hero-actions">
-        <button class="btn primary" id="explorar">Explorar Recetas</button>
-        <a href="crearReceta.html" class="btn outline" id="crear">Crear Receta</a>
+  <!-- 🌟 Sección Principal -->
+  <section class="portada">
+    <div class="contenido-portada contenedor">
+      <div class="texto-portada">
+        <span class="etiqueta">🔥 Recetas destacadas</span>
+        <h1 class="titulo-portada"><span class="texto-degradado">Cocina fácil</span> con los mejores sabores</h1>
+        <p class="descripcion-portada">Descubre miles de recetas deliciosas, saludables y rápidas para cada ocasión. Perfectas para principiantes y expertos. 🍽️</p>
+
+        <div class="botones-portada">
+          <button class="boton-principal boton-grande">🍲 Explorar recetas</button>
+          <button class="boton-secundario boton-grande">📖 Ver categorías</button>
+        </div>
+      </div>
+
+      <div class="imagen-portada">
+        <div class="tarjeta-flotante tarjeta-1">
+          <img src="/ensalada-cesar.jpg" alt="Receta 1">
+          <div class="contenido-tarjeta">
+            <h3>Tarta de frutas</h3>
+            <div class="valoracion">
+              <span class="estrellas">⭐️⭐️⭐️⭐️⭐️</span>
+              <span>4.9</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tarjeta-flotante tarjeta-2">
+          <img src="/Espaguetis-Carbonara-1.jpg" alt="Receta 2">
+          <div class="contenido-tarjeta">
+            <h3>Ensalada fresca</h3>
+            <div class="valoracion">
+              <span class="estrellas">⭐️⭐️⭐️⭐️</span>
+              <span>4.6</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tarjeta-flotante tarjeta-3">
+          <img src="/susi.jpg" alt="Receta 3">
+          <div class="contenido-tarjeta">
+            <h3>Pasta cremosa</h3>
+            <div class="valoracion">
+              <span class="estrellas">⭐️⭐️⭐️⭐️⭐️</span>
+              <span>5.0</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- MAIN -->
-  <main class="container">
+  <!-- 🍱 Categorías -->
+  <section class="categorias">
+    <div class="encabezado-seccion">
+      <h2>Categorías populares</h2>
+      <p>Explora recetas según tu gusto y estilo 🍕🥗🍰</p>
+    </div>
 
-    <!-- RECETAS DESTACADAS -->
-    <h2 class="section-title">Recetas Destacadas</h2>
-    <p class="muted center">Las mejores recetas seleccionadas por nuestros chefs expertos</p>
-    <section class="cards-grid">
-      <article class="recipe-card">
-        <div class="image" style="background:url('susi.jpg') center/cover"></div>
-        <div class="content">
-          <h3>Pasta al Pesto</h3>
-          <p>Deliciosa pasta con salsa pesto casera y parmesano.</p>
-          <div class="meta"><span>30 min</span><span>por Giuseppe Romano</span></div>
-          <a href="recetas.html" class="cta">Ver Receta</a>
-        </div>
-      </article>
+    <div class="rejilla-categorias contenedor">
+      <div class="tarjeta-categoria">
+        <div class="icono-categoria">🍝</div>
+        <h3>Italiana</h3>
+        <p>Pastas, pizzas y más del corazón de Italia.</p>
+      </div>
 
-      <article class="recipe-card">
-        <div class="image" style="background:url('susi.jpg') center/cover"></div>
-        <div class="content">
-          <h3>Tacos Mexicanos</h3>
-          <p>Tacos auténticos con carne, salsas y guacamole.</p>
-          <div class="meta"><span>25 min</span><span>por Miguel Hernández</span></div>
-          <a href="recetas.html" class="cta">Ver Receta</a>
-        </div>
-      </article>
+      <div class="tarjeta-categoria">
+        <div class="icono-categoria">🥗</div>
+        <h3>Saludable</h3>
+        <p>Recetas ligeras y nutritivas para tu bienestar.</p>
+      </div>
 
-      <article class="recipe-card">
-        <div class="image" style="background:url('susi.jpg') center/cover"></div>
-        <div class="content">
-          <h3>Pancakes Esponjosos</h3>
-          <p>Clásicos y suaves, perfectos para el desayuno.</p>
-          <div class="meta"><span>20 min</span><span>por Laura Pérez</span></div>
-          <a href="recetas.html" class="cta">Ver Receta</a>
-        </div>
-      </article>
-    </section>
-    <hr class="divider">
+      <div class="tarjeta-categoria">
+        <div class="icono-categoria">🍰</div>
+        <h3>Postres</h3>
+        <p>Dulces irresistibles para compartir y disfrutar.</p>
+      </div>
 
-    <!-- OPINIONES DE USUARIOS -->
-    <section class="container">
-      <h2 class="section-title">Opiniones de Nuestros Usuarios</h2>
-      <p class="muted center">Lo que dice nuestra comunidad culinaria</p>
-      <div class="reviews-grid">
-        <div class="review-card">
-          <p>“Las recetas son fáciles de seguir y deliciosas. ¡Mi familia ama la paella!”</p>
-          <h4>— Marta R.</h4>
+      <div class="tarjeta-categoria">
+        <div class="icono-categoria">🌮</div>
+        <h3>Mexicana</h3>
+        <p>Sabores intensos, picantes y llenos de color.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🧑‍🍳 Recetas destacadas -->
+  <section class="recetas-destacadas">
+    <div class="encabezado-seccion">
+      <h2>Recetas destacadas</h2>
+      <p>Las más valoradas por nuestra comunidad ⭐</p>
+    </div>
+
+    
+      <div class="rejilla-recetas contenedor">
+      <div class="tarjeta-receta">
+        <div class="imagen-receta">
+          <img src="/tacos.jpg" alt="Tacos de pollo">
+          <div class="etiqueta-receta">Nuevo</div>
         </div>
-        <div class="review-card">
-          <p>“Encontré inspiración para nuevos platillos cada semana. Excelente sitio.”</p>
-          <h4>— Diego L.</h4>
-        </div>
-        <div class="review-card">
-          <p>“La comunidad es muy activa y siempre descubro algo nuevo que cocinar.”</p>
-          <h4>— Ana P.</h4>
+        <div class="contenido-receta">
+          <div class="meta-receta">
+            <span class="tiempo-receta">⏱️ 25 min</span>
+            <span class="dificultad-receta">Fácil</span>
+          </div>
+          <h3>Tacos de pollo</h3>
+          <p>Jugosos tacos de pollo con verduras frescas y guacamole. 🌮</p>
+          <div class="pie-receta">
+            <div class="autor-receta">
+              <img src="/tacos.jpg" alt="Autor">
+              <span>Por Ana López</span>
+            </div>
+            <div class="valoracion-receta">⭐️ 4.8</div>
+          </div>
         </div>
       </div>
-    </section>
-    <hr class="divider">
-
-    <!-- CATEGORÍAS POPULARES -->
-    <section class="container center">
-      <h2 class="section-title">Categorías Populares</h2>
-      <p class="muted center">Explora recetas por tipo de cocina</p>
-      <div class="categories">
-        <button class="cat-btn">Italiana 🍝</button>
-        <button class="cat-btn">Mexicana 🌮</button>
-        <button class="cat-btn">Japonesa 🍣</button>
-        <button class="cat-btn">Española 🥘</button>
-        <button class="cat-btn">Postres 🍰</button>
-        <button class="cat-btn">Vegana 🥦</button>
-      </div>
-    </section>
-    <hr class="divider">
-
-    <!-- CHEFS DESTACADOS -->
-    <section class="container">
-      <h2 class="section-title">Chefs Destacados</h2>
-      <p class="muted center">Conoce a los expertos detrás de las mejores recetas</p>
-      <div class="chefs-grid">
-        <div class="chef-card">
-          <img src="chef1.jpg" alt="chef" class="chef-photo" onerror="this.style.display='none'">
-          <h3>Carmen López</h3>
-          <p>Especialista en cocina española y mediterránea.</p>
+      <div class="rejilla-recetas contenedor">
+      <div class="tarjeta-receta">
+        <div class="imagen-receta">
+          <img src="/tacos.jpg" alt="Tacos de pollo">
+          <div class="etiqueta-receta">Nuevo</div>
         </div>
-        <div class="chef-card">
-          <img src="chef2.jpg" alt="chef" class="chef-photo" onerror="this.style.display='none'">
-          <h3>Miguel Hernández</h3>
-          <p>Apasionado por los sabores mexicanos y latinos.</p>
-        </div>
-        <div class="chef-card">
-          <img src="chef33.jpg" alt="chef" class="chef-photo" onerror="this.style.display='none'">
-          <h3>Giuseppe Romano</h3>
-          <p>Maestro en pastas, risottos y la cocina italiana tradicional.</p>
-        </div>
-        <div class="chef-card">
-          <img src="chef4.webp" alt="chef" class="chef-photo" onerror="this.style.display='none'">
-          <h3>Giuseppe Romano</h3>
-          <p>Maestro en pastas, risottos y la cocina italiana tradicional.</p>
+        <div class="contenido-receta">
+          <div class="meta-receta">
+            <span class="tiempo-receta">⏱️ 25 min</span>
+            <span class="dificultad-receta">Fácil</span>
+          </div>
+          <h3>Tacos de pollo</h3>
+          <p>Jugosos tacos de pollo con verduras frescas y guacamole. 🌮</p>
+          <div class="pie-receta">
+            <div class="autor-receta">
+              <img src="/tacos.jpg" alt="Autor">
+              <span>Por Ana López</span>
+            </div>
+            <div class="valoracion-receta">⭐️ 4.8</div>
+          </div>
         </div>
       </div>
-    </section>
-    <hr class="divider">
-
-    <!-- SUSCRIPCIÓN AL BOLETÍN -->
-    <section class="newsletter">
-      <h2>Suscríbete a Nuestro Boletín</h2>
-      <p>Recibe cada semana nuevas recetas, tips y contenido exclusivo directamente en tu correo.</p>
-      <form id="newsletterForm" class="newsletter-form">
-        <input type="email" id="newsEmail" placeholder="Tu correo electrónico..." required>
-        <button type="submit" class="btn primary">Suscribirme</button>
-      </form>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-content container">
-      <div class="footer-section about">
-        <h3 class="logo">🍴 RecetasMágicas</h3>
-        <p>Tu comunidad culinaria donde cada plato cuenta una historia. Descubre, comparte y disfruta recetas del mundo.</p>
-      </div>
-      <div class="footer-section links">
-        <h4>Enlaces Rápidos</h4>
-        <ul>
-          <li><a href="home.html">Inicio</a></li>
-          <li><a href="recetas.html">Recetas</a></li>
-          <li><a href="Categorias.html">Categorías</a></li>
-          <li><a href="#">Favoritos</a></li>
-          <li><a href="#">Contacto</a></li>
-        </ul>
-      </div>
-      <div class="footer-section social">
-        <h4>Síguenos</h4>
-        <div class="social-icons">
-          <a href="#"><img src="" alt="Facebook"></a>
-          <a href="#"><img src="" alt="Instagram"></a>
-          <a href="#"><img src="" alt="Twitter"></a>
-          <a href="#"><img src="" alt="YouTube"></a>
+      <div class="tarjeta-receta">
+        <div class="imagen-receta">
+          <img src="/susi.jpg" alt="Brownie">
+          <div class="etiqueta-receta nueva">Dulce</div>
+        </div>
+        <div class="contenido-receta">
+          <div class="meta-receta">
+            <span class="tiempo-receta">⏱️ 40 min</span>
+            <span class="dificultad-receta">Media</span>
+          </div>
+          <h3>Brownie de chocolate</h3>
+          <p>El clásico postre americano, húmedo y lleno de sabor. 🍫</p>
+          <div class="pie-receta">
+            <div class="autor-receta">
+              <img src="/chef1.jpg" alt="Autor">
+              <span>Por Carlos Méndez</span>
+            </div>
+            <div class="valoracion-receta">⭐️ 4.9</div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 RecetasMágicas — Todos los derechos reservados 🍲</p>
+  </section>
+
+  <!-- 📊 Estadísticas -->
+  <section class="estadisticas">
+    <div class="rejilla-estadisticas contenedor">
+      <div class="tarjeta-estadistica">
+        <div class="icono-estadistica">👨‍🍳</div>
+        <div class="numero-estadistica">5K+</div>
+        <div class="texto-estadistica">Recetas compartidas</div>
+      </div>
+
+      <div class="tarjeta-estadistica">
+        <div class="icono-estadistica">🧑‍🎓</div>
+        <div class="numero-estadistica">2K+</div>
+        <div class="texto-estadistica">Chefs registrados</div>
+      </div>
+
+      <div class="tarjeta-estadistica">
+        <div class="icono-estadistica">💬</div>
+        <div class="numero-estadistica">10K+</div>
+        <div class="texto-estadistica">Comentarios</div>
+      </div>
+
+      <div class="tarjeta-estadistica">
+        <div class="icono-estadistica">✨</div>
+        <div class="numero-estadistica">100K+</div>
+        <div class="texto-estadistica">Usuarios felices</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⚙️ Pie de página -->
+  <footer class="pie">
+    <div class="contenido-pie contenedor">
+      <div class="logo-pie">
+        🍳 RecetasApp
+      </div>
+      <div class="seccion-pie">
+        <h4>Sobre nosotros</h4>
+        <p>RecetasApp es tu comunidad de cocina favorita. Aprende, comparte y disfruta cada plato.</p>
+      </div>
+
+      <div class="seccion-pie">
+        <h4>Enlaces útiles</h4>
+        <ul>
+          <li><a href="#">Inicio</a></li>
+          <li><a href="categorias.html">Categorías</a></li>
+          <li><a href="subireceta.html">Subir receta</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="seccion-pie">
+        <h4>Síguenos</h4>
+        <div class="redes-sociales">
+          <a href="#">📘</a>
+          <a href="#">📸</a>
+          <a href="#">🎵</a>
+          <a href="#">🐦</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pie-inferior contenedor">
+      <p>© 2025 RecetasApp. Todos los derechos reservados.</p>
+      <p>Hecho con ❤️ para amantes de la cocina.</p>
     </div>
   </footer>
 
-  <script src="js/auth.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/theme.js"></script>
+  <script>
+    const botonTema = document.getElementById("boton-tema");
+    const cuerpo = document.documentElement;
+
+    botonTema.addEventListener("click", () => {
+      const temaActual = cuerpo.getAttribute("data-tema");
+      cuerpo.setAttribute("data-tema", temaActual === "claro" ? "oscuro" : "claro");
+    });
+  </script>
 </body>
 </html>
