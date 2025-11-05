@@ -20,6 +20,14 @@ export class CategoriaPage {
 
   constructor(private categoriaService: CategoriaService) { }
 
+
+  toggleTheme() {
+    const cuerpo = document.documentElement;
+    const temaActual = cuerpo.getAttribute("data-tema") || "claro";
+    cuerpo.setAttribute("data-tema", temaActual === "claro" ? "oscuro" : "claro");
+  }
+  
+
   ngOnInit(): void {
     this.cargarCategorias()
   }

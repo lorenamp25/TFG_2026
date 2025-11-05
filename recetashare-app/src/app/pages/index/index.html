@@ -1,4 +1,4 @@
-  <!-- 🧭 Encabezado -->
+<!-- 🧭 Encabezado -->
   <header class="encabezado">
     <div class="contenido-encabezado contenedor">
       <div class="logo">
@@ -13,7 +13,7 @@
       </nav>
 
       <div class="acciones-encabezado">
-        <button class="cambiar-tema" id="boton-tema">
+        <button class="cambiar-tema" id="boton-tema" (click)="toggleTheme()">
             <span class="icono-sol">☀️</span>
             <span class="icono-luna">🌙</span>
         </button>
@@ -40,7 +40,7 @@
 
       <div class="imagen-portada">
         <div class="tarjeta-flotante tarjeta-1">
-          <img src="/assets/images/ensalada-cesar.jpg" alt="Receta 1">
+          <img src="/images/ensalada-cesar.jpg" alt="Receta 1">
           <div class="contenido-tarjeta">
             <h3>Tarta de frutas</h3>
             <div class="valoracion">
@@ -51,7 +51,7 @@
         </div>
 
         <div class="tarjeta-flotante tarjeta-2">
-          <img src="/Espaguetis-Carbonara-1.jpg" alt="Receta 2">
+          <img src="/images/Espaguetis-Carbonara-1.jpg" alt="Receta 2">
           <div class="contenido-tarjeta">
             <h3>Ensalada fresca</h3>
             <div class="valoracion">
@@ -62,7 +62,7 @@
         </div>
 
         <div class="tarjeta-flotante tarjeta-3">
-          <img src="/susi.jpg" alt="Receta 3">
+          <img src="/images/susi.jpg" alt="Receta 3">
           <div class="contenido-tarjeta">
             <h3>Pasta cremosa</h3>
             <div class="valoracion">
@@ -175,7 +175,7 @@
           <p>El clásico postre americano, húmedo y lleno de sabor. 🍫</p>
           <div class="pie-receta">
             <div class="autor-receta">
-              <img src="/chef1.jpg" alt="Autor">
+              <img src="/images/chef1.jpg" alt="Autor">
               <span>Por Carlos Méndez</span>
             </div>
             <div class="valoracion-receta">⭐️ 4.9</div>
