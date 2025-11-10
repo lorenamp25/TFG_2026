@@ -12,6 +12,10 @@ export class CategoriaService {
 
     constructor(private http: HttpClient) { }
 
+    leerCategoria(id: number): Observable<any> {
+        return this.http.get(`${this.base}/categorias/${id}`);
+    }
+
     listarCategorias() {
         return this.http.get(`${this.base}/categorias/`);
     }

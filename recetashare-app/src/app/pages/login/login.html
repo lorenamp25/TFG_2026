@@ -1,0 +1,12 @@
+<div class="contenedor-login">
+  <div class="logo">🍪</div>
+  <h1>RecetasApp</h1>
+  <p id="texto-form">Inicia sesión para descubrir nuevas recetas cada día.</p>
+
+  <form [formGroup]="form" (ngSubmit)="onLogin()"> >
+    <input type="email" formControlName="email" placeholder="Correo electrónico" required>
+    <input type="password" formControlName="password" placeholder="Contraseña" required>
+    <button type="submit" class="boton-formulario">Iniciar sesión</button>
+  </form>
+
+</div>

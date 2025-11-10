@@ -16,9 +16,22 @@ class UsuarioController {
     }
 
     // GET /usuarios/{id}
-    public function show($id) {
+    public function showById($id) {
         $model = new Usuario($this->conn);
         $user = $model->getById($id);
+
+        if ($user) {
+            echo json_encode($user);
+        } else {
+            http_response_code(404);
+            echo json_encode(["error" => "Usuario no encontrado"]);
+        }
+    }
+    
+    // GET /usuarios/{id}
+    public function showByEmail($email) {
+        $model = new Usuario($this->conn);
+        $user = $model->getByMail($email);
 
         if ($user) {
             echo json_encode($user);

@@ -19,7 +19,7 @@
 
 
 # Preguntas
-1. Como ver las imagenes
+1. Debo crear la opcion para registrar nuevos usuarios?
 2. 
 
 

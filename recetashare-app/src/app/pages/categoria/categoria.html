@@ -1,36 +1,3 @@
-
-<!DOCTYPE html>
-<html lang="es" data-tema="claro">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Categorías | RecetasApp</title>
-</head>
-<body>
-
-  <!-- 🧭 Encabezado -->
-  <header class="encabezado">
-    <div class="contenido-encabezado contenedor">
-      <div class="logo">🍳 <span>RecetasApp</span></div>
-
-      <nav class="navegacion">
-        <a href="index.html">Inicio</a>
-        <a href="categorias.html" class="activo">Categorías</a>
-        <a href="recetas.html">Recetas</a>
-        <a href="contacto.html">Contacto</a>
-      </nav>
-
-      <div class="acciones-encabezado">
-        <button class="cambiar-tema" id="boton-tema" (click)="toggleTheme()">
-          <span class="icono-sol">☀️</span>
-          <span class="icono-luna">🌙</span>
-        </button>
-        <a href="subireceta.html" class="boton-principal">➕ Subir receta</a>
-        <a href="login.html" class="boton-secundario">👤 Iniciar sesión</a>
-      </div>
-    </div>
-  </header>
-
   <!-- 🧂 Contenido principal -->
   <section class="categorias-pagina contenedor">
     <h1 class="titulo-seccion">🍴 Categorías de recetas</h1>
@@ -144,49 +111,7 @@
   }
 </div>
 -->
-<footer class="pie">
-    <div class="contenido-pie contenedor">
-      <div class="logo-pie">🍳 RecetasApp</div>
-      <div class="seccion-pie">
-        <h4>Sobre nosotros</h4>
-        <p>RecetasApp es tu comunidad culinaria para compartir y descubrir nuevas ideas de cocina.</p>
-      </div>
-      <div class="seccion-pie">
-        <h4>Enlaces útiles</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="categorias.html">Categorías</a></li>
-          <li><a href="recetas.html">Recetas</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-        </ul>
-      </div>
-      <div class="seccion-pie">
-        <h4>Síguenos</h4>
-        <div class="redes-sociales">
-          <a href="#">📘</a>
-          <a href="#">📸</a>
-          <a href="#">🎵</a>
-          <a href="#">🐦</a>
-        </div>
-      </div>
-    </div>
 
-    <div class="pie-inferior contenedor">
-      <p>© 2025 RecetasApp. Todos los derechos reservados.</p>
-      <p>Hecho con ❤️ para amantes de la cocina.</p>
-    </div>
-  </footer>
-
-  <script>
-    const botonTema = document.getElementById("boton-tema");
-    const cuerpo = document.documentElement;
-    botonTema.addEventListener("click", () => {
-      const temaActual = cuerpo.getAttribute("data-tema");
-      cuerpo.setAttribute("data-tema", temaActual === "claro" ? "oscuro" : "claro");
-    });
-  </script>
-</body>
-</html>
 <div>
   <button (click)="agregarCategoria()">Agregar Categoria</button>
 </div>

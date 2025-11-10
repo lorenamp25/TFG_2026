@@ -34,6 +34,22 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Obtener por email
+    public function getByMail($email) {
+        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion FROM " . $this->table_name . " WHERE email = :email LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function getById($id) {
+        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Crear usuario
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " (nickname, nombre, apellido, email, password, fecha_nacimiento, puntuacion) VALUES (:nickname, :nombre, :apellido, :email, :password, :fecha_nacimiento, :puntuacion) RETURNING id";
