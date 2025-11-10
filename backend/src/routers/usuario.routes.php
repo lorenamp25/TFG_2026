@@ -9,7 +9,8 @@ function registerUsuarioRoutes($router, $db) {
         // id numérico
         $controller->showById($id);
     });
-    $router->register('GET', 'usuarios/{id:[A-Za-z0-9_-]+}', function($email) use ($controller) {
+    // Allow common email characters (letters, digits, @, dot, underscore, dash, plus, percent)
+    $router->register('GET', 'usuarios/{email:[A-Za-z0-9@._%+\-]+}', function($email) use ($controller) {
         // id string (slug, uuid, etc.)
         $controller->showByEmail($email);
     });

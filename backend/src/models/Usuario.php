@@ -42,13 +42,6 @@ class Usuario {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    public function getById($id) {
-        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 
     // Crear usuario
     public function create() {
