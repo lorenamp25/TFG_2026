@@ -37,8 +37,8 @@ class Database {
         return $this->conn;
     }
 
-        // Crear las tablas necesarias (si no existen)
-        public function createTables() {
+    // Crear las tablas necesarias (si no existen)
+    public function createTables() {
                 $sql = <<<SQL
 -- Categorías
 CREATE TABLE IF NOT EXISTS categorias (
@@ -135,5 +135,21 @@ SQL;
                         echo json_encode(["error" => "Error creating tables: " . $e->getMessage()]);
                         return false;
                 }
+    }
+    public function crearDatosDummy() {
+        $sql = <<<SQL
+INSERT INTO categorias (nombre) VALUES  ('Postres'), ('Platos principales'), ('Ensaladas');
+SQL;
+
+        try {
+            $this->conn->exec($sql);
+            return true;
+        } catch (PDOException $e) {
+            echo json_encode(["error" => "Error inserting dummy data: " . $e->getMessage()]);
+            return false;
         }
+
+        
+
+    }
 }

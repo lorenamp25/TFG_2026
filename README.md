@@ -19,5 +19,17 @@
 
 
 # Preguntas
-1. Formulario de creacion/edicion vale la pena crear otro componente?
+1. Como ver las imagenes
 2. 
+
+
+# Acceso a la base de datos
+Desde la terminal en el Docker-desktop:
+ `psql -U receta`       --> Conecta a la base de datos
+ `\dt`                  --> Lista las tablas creadas
+ `\d categorias`        --> Muestra la estructura de la tabla pedida
+
+
+Herramienta para generar el diagrama:
+   https://dbdiagram.io/d
+

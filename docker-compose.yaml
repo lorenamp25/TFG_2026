@@ -11,6 +11,8 @@ services:
       test: ['CMD', 'pg_isready', '--username', 'receta', '-d', 'receta']
       retries: 3
       timeout: 30s
+    ports:
+      - 5432:5432
 
   web:
     build: ./recetashare-app

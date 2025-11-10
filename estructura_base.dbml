@@ -1,0 +1,105 @@
+
+Table "categorias" {
+  "id" integer [pk, not null]
+  "nombre" "character varying(255)" [not null]
+}
+
+Table "comentarios" {
+  "id" integer [pk, not null]
+  "receta_id" integer
+  "usuario_id" integer
+  "contenido" text [not null]
+  "puntuacion" integer
+  "fecha_creacion" timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "ingredientes" {
+  "id" integer [pk, not null]
+  "nombre" "character varying(255)" [not null]
+}
+
+Table "mensajes" {
+  "id" integer [pk, not null]
+  "remitente" integer
+  "destinatario" integer
+  "asunto" "character varying(255)"
+  "contenido" text [not null]
+  "fecha_envio" timestamp [default: `CURRENT_TIMESTAMP`]
+  "leido" boolean [default: false]
+}
+
+Table "receta_ingredientes" {
+  "receta_id" integer [not null]
+  "ingrediente_id" integer [not null]
+  "cantidad" "character varying(64)"
+  "unidad" "character varying(64)"
+
+  Indexes {
+    (receta_id, ingrediente_id) [pk, name: "receta_ingredientes_pkey"]
+  }
+}
+
+Table "receta_instrucciones" {
+  "receta_id" integer [not null]
+  "orden" integer [not null]
+  "descripcion" text
+  "imagen_url" "character varying(1024)"
+
+  Indexes {
+    (receta_id, orden) [pk, name: "receta_instrucciones_pkey"]
+  }
+}
+
+Table "recetas" {
+  "id" integer [pk, not null]
+  "titulo" "character varying(255)" [not null]
+  "descripcion" text
+  "tiempo_preparacion" integer
+  "dificultad" "character varying(50)"
+  "categoria" integer
+  "imagen_url" "character varying(1024)"
+  "usuario_id" integer
+}
+
+Table "solicitudes_cambio" {
+  "id" integer [pk, not null]
+  "usuario_id" integer
+  "receta_id" integer
+  "descripcion" text
+  "estado" "character varying(20)" [default: `'pendiente'::charactervarying`]
+  "fecha_solicitud" timestamp [default: `CURRENT_TIMESTAMP`]
+  "fecha_resolucion" timestamp
+}
+
+Table "usuarios" {
+  "id" integer [pk, not null]
+  "nickname" "character varying(100)" [unique]
+  "nombre" "character varying(100)"
+  "apellido" "character varying(100)"
+  "email" "character varying(255)" [unique]
+  "password" "character varying(255)"
+  "fecha_nacimiento" date
+  "puntuacion" integer [default: 0]
+}
+
+Ref "comentarios_receta_id_fkey":"recetas"."id" < "comentarios"."receta_id" [delete: cascade]
+
+Ref "comentarios_usuario_id_fkey":"usuarios"."id" < "comentarios"."usuario_id" [delete: set null]
+
+Ref "mensajes_destinatario_fkey":"usuarios"."id" < "mensajes"."destinatario" [delete: set null]
+
+Ref "mensajes_remitente_fkey":"usuarios"."id" < "mensajes"."remitente" [delete: set null]
+
+Ref "receta_ingredientes_ingrediente_id_fkey":"ingredientes"."id" < "receta_ingredientes"."ingrediente_id" [delete: cascade]
+
+Ref "receta_ingredientes_receta_id_fkey":"recetas"."id" < "receta_ingredientes"."receta_id" [delete: cascade]
+
+Ref "receta_instrucciones_receta_id_fkey":"recetas"."id" < "receta_instrucciones"."receta_id" [delete: cascade]
+
+Ref "recetas_categoria_fkey":"categorias"."id" < "recetas"."categoria"
+
+Ref "recetas_usuario_id_fkey":"usuarios"."id" < "recetas"."usuario_id"
+
+Ref "solicitudes_cambio_receta_id_fkey":"recetas"."id" < "solicitudes_cambio"."receta_id" [delete: set null]
+
+Ref "solicitudes_cambio_usuario_id_fkey":"usuarios"."id" < "solicitudes_cambio"."usuario_id" [delete: set null]
