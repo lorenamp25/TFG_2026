@@ -57,29 +57,13 @@
   </div>
 
   <div class="rejilla-categorias contenedor">
-    <div class="tarjeta-categoria">
-      <div class="icono-categoria">🍝</div>
-      <h3>Italiana</h3>
-      <p>Pastas, pizzas y más del corazón de Italia.</p>
-    </div>
-
-    <div class="tarjeta-categoria">
-      <div class="icono-categoria">🥗</div>
-      <h3>Saludable</h3>
-      <p>Recetas ligeras y nutritivas para tu bienestar.</p>
-    </div>
-
-    <div class="tarjeta-categoria">
-      <div class="icono-categoria">🍰</div>
-      <h3>Postres</h3>
-      <p>Dulces irresistibles para compartir y disfrutar.</p>
-    </div>
-
-    <div class="tarjeta-categoria">
-      <div class="icono-categoria">🌮</div>
-      <h3>Mexicana</h3>
-      <p>Sabores intensos, picantes y llenos de color.</p>
-    </div>
+    @defer (when categorias.length > 0) {
+      @for (categoria of categorias | slice:0:4; track $index) {
+        <app-cardcategoria [categoria]="categoria"></app-cardcategoria>
+      }
+    } @placeholder {
+      <p>Cargando categorías...</p>
+    }
   </div>
 </section>
 

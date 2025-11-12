@@ -9,6 +9,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'Sistema de Turnos';
+  isAdmin = true;  // TODO: TOMAR EL VALOR AL INGRESAR AL SISTEMA
 
 
   toggleTheme() {

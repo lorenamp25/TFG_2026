@@ -22,7 +22,43 @@
         </div>
       }
     </div>
+
+    <div>
+      <label for="descripcion">Descripcion</label>
+      <input
+        id="descripcion"
+        type="text"
+        formControlName="descripcion"
+        placeholder="Ingrese la descripcion de categoria"
+      />
+      @if (form.get('descripcion')?.invalid && form.get('descripcion')?.touched) {
+        <div>
+          @if (form.get('descripcion')?.errors?.['required']) { Descripcion obligatoria }
+          @if (form.get('descripcion')?.errors?.['minlength']) { Min 5 letras }
+        </div>
+      }
+    </div>
+
+    <div>
+      <label for="icono">Icono</label>
+      <input
+        id="icono"
+        type="text"
+        formControlName="icono"
+        placeholder="Ingrese el icono de la categoria"
+      />
+      @if (form.get('icono')?.invalid && form.get('icono')?.touched) {
+        <div>
+          @if (form.get('icono')?.errors?.['required']) { Nombre obligatorio }
+        </div>
+      }
+    </div>
+
+
+
   </div>
+
+
 
   <button type="submit" [disabled]="form.invalid">Confirmar</button>
   <button type="button" (click)="onCancelar()">Cancelar</button>

@@ -17,7 +17,9 @@ export class CategoriaForm {
 
   form = new FormGroup({
     id: new FormControl(0),
-    nombre: new FormControl('', [Validators.required, Validators.minLength(3)])
+    nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    descripcion: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    icono: new FormControl('', [Validators.required])
   })
 
   ngOnInit() {

@@ -49,6 +49,8 @@ class CategoriaController {
 
         $model = new Categoria($this->conn);
         $model->nombre = $input['nombre'];
+        $model->descripcion = $input['descripcion'];
+        $model->icono = $input['icono'];
 
         $id = $model->create();
         if ($id) {
@@ -65,6 +67,8 @@ class CategoriaController {
         $model = new Categoria($this->conn);
         $model->id = $id;
         $model->nombre = $input['nombre'] ?? null;
+        $model->descripcion = $input['descripcion'];
+        $model->icono = $input['icono'];
 
         if (!$model->nombre) {
             http_response_code(400);

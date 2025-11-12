@@ -5,11 +5,12 @@ import { Categoria } from '../../models/categoria.model';
 import { CategoriaForm } from '../../components/categoria-form/categoria-form';
 import { EstadoAccion } from '../../models/estadoaccion.enum';
 import { CategoriaTablaComponent } from '../../components/categoria-tabla/categoria-tabla';
+import { Cardcategoria } from '../../components/cardcategoria/cardcategoria';
 
 @Component({
   standalone: true,
   selector: 'app-categoria',
-  imports: [CommonModule, CategoriaTablaComponent, CategoriaForm],
+  imports: [CommonModule, CategoriaTablaComponent, CategoriaForm, Cardcategoria],
   templateUrl: './categoria.html',
   styleUrls: ['./categoria.css']
 })

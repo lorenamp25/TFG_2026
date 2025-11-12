@@ -19,6 +19,18 @@
         <a href="categoria">Categorías</a>
         <a href="ingrediente">Ingredientes</a>
         <a href="receta">Recetas</a>
+
+        @if (isAdmin) {
+          <ul class="submenu">
+            <li>
+              <a href="#">Admin</a>
+              <ul class="submenu-desplegable">
+                <li><a href="sobre-nosotros">Categorias</a></li>
+                <li><a href="contacto">Ingredientes</a></li>
+              </ul>
+            </li>
+          </ul>
+        }
       </nav>
 
       <div class="acciones-encabezado">

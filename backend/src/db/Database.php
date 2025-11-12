@@ -43,7 +43,9 @@ class Database {
 -- Categorías
 CREATE TABLE IF NOT EXISTS categorias (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL
+    nombre VARCHAR(255) NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    icono VARCHAR(10) NOT NULL
 );
 
 -- Ingredientes
@@ -138,7 +140,7 @@ SQL;
     }
     public function crearDatosDummy() {
         $sql = <<<SQL
-INSERT INTO categorias (nombre) VALUES  ('Postres'), ('Platos principales'), ('Ensaladas');
+INSERT INTO categorias (nombre, decripcion, icono) VALUES  ('Postres', 'Ricos postres', '🥗'), ('Platos principales', 'Mucha comida', '🥗'), ('Ensaladas', 'Algo saludable', '🥗' );
 SQL;
 
         try {
