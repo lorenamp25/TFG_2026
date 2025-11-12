@@ -1,128 +1,113 @@
-:root {
-      --color-primario: #ff7b54;
-      --color-secundario: #ffb26b;
-      --color-fondo: #fff8f3;
-      --color-texto: #333;
-      --color-borde: #e0cfc2;
-      --radio: 14px;
-      --transicion: 0.3s ease;
-      --sombra: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
+/* ======== RESET ======== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      height: 100vh;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #ffe0cc, #fff8f3);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: var(--color-texto);
-    }
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+  background-size: 200% 200%;
+  animation: fondo 8s ease-in-out infinite;
+}
 
-    .contenedor-login {
-      background: var(--color-fondo);
-      border-radius: var(--radio);
-      box-shadow: var(--sombra);
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      padding: 2.5rem 2rem;
-      animation: aparecer 1s ease;
-    }
+@keyframes fondo {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+/* ======== CONTENEDOR LOGIN ======== */
+.contenedor-login {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px 35px;
+  width: 340px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: aparecer 0.8s ease forwards;
+}
 
-    .logo {
-      font-size: 3rem;
-      color: var(--color-primario);
-      margin-bottom: 0.3rem;
-    }
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
+/* ======== LOGO Y TITULO ======== */
+.logo {
+  font-size: 55px;
+  animation: flotar 3s ease-in-out infinite;
+  margin-bottom: 10px;
+}
 
-    p {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-      color: #555;
-    }
+@keyframes flotar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+h1 {
+  font-size: 1.9rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
 
-    input {
-      padding: 0.9rem;
-      border-radius: var(--radio);
-      border: 1px solid var(--color-borde);
-      background: #fff;
-      font-size: 1rem;
-      transition: var(--transicion);
-    }
+#texto-form {
+  color: #f8f8f8;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+  text-align: center;
+  max-width: 260px;
+}
 
-    input:focus {
-      border-color: var(--color-primario);
-      box-shadow: 0 0 0 3px rgba(255, 123, 84, 0.2);
-      outline: none;
-    }
+/* ======== FORMULARIO ======== */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
 
-    .boton-formulario {
-      background: linear-gradient(45deg, var(--color-primario), var(--color-secundario));
-      border: none;
-      border-radius: 50px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 0.9rem;
-      cursor: pointer;
-      transition: var(--transicion);
-    }
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-align: center;
+}
 
-    .boton-formulario:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(255, 123, 84, 0.3);
-    }
+input:focus {
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.4);
+  transform: translateY(-2px);
+}
 
-    .alternar {
-      margin-top: 1.2rem;
-      font-size: 0.95rem;
-    }
+/* ======== BOTÓN ======== */
+.boton-formulario {
+  width: 100%;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-    .alternar a {
-      color: var(--color-primario);
-      font-weight: 600;
-      text-decoration: none;
-      transition: color var(--transicion);
-    }
-
-    .alternar a:hover {
-      color: var(--color-secundario);
-      text-decoration: underline;
-    }
-
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: rgba(0, 0, 0, 0.6);
-    }
-
-    footer a {
-      color: var(--color-primario);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
+.boton-formulario:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
