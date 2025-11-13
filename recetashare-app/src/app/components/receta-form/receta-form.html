@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="onGrabar()">
+  <div>
+    <input
+      id="id"
+      type="text"
+      formControlName="id"
+      hidden="true"
+    />
+
+    <div>
+      <label for="titulo">Titulo</label>
+      <input
+        id="titulo"
+        type="text"
+        formControlName="titulo"
+        placeholder="Ingrese nombre de la receta"
+      />
+      @if (form.get('titulo')?.invalid && form.get('titulo')?.touched) {
+        <div>
+          @if (form.get('titulo')?.errors?.['required']) { Titulo obligatorio }
+          @if (form.get('titulo')?.errors?.['minlength']) { Min 3 letras }
+        </div>
+      }
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Confirmar</button>
+  <button type="button" (click)="onCancelar()">Cancelar</button>
+</form>
+
+
