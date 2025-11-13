@@ -76,71 +76,13 @@
 
 
   <div class="rejilla-recetas contenedor">
-    <div class="tarjeta-receta">
-      <div class="imagen-receta">
-        <img src="/tacos.jpg" alt="Tacos de pollo">
-        <div class="etiqueta-receta">Nuevo</div>
-      </div>
-      <div class="contenido-receta">
-        <div class="meta-receta">
-          <span class="tiempo-receta">⏱️ 25 min</span>
-          <span class="dificultad-receta">Fácil</span>
-        </div>
-        <h3>Tacos de pollo</h3>
-        <p>Jugosos tacos de pollo con verduras frescas y guacamole. 🌮</p>
-        <div class="pie-receta">
-          <div class="autor-receta">
-            <img src="/tacos.jpg" alt="Autor">
-            <span>Por Ana López</span>
-          </div>
-          <div class="valoracion-receta">⭐️ 4.8</div>
-        </div>
-      </div>
-    </div>
-    <div class="rejilla-recetas contenedor">
-    <div class="tarjeta-receta">
-      <div class="imagen-receta">
-        <img src="/tacos.jpg" alt="Tacos de pollo">
-        <div class="etiqueta-receta">Nuevo</div>
-      </div>
-      <div class="contenido-receta">
-        <div class="meta-receta">
-          <span class="tiempo-receta">⏱️ 25 min</span>
-          <span class="dificultad-receta">Fácil</span>
-        </div>
-        <h3>Tacos de pollo</h3>
-        <p>Jugosos tacos de pollo con verduras frescas y guacamole. 🌮</p>
-        <div class="pie-receta">
-          <div class="autor-receta">
-            <img src="/tacos.jpg" alt="Autor">
-            <span>Por Ana López</span>
-          </div>
-          <div class="valoracion-receta">⭐️ 4.8</div>
-        </div>
-      </div>
-    </div>
-    <div class="tarjeta-receta">
-      <div class="imagen-receta">
-        <img src="/susi.jpg" alt="Brownie">
-        <div class="etiqueta-receta nueva">Dulce</div>
-      </div>
-      <div class="contenido-receta">
-        <div class="meta-receta">
-          <span class="tiempo-receta">⏱️ 40 min</span>
-          <span class="dificultad-receta">Media</span>
-        </div>
-        <h3>Brownie de chocolate</h3>
-        <p>El clásico postre americano, húmedo y lleno de sabor. 🍫</p>
-        <div class="pie-receta">
-          <div class="autor-receta">
-            <img src="/images/chef1.jpg" alt="Autor">
-            <span>Por Carlos Méndez</span>
-          </div>
-          <div class="valoracion-receta">⭐️ 4.9</div>
-        </div>
-      </div>
-    </div>
-    </div>
+    <!-- @defer (when recetasDestacadas.length > 0) {
+      @for (receta of recetasDestacadas | slice:0:4; track $index) {
+        <app-cardreceta [receta]="receta"></app-cardreceta>
+      }
+    } @placeholder {
+      <p>Cargando recetas destacadas...</p>
+    } -->
   </div>
 </section>
 

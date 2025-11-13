@@ -11,11 +11,20 @@ export class AppComponent {
   title = 'Sistema de Turnos';
   isAdmin = true;  // TODO: TOMAR EL VALOR AL INGRESAR AL SISTEMA
 
+  constructor () {
+    let temaActual = localStorage.getItem("data-tema") || "claro"
+    const cuerpo = document.documentElement
+    cuerpo.setAttribute("data-tema", temaActual)
+  }
 
   toggleTheme() {
-    const cuerpo = document.documentElement;
-    const temaActual = cuerpo.getAttribute("data-tema") || "claro";
-    cuerpo.setAttribute("data-tema", temaActual === "claro" ? "oscuro" : "claro");
+    const cuerpo = document.documentElement
+    let temaActual = localStorage.getItem("data-tema") || "claro"
+
+    temaActual = temaActual === "claro" ? "oscuro" : "claro"
+    cuerpo.setAttribute("data-tema", temaActual)
+
+    localStorage.setItem("data-tema", temaActual)
   }
 
 }

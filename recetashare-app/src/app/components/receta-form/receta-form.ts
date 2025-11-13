@@ -11,14 +11,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './receta-form.css',
 })
 export class RecetaForm {
-
   @Input() receta: Receta | null = null
   @Output() guardarReceta = new EventEmitter<Receta>();
   @Output() cancelarAccion = new EventEmitter<void>();
 
   form = new FormGroup({
     id: new FormControl(0),
-    nombre: new FormControl('', [Validators.required, Validators.minLength(3)])
+    titulo: new FormControl('', [Validators.required, Validators.minLength(3)])
+    // TODO: completar el formulario con los demás campos de Receta
   })
 
   ngOnInit() {
