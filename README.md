@@ -45,7 +45,6 @@ Herramienta para generar el diagrama:
 
 
 # Funcionamiento:
-1. Pagina Index: mostrar 4 categorias, recetas destacadas
 2. Pagina Categorias: Mostrar card de las categorias y al click en categoria ir a las recetas de la categoria.
 3. Pagina Ingredientes: Mostrar card de los ingredientes y al click en el ingrediente ir a las recetas que usan ese ingrediente
 4. Pagina Recetas: Card de todas las recetas, al click en una receta mostrar la receta completa, donde se puede comentar

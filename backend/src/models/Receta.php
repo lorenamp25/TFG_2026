@@ -18,6 +18,9 @@ class Receta {
     public $categoria;
     public $imagen_url;
     public $usuario_id;
+    public $destacada;
+    public $votos_positivos = 0;
+    public $votos_negativos = 0;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -25,7 +28,7 @@ class Receta {
 
     // Obtener todas las recetas (incluye ingredientes e instrucciones)
     public function getAll() {
-        $query = "SELECT id, titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT id, titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, destacada, votos_positivos, votos_negativos FROM " . $this->table_name . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -41,7 +44,7 @@ class Receta {
 
     // Obtener una receta por ID con sus relaciones
     public function getById($id) {
-        $query = "SELECT id, titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
+        $query = "SELECT id, titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, destacada, votos_positivos, votos_negativos FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
@@ -59,7 +62,7 @@ class Receta {
             $this->conn->beginTransaction();
 
             // Use RETURNING id so we can fetch the new id in PostgreSQL
-            $query = "INSERT INTO " . $this->table_name . " (titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id) VALUES (:titulo, :descripcion, :tiempo_preparacion, :dificultad, :categoria, :imagen_url, :usuario_id) RETURNING id";
+            $query = "INSERT INTO " . $this->table_name . " (titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, destacada, votos_positivos, votos_negativos) VALUES (:titulo, :descripcion, :tiempo_preparacion, :dificultad, :categoria, :imagen_url, :usuario_id, :destacada, :votos_positivos, :votos_negativos) RETURNING id";
             $stmt = $this->conn->prepare($query);
 
             $this->titulo = htmlspecialchars(strip_tags($this->titulo));
@@ -69,6 +72,9 @@ class Receta {
             $this->categoria = $this->categoria ?? null;
             $this->imagen_url = $this->imagen_url ?? null;
             $this->usuario_id = $this->usuario_id ?? null;
+            $this->destacada = $this->destacada ?? null;
+            $this->votos_positivos = isset($this->votos_positivos) ? (int)$this->votos_positivos : 0;
+            $this->votos_negativos = isset($this->votos_negativos) ? (int)$this->votos_negativos : 0;
 
             $stmt->bindParam(":titulo", $this->titulo);
             $stmt->bindParam(":descripcion", $this->descripcion);
@@ -77,6 +83,9 @@ class Receta {
             $stmt->bindParam(":categoria", $this->categoria);
             $stmt->bindParam(":imagen_url", $this->imagen_url);
             $stmt->bindParam(":usuario_id", $this->usuario_id);
+            $stmt->bindParam(":destacada", $this->destacada);
+            $stmt->bindParam(":votos_positivos", $this->votos_positivos);
+            $stmt->bindParam(":votos_negativos", $this->votos_negativos);
 
             if (!$stmt->execute()) {
                 $this->conn->rollBack();
@@ -134,7 +143,7 @@ class Receta {
         try {
             $this->conn->beginTransaction();
 
-            $query = "UPDATE " . $this->table_name . " SET titulo = :titulo, descripcion = :descripcion, tiempo_preparacion = :tiempo_preparacion, dificultad = :dificultad, categoria = :categoria, imagen_url = :imagen_url, usuario_id = :usuario_id WHERE id = :id";
+            $query = "UPDATE " . $this->table_name . " SET titulo = :titulo, descripcion = :descripcion, tiempo_preparacion = :tiempo_preparacion, dificultad = :dificultad, categoria = :categoria, imagen_url = :imagen_url, usuario_id = :usuario_id, destacada = :destacada, votos_positivos = :votos_positivos, votos_negativos = :votos_negativos WHERE id = :id";
             $stmt = $this->conn->prepare($query);
 
             $this->titulo = htmlspecialchars(strip_tags($this->titulo));
@@ -144,6 +153,7 @@ class Receta {
             $this->categoria = $this->categoria ?? null;
             $this->imagen_url = $this->imagen_url ?? null;
             $this->usuario_id = $this->usuario_id ?? null;
+            $this->destacada = $this->destacada ?? null;
             $this->id = htmlspecialchars(strip_tags($this->id));
 
             $stmt->bindParam(":titulo", $this->titulo);
@@ -153,6 +163,12 @@ class Receta {
             $stmt->bindParam(":categoria", $this->categoria);
             $stmt->bindParam(":imagen_url", $this->imagen_url);
             $stmt->bindParam(":usuario_id", $this->usuario_id);
+            $stmt->bindParam(":destacada", $this->destacada);
+            // allow updating votos if provided
+            $this->votos_positivos = isset($this->votos_positivos) ? (int)$this->votos_positivos : $this->votos_positivos;
+            $this->votos_negativos = isset($this->votos_negativos) ? (int)$this->votos_negativos : $this->votos_negativos;
+            $stmt->bindParam(":votos_positivos", $this->votos_positivos);
+            $stmt->bindParam(":votos_negativos", $this->votos_negativos);
             $stmt->bindParam(":id", $this->id);
 
             if (!$stmt->execute()) {

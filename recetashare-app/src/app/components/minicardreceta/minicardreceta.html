@@ -1,0 +1,10 @@
+<div class="tarjeta-flotante tarjeta-{{ orden + 1 }}">
+  <img src="{{ receta.imagen_url }}" alt="Receta 1">
+  <div class="contenido-tarjeta">
+    <h3>{{ receta.titulo }}</h3>
+    <div class="valoracion">
+      <span class="estrellas">{{ estrellas() }}</span>
+      <span>{{ puntuacion() }}</span>
+    </div>
+  </div>
+</div>

@@ -39,7 +39,7 @@ class Database {
 
     // Crear las tablas necesarias (si no existen)
     public function createTables() {
-                $sql = <<<SQL
+                 $sql = <<<SQL
 -- Categorías
 CREATE TABLE IF NOT EXISTS categorias (
     id SERIAL PRIMARY KEY,
@@ -75,8 +75,11 @@ CREATE TABLE IF NOT EXISTS recetas (
     dificultad VARCHAR(50),
     categoria INTEGER REFERENCES categorias(id),
     imagen_url VARCHAR(1024),
-    usuario_id INTEGER REFERENCES usuarios(id)
+    usuario_id INTEGER REFERENCES usuarios(id),
+    votos_positivos INTEGER DEFAULT 0,
+    votos_negativos INTEGER DEFAULT 0
 );
+
 
 -- Receta ingredientes (relación)
 CREATE TABLE IF NOT EXISTS receta_ingredientes (
@@ -129,9 +132,11 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
 );
 
 SQL;
+        // Ensure new columns exist on existing databases (safe ALTER)
+        $sql .= "\n-- Add votes columns if missing\nALTER TABLE recetas ADD COLUMN IF NOT EXISTS votos_positivos INTEGER DEFAULT 0;\nALTER TABLE recetas ADD COLUMN IF NOT EXISTS votos_negativos INTEGER DEFAULT 0;\n";
 
-                try {
-                        $this->conn->exec($sql);
+        try {
+            $this->conn->exec($sql);
                         return true;
                 } catch (PDOException $e) {
                         echo json_encode(["error" => "Error creating tables: " . $e->getMessage()]);
@@ -139,12 +144,140 @@ SQL;
                 }
     }
     public function crearDatosDummy() {
-        $sql = <<<SQL
-INSERT INTO categorias (nombre, decripcion, icono) VALUES  ('Postres', 'Ricos postres', '🥗'), ('Platos principales', 'Mucha comida', '🥗'), ('Ensaladas', 'Algo saludable', '🥗' );
-SQL;
-
+        
         try {
-            $this->conn->exec($sql);
+            $this->conn->beginTransaction();
+
+            // --- Categories ---
+            $categories = [
+                ['nombre' => 'Entrantes', 'descripcion' => 'Aperitivos y entrantes', 'icono' => '🥗'],
+                ['nombre' => 'Platos principales', 'descripcion' => 'Platos fuertes', 'icono' => '🍲'],
+                ['nombre' => 'Postres', 'descripcion' => 'Dulces y postres', 'icono' => '🍰'],
+                ['nombre' => 'Bebidas', 'descripcion' => 'Bebidas frías y calientes', 'icono' => '🍹']
+            ];
+            $catIds = [];
+            $selectCat = $this->conn->prepare("SELECT id FROM categorias WHERE nombre = :nombre LIMIT 1");
+            $insertCat = $this->conn->prepare("INSERT INTO categorias (nombre, descripcion, icono) VALUES (:nombre, :descripcion, :icono) RETURNING id");
+            foreach ($categories as $c) {
+                $selectCat->execute([':nombre' => $c['nombre']]);
+                $id = $selectCat->fetchColumn();
+                if (!$id) {
+                    $insertCat->execute([':nombre' => $c['nombre'], ':descripcion' => $c['descripcion'], ':icono' => $c['icono']]);
+                    $id = $insertCat->fetchColumn();
+                }
+                $catIds[] = $id;
+            }
+
+            // --- Users (3) ---
+            $users = [
+                ['nickname' => 'lorena', 'nombre' => 'Lorena', 'apellido' => 'Gómez', 'email' => 'lorena@example.com', 'password' => password_hash('password1', PASSWORD_DEFAULT)],
+                ['nickname' => 'carlos', 'nombre' => 'Carlos', 'apellido' => 'Perez', 'email' => 'carlos@example.com', 'password' => password_hash('password2', PASSWORD_DEFAULT)],
+                ['nickname' => 'ana', 'nombre' => 'Ana', 'apellido' => 'Diaz', 'email' => 'ana@example.com', 'password' => password_hash('password3', PASSWORD_DEFAULT)]
+            ];
+            $userIds = [];
+            $selectUser = $this->conn->prepare("SELECT id FROM usuarios WHERE email = :email LIMIT 1");
+            $insertUser = $this->conn->prepare("INSERT INTO usuarios (nickname, nombre, apellido, email, password, puntuacion) VALUES (:nickname, :nombre, :apellido, :email, :password, :puntuacion) RETURNING id");
+            foreach ($users as $u) {
+                $selectUser->execute([':email' => $u['email']]);
+                $id = $selectUser->fetchColumn();
+                if (!$id) {
+                    $insertUser->execute([':nickname' => $u['nickname'], ':nombre' => $u['nombre'], ':apellido' => $u['apellido'], ':email' => $u['email'], ':password' => $u['password'], ':puntuacion' => 0]);
+                    $id = $insertUser->fetchColumn();
+                }
+                $userIds[] = $id;
+            }
+
+            // --- Ingredientes (20) ---
+            $ingredientes = [
+                'Harina','Azúcar','Sal','Pimienta','Aceite de oliva','Huevos','Leche','Mantequilla','Ajo','Cebolla',
+                'Tomate','Queso','Pollo','Carne de vaca','Perejil','Albahaca','Arroz','Pasta','Patata','Zanahoria'
+            ];
+            $ingredienteIds = [];
+            $selectIng = $this->conn->prepare("SELECT id FROM ingredientes WHERE nombre = :nombre LIMIT 1");
+            $insertIng = $this->conn->prepare("INSERT INTO ingredientes (nombre) VALUES (:nombre) RETURNING id");
+            foreach ($ingredientes as $nombre) {
+                $selectIng->execute([':nombre' => $nombre]);
+                $id = $selectIng->fetchColumn();
+                if (!$id) {
+                    $insertIng->execute([':nombre' => $nombre]);
+                    $id = $insertIng->fetchColumn();
+                }
+                $ingredienteIds[] = $id;
+            }
+
+            // --- Recetas (10) with ingredientes and instrucciones ---
+            $titulos = [
+                'Tarta de manzana','Pollo al horno','Pasta con salsa de tomate','Arroz con verduras','Ensalada mediterránea',
+                'Sopa de pollo','Patatas al horno','Tortilla española','Galletas de mantequilla','Pasta al pesto'
+            ];
+
+            $insertReceta = $this->conn->prepare("INSERT INTO recetas (titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, destacada, votos_positivos, votos_negativos) VALUES (:titulo, :descripcion, :tiempo_preparacion, :dificultad, :categoria, :imagen_url, :usuario_id, :destacada, :votos_positivos, :votos_negativos) RETURNING id");
+            $insertRecIng = $this->conn->prepare("INSERT INTO receta_ingredientes (receta_id, ingrediente_id, cantidad, unidad) VALUES (:receta_id, :ingrediente_id, :cantidad, :unidad)");
+            $insertInstr = $this->conn->prepare("INSERT INTO receta_instrucciones (receta_id, orden, descripcion, imagen_url) VALUES (:receta_id, :orden, :descripcion, :imagen_url)");
+
+            foreach ($titulos as $i => $titulo) {
+                $descripcion = "Deliciosa receta de $titulo.";
+                $tiempo = rand(10, 120);
+                $diffOptions = ['fácil','media','alta'];
+                $dificultad = $diffOptions[array_rand($diffOptions)];
+                $categoria = $catIds[array_rand($catIds)];
+                $imagen = null;
+                $usuario_id = $userIds[array_rand($userIds)];
+                $destacada = (rand(0,9) === 0) ? true : false;
+
+                $insertReceta->execute([
+                    ':titulo' => $titulo,
+                    ':descripcion' => $descripcion,
+                    ':tiempo_preparacion' => $tiempo,
+                    ':dificultad' => $dificultad,
+                    ':categoria' => $categoria,
+                    ':imagen_url' => $imagen,
+                    ':usuario_id' => $usuario_id,
+                    ':destacada' => $destacada,
+                    ':votos_positivos' => rand(0,50),
+                    ':votos_negativos' => rand(0,20)
+                ]);
+                $recetaId = $insertReceta->fetchColumn();
+
+                // add 3-6 ingredientes
+                $numIng = rand(3,6);
+                $used = [];
+                for ($k=0;$k<$numIng;$k++) {
+                    $idx = $ingredienteIds[array_rand($ingredienteIds)];
+                    if (in_array($idx,$used)) continue;
+                    $used[] = $idx;
+                    $cantidad = rand(1,500);
+                    $unidad = (rand(0,1)===0)?'g':'ml';
+                    $insertRecIng->execute([':receta_id'=>$recetaId,':ingrediente_id'=>$idx,':cantidad'=>$cantidad,':unidad'=>$unidad]);
+                }
+
+                // add 2-5 instrucciones
+                $numInstr = rand(2,5);
+                for ($s=1;$s<=$numInstr;$s++) {
+                    $desc = "Paso $s para preparar $titulo.";
+                    $insertInstr->execute([':receta_id'=>$recetaId,':orden'=>$s,':descripcion'=>$desc,':imagen_url'=>null]);
+                }
+            }
+
+            // --- Comentarios: crear algunos comentarios aleatorios ---
+            $insertComentario = $this->conn->prepare("INSERT INTO comentarios (receta_id, usuario_id, contenido, puntuacion) VALUES (:receta_id, :usuario_id, :contenido, :puntuacion)");
+            // fetch some recipe ids
+            $rstmt = $this->conn->query("SELECT id FROM recetas ORDER BY id DESC LIMIT 10");
+            $rids = $rstmt->fetchAll(PDO::FETCH_COLUMN);
+            $sampleComments = ["Deliciosa!", "Me gustó mucho", "Fácil de preparar", "No me convenció", "Perfecta para cenar"];
+            foreach ($rids as $rid) {
+                $num = rand(0,3);
+                for ($c=0;$c<$num;$c++) {
+                    $insertComentario->execute([':receta_id'=>$rid, ':usuario_id'=>$userIds[array_rand($userIds)], ':contenido'=>$sampleComments[array_rand($sampleComments)], ':puntuacion'=>rand(1,5)]);
+                }
+            }
+
+            $this->conn->commit();
+
+
+
+
+
             return true;
         } catch (PDOException $e) {
             echo json_encode(["error" => "Error inserting dummy data: " . $e->getMessage()]);

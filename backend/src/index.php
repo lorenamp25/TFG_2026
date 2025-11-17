@@ -29,6 +29,8 @@ if ($db && $dbInit !== '0' && strtolower($dbInit) !== 'false') {
 	$database->createTables();
 }
 
+// $database->crearDatosDummy();
+
 // Router principal
 $router = new Router();
 

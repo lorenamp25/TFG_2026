@@ -10,7 +10,6 @@ import { Receta } from '../../models/receta.model';
   styleUrl: './receta-tabla.css',
 })
 export class RecetaTabla {
- 
   @Input() recetas: Receta[] = []
   @Output() editarRecetaEvent = new EventEmitter<Receta>()
   @Output() eliminarRecetaEvent = new EventEmitter<Receta>()

@@ -3,4 +3,5 @@ export enum EstadoAccion {
   Agregando,    // 1
   Editando,     // 2
   Borrando,     // 3
+  Procesando,   // 4
 }

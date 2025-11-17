@@ -11,6 +11,11 @@ export const routes: Routes = [
       import('./pages/categoria/categoria').then((m) => m.CategoriaPage),
   },
   {
+    path: 'receta',
+    loadComponent: () =>
+      import('./pages/receta/receta').then((m) => m.RecetaPage),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./pages/login/login').then((m) => m.LoginPage),
