@@ -1,4 +1,9 @@
+// Exporta un objeto llamado "environment" que contiene variables de configuración
 export const environment = {
+
+  // Indica si la app está en modo producción (false = modo desarrollo)
   production: false,
+
+  // URL base para hacer peticiones a la API backend
   apiUrl: 'http://localhost:8000'
 };

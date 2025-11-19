@@ -1,130 +1,161 @@
-/* === ESTILO GENERAL === */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", sans-serif;
+/* Paleta y estilos base */
+:root {
+  --bg-gradient: linear-gradient(135deg, #4f46e5, #ec4899);
+  --card-bg: rgba(255, 255, 255, 0.12);
+  --card-border: rgba(255, 255, 255, 0.25);
+  --text-main: #f9fafb;
+  --text-muted: #e5e7eb;
+  --accent: #22c55e;
+  --danger: #ef4444;
+  --shadow-soft: 0 18px 35px rgba(15, 23, 42, 0.45);
 }
 
-body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1e1e2f, #252547, #141420);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
-}
-
-/* === CONTENEDOR === */
+/* Contenedor principal */
 .container {
-  width: 100%;
-  max-width: 500px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  padding: 30px 24px;
-  text-align: center;
-}
-
-h1 {
-  font-size: 1.7rem;
-  background: linear-gradient(90deg, #ff6b6b, #ffd166);
-  -webkit-background-clip: text;
-  color: transparent;
-  margin-bottom: 20px;
-}
-
-/* === FORMULARIO === */
-form {
+  min-height: 60vh;
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1.5rem;
+  background: var(--bg-gradient);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-input {
-  flex: 1;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-}
-
-button {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.2s, background 0.3s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-.add-btn {
-  background: linear-gradient(90deg, #ff6b6b, #ffd166);
-  color: #0f172a;
-}
-
-/* === LISTA === */
-ul {
+/* Lista de categorías */
+#categoryList {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 0;
+  margin: 0;
+  padding: 1.5rem;
+  max-width: 560px;
+  width: 100%;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.2), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.5), transparent 60%),
+              rgba(15, 23, 42, 0.75);
+  border-radius: 1.4rem;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
 }
 
-li {
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 10px 14px;
+/* Cada elemento de la lista */
+#categoryList li {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: 0.2s;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.7rem;
+  background: var(--card-bg);
+  border-radius: 0.9rem;
+  border: 1px solid transparent;
+  cursor: default;
+  transform-origin: center;
+  animation: fadeInUp 0.45s ease-out;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
 }
 
-li:hover {
-  background: rgba(255,255,255,0.15);
+/* efecto hover sobre cada fila */
+#categoryList li:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.6);
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(148, 163, 184, 0.6);
 }
 
+/* Texto de la categoría */
 .category-name {
+  flex: 1;
+  font-size: 1rem;
   font-weight: 500;
+  color: var(--text-main);
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+/* Contenedor de botones */
 .actions {
   display: flex;
-  gap: 8px;
+  gap: 0.35rem;
 }
 
-.edit, .delete {
-  background: none;
+/* Estilo base de los botones */
+.actions button {
   border: none;
+  outline: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
   cursor: pointer;
-  color: #fff;
-  font-size: 1rem;
-  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--text-muted);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.65);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    filter 0.15s ease;
 }
 
-.edit:hover {
-  color: #ffd166;
+/* Botón de editar */
+.actions .edit {
+  background: radial-gradient(circle at top left, #4ade80, #16a34a);
+  color: #022c22;
 }
 
-.delete:hover {
-  color: #ff6b6b;
+/* Botón de eliminar */
+.actions .delete {
+  background: radial-gradient(circle at top left, #fb7185, #b91c1c);
+  color: #fef2f2;
 }
 
-/* === ANIMACIÓN DE ENTRADA === */
-.fade-in {
-  animation: fadeIn 0.4s ease forwards;
+/* Hover y active de los botones */
+.actions button:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.8);
+  filter: brightness(1.05);
 }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+
+.actions button:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.7);
+}
+
+/* Animación de entrada de las filas */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Un pelín de responsividad */
+@media (max-width: 600px) {
+  #categoryList {
+    padding: 1.1rem;
+  }
+
+  #categoryList li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    align-self: flex-end;
+  }
 }

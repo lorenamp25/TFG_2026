@@ -1,47 +1,70 @@
+<!-- Texto informativo de la página -->
 <p>Pagina de administracion de categorias</p>
 
 <div>
+  <!-- Botón que llama al método agregarCategoria() para cambiar el estado a “agregar” -->
   <button (click)="agregarCategoria()">Agregar Categoria</button>
 </div>
 
+<!-- Estructura condicional usando @switch para controlar qué vista mostrar -->
 @switch (estado) {
+
+  <!-- Caso 0: Mostrar la tabla de categorías -->
   @case (0) {
     <div class="container">
       <div>Categorias disponibles</div>
+
+      <!-- @defer retrasa la carga hasta que existan datos -->
       @defer (when categorias.length > 0){
+
+        <!-- Componente que muestra la tabla con la lista de categorías -->
         <app-categoria-tabla
-          [categorias]="categorias"
-          (editarCategoriaEvent)="onEditarCategoria($event)"
-          (eliminarCategoriaEvent)="onEliminarCategoria($event)"
+          [categorias]="categorias"                    
+          (editarCategoriaEvent)="onEditarCategoria($event)"     
+          (eliminarCategoriaEvent)="onEliminarCategoria($event)" 
         ></app-categoria-tabla>
+
       } @placeholder {
+        <!-- Contenido temporal mientras se cargan las categorías -->
         <p>Cargando categorias...</p>
       }
     </div>
   }
+
+  <!-- Caso 1: Vista para agregar una nueva categoría -->
   @case (1) {
     <div class="container">
       <div>Agregando</div>
+
+      <!-- Formulario compartido para crear o editar -->
       <app-categoria-form
-          (guardarCategoria)="onGuardar($event)"
-          (cancelarAccion)="onCancelar()"
-          [categoria]="categoria"
+          (guardarCategoria)="onGuardar($event)"   
+          (cancelarAccion)="onCancelar()"          
+          [categoria]="categoria"                  
       ></app-categoria-form>
     </div>
   }
+
+  <!-- Caso 2: Vista para editar una categoría existente -->
   @case (2) {
     <div class="container">
       <div>Editando</div>
+
+      <!-- Formulario que recibe los datos de la categoría a editar -->
       <app-categoria-form
           (guardarCategoria)="onGuardar($event)"
           (cancelarAccion)="onCancelar()"
-          [categoria]="categoria"
+          [categoria]="categoria"                  
       ></app-categoria-form>
     </div>
   }
+
+  <!-- Caso 3: Vista para confirmar eliminación (usa el mismo formulario) -->
   @case (3) {
     <div class="container">
       <div>Confirmar Eliminacion</div>
+
+      <!-- Mismo formulario, quizá luego personalices este caso -->
       <app-categoria-form
           (guardarCategoria)="onGuardar($event)"
           (cancelarAccion)="onCancelar()"

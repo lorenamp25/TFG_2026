@@ -1,5 +1,9 @@
+<!-- Formulario reactivo que usa un FormGroup llamado 'form' y ejecuta onGrabar() al enviarse -->
 <form [formGroup]="form" (ngSubmit)="onGrabar()">
+
   <div>
+
+    <!-- Campo oculto para el ID de la categoría (se usa para editar) -->
     <input
       id="id"
       type="text"
@@ -8,60 +12,82 @@
     />
 
     <div>
+      <!-- Etiqueta del campo Nombre -->
       <label for="nombre">Nombre</label>
+
+      <!-- Input vinculado al control 'nombre' del formulario -->
       <input
         id="nombre"
         type="text"
         formControlName="nombre"
         placeholder="Ingrese nombre de categoria"
       />
+
+      <!-- Validaciones mostradas SOLO si el campo es inválido y fue tocado -->
       @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
         <div>
+          <!-- Mensaje si falta el nombre -->
           @if (form.get('nombre')?.errors?.['required']) { Nombre obligatorio }
+
+          <!-- Mensaje si no cumple el mínimo de caracteres -->
           @if (form.get('nombre')?.errors?.['minlength']) { Min 3 letras }
         </div>
       }
     </div>
 
     <div>
+      <!-- Etiqueta del campo Descripción -->
       <label for="descripcion">Descripcion</label>
+
+      <!-- Input vinculado al control 'descripcion' del formulario -->
       <input
         id="descripcion"
         type="text"
         formControlName="descripcion"
         placeholder="Ingrese la descripcion de categoria"
       />
+
+      <!-- Validaciones cuando está inválido + tocado -->
       @if (form.get('descripcion')?.invalid && form.get('descripcion')?.touched) {
         <div>
+          <!-- Si falta escribir descripción -->
           @if (form.get('descripcion')?.errors?.['required']) { Descripcion obligatoria }
+
+          <!-- Si no llega al mínimo -->
           @if (form.get('descripcion')?.errors?.['minlength']) { Min 5 letras }
         </div>
       }
     </div>
 
     <div>
+      <!-- Etiqueta del campo Icono -->
       <label for="icono">Icono</label>
+
+      <!-- Input vinculado al control 'icono' -->
       <input
         id="icono"
         type="text"
         formControlName="icono"
         placeholder="Ingrese el icono de la categoria"
       />
+
+      <!-- Validaciones del icono -->
       @if (form.get('icono')?.invalid && form.get('icono')?.touched) {
         <div>
+          <!-- Si no se ingresó icono -->
           @if (form.get('icono')?.errors?.['required']) { Nombre obligatorio }
         </div>
       }
     </div>
 
-
-
   </div>
+
+</form>
 
 
 
   <button type="submit" [disabled]="form.invalid">Confirmar</button>
   <button type="button" (click)="onCancelar()">Cancelar</button>
-</form>
+
 
 

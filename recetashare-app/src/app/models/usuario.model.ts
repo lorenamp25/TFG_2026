@@ -1,30 +1,48 @@
+// Clase que representa un usuario dentro de la aplicación
 export class Usuario {
+
+    // Identificador único del usuario
     id: number
+
+    // Apodo o nombre público del usuario
     nickname: string
+
+    // Nombre real del usuario
     nombre: string
+
+    // Apellido del usuario
     apellido: string
+
+    // Correo electrónico del usuario
     email: string
+
+    // Contraseña del usuario (habitualmente debe guardarse hasheada)
     password: string
+
+    // Fecha de nacimiento del usuario (tipo Date)
     fecha_nacimiento: Date
+
+    // Puntuación o reputación del usuario dentro de la app
     puntuacion: number
 
+    // Constructor que inicializa todos los campos al crear un usuario
     constructor(
-      id: number,
-      nombre: string,
-      nickname: string,
-      apellido: string,
-      email: string,
-      password: string,
-      fecha_nacimiento: Date,
-      puntuacion: number
+      id: number,               // ID único
+      nombre: string,           // Nombre del usuario
+      nickname: string,         // Apodo
+      apellido: string,         // Apellido
+      email: string,            // Email
+      password: string,         // Contraseña
+      fecha_nacimiento: Date,   // Fecha de nacimiento
+      puntuacion: number        // Puntuación/reputación
     ) {
-      this.id = id
-      this.nombre = nombre
-      this.nickname = nickname
-      this.apellido = apellido
-      this.email = email
-      this.password = password
-      this.fecha_nacimiento = fecha_nacimiento
-      this.puntuacion = puntuacion
+      this.id = id                                 // Asigna el ID
+      this.nombre = nombre                         // Asigna el nombre
+      this.nickname = nickname                     // Asigna el apodo
+      this.apellido = apellido                     // Asigna el apellido
+      this.email = email                           // Asigna el correo
+      this.password = password                     // Asigna la contraseña
+      this.fecha_nacimiento = fecha_nacimiento     // Asigna la fecha de nacimiento
+      this.puntuacion = puntuacion                 // Asigna la puntuación
     }
 }

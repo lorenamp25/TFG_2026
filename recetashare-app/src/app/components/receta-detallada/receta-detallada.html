@@ -1,45 +1,57 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Receta — Detalle</title>
+  <meta charset="utf-8" /> <!-- Codificación de caracteres UTF-8 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1" /> <!-- Hace la página responsive en móviles -->
+  <title>Receta — Detalle</title> <!-- Título de la pestaña del navegador -->
 </head>
 <body>
   <!-- ======== HEADER ======== -->
+  <!-- Barra superior con logo y botones de navegación -->
   <header class="topbar">
     <div class="left">
+      <!-- Icono pequeño de la app -->
       <span class="logo-sm">🍴</span>
+      <!-- Nombre de la marca o aplicación -->
       <span class="brand-name">RecetasMágicas</span>
     </div>
     <div class="right">
+      <!-- Botón para volver a la página anterior de recetas -->
       <button id="btnBack" class="btn ghost">Volver</button>
+      <!-- Botón para cerrar sesión -->
       <button id="btnLogout2" class="btn ghost">Salir</button>
+      <!-- Botón para cambiar el tema (claro/oscuro) -->
       <button id="themeToggle" class="btn ghost">🌙</button>
     </div>
   </header>
 
   <!-- ======== CONTENIDO ======== -->
+  <!-- Contenedor principal del contenido -->
   <main class="container">
+    <!-- Artículo donde se inyectará el detalle de la receta -->
     <article class="recipe-detail" id="recipeContent">
       <!-- El contenido se rellenará dinámicamente -->
     </article>
   </main>
 
   <!-- ======== SCRIPTS ======== -->
+  <!-- Script de autenticación (comprobación de login, etc.) -->
   <script src="js/auth.js"></script>
+  <!-- Script de tema (cambio claro/oscuro) -->
   <script src="js/theme.js"></script>
+
   <script>
     // --- Datos de recetas (puedes añadir o modificar los enlaces e info aquí) ---
+    // Objeto que guarda varias recetas simuladas con su información
     const recetas = {
       paella: {
-        titulo: "Paella Valenciana Tradicional",
-        autor: "Carmen López",
-        duracion: "45 min",
-        dificultad: "Intermedio",
-        imagen: "tacos.jpg",
+        titulo: "Paella Valenciana Tradicional",          // Título de la receta
+        autor: "Carmen López",                            // Nombre del autor
+        duracion: "45 min",                               // Tiempo estimado
+        dificultad: "Intermedio",                         // Nivel de dificultad
+        imagen: "tacos.jpg",                              // Imagen asociada (ruta)
         descripcion: "La auténtica paella valenciana con pollo, conejo, judías verdes y azafrán.",
-        ingredientes: [
+        ingredientes: [                                   // Lista de ingredientes
           "500 g de arroz bomba",
           "400 g de pollo troceado",
           "300 g de conejo",
@@ -50,7 +62,7 @@
           "Aceite de oliva virgen extra",
           "Sal al gusto"
         ],
-        pasos: [
+        pasos: [                                          // Pasos de preparación
           "Sella el pollo y el conejo en la paellera.",
           "Añade las verduras y sofríe unos minutos.",
           "Agrega el tomate rallado y deja reducir.",
@@ -109,15 +121,20 @@
     };
 
     // --- Obtener ID de receta desde la URL ---
+    // Ejemplo: detalle.html?id=paella → id = "paella"
     const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+    const id = params.get("id"); // Recupera el valor del parámetro "id" de la query
 
     // --- Seleccionar el contenedor ---
+    // Elemento <article> donde se va a inyectar el contenido HTML de la receta
     const content = document.getElementById("recipeContent");
 
     // --- Si existe la receta, mostrarla ---
     if (recetas[id]) {
+      // Si el id existe dentro del objeto recetas, se obtiene la receta r
       const r = recetas[id];
+
+      // Se construye un bloque HTML usando template literals con los datos de la receta
       content.innerHTML = `
         <h1>${r.titulo}</h1>
         <p class="muted">por ${r.autor} • ${r.duracion} • ${r.dificultad}</p>
@@ -136,16 +153,20 @@
         </section>
       `;
     } else {
+      // Si el id de la URL no coincide con ninguna receta definida
       content.innerHTML = `<h2>No se encontró la receta 😢</h2>`;
     }
 
     // --- Navegación y logout ---
+    // Botón "Volver" → vuelve a la página de listado de recetas
     document.getElementById('btnBack').addEventListener('click', () => {
       location.href = 'recetas.html';
     });
+
+    // Botón "Salir" → borra el token de login y vuelve a la portada
     document.getElementById('btnLogout2').addEventListener('click', () => {
-      localStorage.removeItem('RM_token');
-      location.href = 'index.html';
+      localStorage.removeItem('RM_token'); // Elimina el token de sesión almacenado
+      location.href = 'index.html';       // Redirige a la página principal
     });
   </script>
 </body>

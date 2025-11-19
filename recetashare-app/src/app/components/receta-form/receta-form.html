@@ -1,5 +1,8 @@
+<!-- Formulario reactivo que usa Angular: formGroup enlaza el formulario a la clase -->
 <form [formGroup]="form" (ngSubmit)="onGrabar()">
+
   <div>
+    <!-- Campo oculto para guardar el ID de la receta (en edición) -->
     <input
       id="id"
       type="text"
@@ -8,24 +11,32 @@
     />
 
     <div>
+      <!-- Etiqueta del campo de título -->
       <label for="titulo">Titulo</label>
+
+      <!-- Input que se enlaza al formControl 'titulo' -->
       <input
         id="titulo"
         type="text"
         formControlName="titulo"
         placeholder="Ingrese nombre de la receta"
       />
+
+      <!-- Validación: si el campo es inválido y ha sido tocado, muestra los errores -->
       @if (form.get('titulo')?.invalid && form.get('titulo')?.touched) {
         <div>
+          <!-- Error: campo requerido vacío -->
           @if (form.get('titulo')?.errors?.['required']) { Titulo obligatorio }
+          <!-- Error: menos de 3 letras -->
           @if (form.get('titulo')?.errors?.['minlength']) { Min 3 letras }
         </div>
       }
     </div>
   </div>
 
+  <!-- Botón de guardar: se deshabilita si el formulario es inválido -->
   <button type="submit" [disabled]="form.invalid">Confirmar</button>
+
+  <!-- Botón para cancelar la edición y volver atrás -->
   <button type="button" (click)="onCancelar()">Cancelar</button>
 </form>
-
-

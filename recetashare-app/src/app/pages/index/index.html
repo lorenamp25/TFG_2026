@@ -1,25 +1,40 @@
 <!-- 🌟 Sección Principal -->
 <section class="portada">
   <div class="contenido-portada contenedor">
+    
+    <!-- Texto principal de la portada -->
     <div class="texto-portada">
-      <h1 class="titulo-portada"><span class="texto-degradado">Cocina fácil</span> con los mejores sabores</h1>
-      <p class="descripcion-portada">Descubre miles de recetas deliciosas, saludables y rápidas para cada ocasión. Perfectas para principiantes y expertos. 🍽️</p>
+      <h1 class="titulo-portada">
+        <span class="texto-degradado">Cocina fácil</span> con los mejores sabores
+      </h1>
 
+      <p class="descripcion-portada">
+        Descubre miles de recetas deliciosas, saludables y rápidas para cada ocasión.
+        Perfectas para principiantes y expertos. 🍽️
+      </p>
+
+      <!-- Botones principales de navegación -->
       <div class="botones-portada">
         <a href="receta" class="boton-principal boton-grande">🍲 Explorar recetas</a>
         <a href="categoria" class="boton-secundario boton-grande">📖 Ver categorías</a>
       </div>
     </div>
 
+    <!-- Tarjetas pequeñas de recetas (animación decorativa) -->
     <div class="imagen-portada">
-      @if (cargandoRecetas === false) {
-        @for (receta of recetasInicio; track $index) {
-          <app-minicardreceta [receta]="receta" [orden]="$index"></app-minicardreceta>
+      @if (cargandoRecetas === false) {         <!-- Si no está cargando las recetas -->
+        @for (receta of recetasInicio; track $index) {   <!-- Recorre lista inicial de recetas -->
+          <app-minicardreceta 
+            [receta]="receta" 
+            [orden]="$index">                 <!-- Pasa también el índice como orden -->
+          </app-minicardreceta>
         }
       }
     </div>
+
   </div>
 </section>
+
 
 <!-- 🍱 Categorías -->
 <section class="categorias">
@@ -28,44 +43,65 @@
     <p>Explora recetas según tu gusto y estilo 🍕🥗🍰</p>
   </div>
 
+  <!-- Lista de categorías -->
   <div class="rejilla-categorias contenedor">
-    @defer (when cargandoCategorias === false) {
-      @if (categorias.length === 0) {
+
+    @defer (when cargandoCategorias === false) {     <!-- Carga diferida cuando ya no está cargando -->
+
+      @if (categorias.length === 0) {                <!-- Si no hay categorías -->
         <p>No hay categorías disponibles.</p>
+
       } @else {
+        <!-- Muestra solo las primeras 4 categorías -->
         @for (categoria of categorias | slice:0:4; track $index) {
           <app-cardcategoria [categoria]="categoria"></app-cardcategoria>
         }
       }
+
     } @placeholder {
+      <!-- Mientras espera la carga -->
       <p>Cargando categorías...</p>
     }
+
   </div>
 </section>
+
 
 <!-- 🧑‍🍳 Recetas destacadas -->
 <section class="recetas-destacadas">
   <div class="encabezado-seccion">
     <h2>Recetas destacadas</h2>
   </div>
+
   <div class="rejilla-recetas contenedor">
-    @defer (when cargandoRecetas === false) {
-      @if (recetasDestacadas.length === 0) {
+
+    @defer (when cargandoRecetas === false) {        <!-- Carga diferida -->
+
+      @if (recetasDestacadas.length === 0) {         <!-- Si no hay destacadas -->
         <p>No hay recetas disponibles.</p>
+
       } @else {
+        <!-- Recorre todas las recetas destacadas -->
         @for (receta of recetasDestacadas; track $index) {
           <app-cardreceta [receta]="receta"></app-cardreceta>
         }
       }
+
     } @placeholder {
+      <!-- Mientras carga -->
       <p>Cargando recetas destacadas...</p>
     }
+
   </div>
 </section>
 
+
 <!-- 📊 Estadísticas -->
 <section class="estadisticas">
+
+  <!-- Cuatro tarjetas con números/indicadores -->
   <div class="rejilla-estadisticas contenedor">
+
     <div class="tarjeta-estadistica">
       <div class="icono-estadistica">👨‍🍳</div>
       <div class="numero-estadistica">5K+</div>
@@ -89,7 +125,7 @@
       <div class="numero-estadistica">100K+</div>
       <div class="texto-estadistica">Usuarios felices</div>
     </div>
+
   </div>
+
 </section>
-
-

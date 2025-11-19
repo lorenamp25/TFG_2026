@@ -1,17 +1,42 @@
   <!-- 🧂 Contenido principal -->
   <section class="categorias-pagina contenedor">
+    <!-- Título grande de la sección -->
     <h1 class="titulo-seccion">🍴 Categorías de recetas</h1>
-    <p class="descripcion-seccion">Explora nuestras categorías y encuentra el tipo de receta que más te gusta.</p>
 
+    <!-- Breve descripción introductoria -->
+    <p class="descripcion-seccion">
+      Explora nuestras categorías y encuentra el tipo de receta que más te gusta.
+    </p>
+
+    <!-- Contenedor en rejilla para mostrar las tarjetas -->
     <div class="rejilla-categorias">
 
-      <!-- Cada tarjeta enlaza a su página de categoría -->
+      <!-- 
+        @defer: Angular espera hasta que se cumpla la condición (categorias.length > 0).
+        Sirve para no renderizar la lista hasta que haya datos.
+      -->
       @defer (when categorias.length > 0) {
+
+        <!-- 
+          @for: recorre el array 'categorias'
+          track $index: usa el índice como referencia para optimizar el rendimiento
+        -->
         @for (categoria of categorias; track $index) {
+
+          <!-- 
+            Componente que muestra cada tarjeta de categoría,
+            se le pasa la categoría actual mediante @Input
+          -->
           <app-cardcategoria [categoria]="categoria"></app-cardcategoria>
         }
+
       } @placeholder {
+
+        <!-- 
+          Contenido temporal mientras no se cargan las categorías
+        -->
         <p>Cargando categorías...</p>
+
       }
 
     </div>

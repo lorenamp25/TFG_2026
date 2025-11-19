@@ -1,86 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar sesión | RecetasApp</title>
+  <meta charset="UTF-8"> <!-- Codificación estándar UTF-8 para caracteres especiales -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace la página responsive en móviles -->
+  <title>Iniciar sesión | RecetasApp</title> <!-- Título de la pestaña del navegador -->
+  <!-- Fuente bonita desde Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-  
 </head>
+
 <body>
+  <!-- Contenedor principal del bloque de login/registro -->
   <div class="contenedor-login">
+    <!-- Icono / logo de la app -->
     <div class="logo">🍪</div>
+    <!-- Nombre de la aplicación -->
     <h1>RecetasApp</h1>
+    <!-- Texto que cambia según si estamos en login o registro -->
     <p id="texto-form">Inicia sesión para descubrir nuevas recetas cada día.</p>
 
+    <!-- Formulario principal de login/registro -->
     <form id="form-login">
+      <!-- Campo de correo -->
       <input type="email" placeholder="Correo electrónico" required>
+      <!-- Campo de contraseña -->
       <input type="password" placeholder="Contraseña" required>
+      <!-- Botón de enviar (iniciar sesión o registrarse según el modo) -->
       <button type="submit" class="boton-formulario">Iniciar sesión</button>
     </form>
 
+    <!-- Enlace para cambiar entre "Iniciar sesión" y "Registrarse" -->
     <div class="alternar">
       ¿No tienes cuenta? <a href="#" id="link-registrar">Regístrate</a>
     </div>
   </div>
 
+  <!-- Pie de página sencillo -->
   <footer>© 2025 RecetasApp — Hecho con ❤️ para amantes de la cocina</footer>
 
   <script>
+    // Obtiene la referencia al enlace "Regístrate / Inicia sesión"
     const linkRegistrar = document.getElementById("link-registrar");
+    // Referencia al formulario de login/registro
     const formLogin = document.getElementById("form-login");
+    // Párrafo que muestra el texto explicativo de arriba del formulario
     const textoForm = document.getElementById("texto-form");
+    // Bandera para saber si estamos en modo registro (true) o login (false)
     let esRegistro = false;
 
+    // Listener para cuando se hace clic en "Regístrate" o "¿Ya tienes cuenta?"
     linkRegistrar.addEventListener("click", (e) => {
-      e.preventDefault();
-      esRegistro = !esRegistro;
+      e.preventDefault(); // Evita que el enlace recargue o navegue
+      esRegistro = !esRegistro; // Alterna entre true/false
 
+      // Si estamos en modo registro...
       if (esRegistro) {
+        // Cambia el texto descriptivo sobre el formulario
         textoForm.textContent = "Crea una cuenta para guardar tus recetas favoritas 🧁";
+
+        // Cambia el contenido del formulario para pedir nombre + email + contraseña
         formLogin.innerHTML = `
           <input type="text" placeholder="Nombre completo" required>
           <input type="email" placeholder="Correo electrónico" required>
           <input type="password" placeholder="Contraseña" required>
           <button type="submit" class="boton-formulario">Registrarme</button>
         `;
+
+        // Cambia el texto del enlace a la opción contraria
         linkRegistrar.textContent = "¿Ya tienes cuenta? Inicia sesión";
       } else {
+        // Si volvemos al modo iniciar sesión...
         textoForm.textContent = "Inicia sesión para descubrir nuevas recetas cada día.";
+
+        // El formulario vuelve a tener solo email + contraseña
         formLogin.innerHTML = `
           <input type="email" placeholder="Correo electrónico" required>
           <input type="password" placeholder="Contraseña" required>
           <button type="submit" class="boton-formulario">Iniciar sesión</button>
         `;
+
+        // Texto del enlace vuelve a "Regístrate"
         linkRegistrar.textContent = "Regístrate";
       }
     });
 
+    // Maneja el envío del formulario tanto en modo login como registro
     formLogin.addEventListener("submit", function(e) {
-      e.preventDefault();
+      e.preventDefault(); // Evita recarga de la página
 
+      // Obtiene el email del formulario actual (sea login o registro)
       const email = formLogin.querySelector("input[type='email']").value.trim();
+      // Obtiene la contraseña
       const password = formLogin.querySelector("input[type='password']").value.trim();
+      // Intenta obtener el campo nombre si existe (solo en registro)
       const nombre = formLogin.querySelector("input[type='text']")?.value.trim();
 
+      // Recupera del localStorage el array de usuarios, o uno vacío si no existe
       const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
 
+      // Si estamos en modo registro...
       if (esRegistro) {
+        // Comprueba que los campos obligatorios no estén vacíos
         if (!email || !password || !nombre) return alert("Completa todos los campos.");
 
+        // Verifica si ya existe un usuario con ese email
         if (usuarios.find(u => u.email === email)) {
           alert("Este correo ya está registrado.");
         } else {
+          // Si no existe, añade un nuevo usuario al array
           usuarios.push({ nombre, email, password });
+          // Guarda la lista de usuarios actualizada en localStorage
           localStorage.setItem('usuarios', JSON.stringify(usuarios));
           alert("✅ Cuenta creada con éxito. Ahora puedes iniciar sesión.");
+          // Recarga la página para volver al estado inicial
           location.reload();
         }
       } else {
+        // Modo login: busca un usuario que coincida con email y password
         const usuario = usuarios.find(u => u.email === email && u.password === password);
+
         if (usuario) {
+          // Si encuentra usuario válido, redirige a la página principal
           window.location.href = "index.html";
         } else {
+          // Si no coincide, muestra error
           alert("Correo o contraseña incorrectos ❌");
         }
       }
@@ -88,4 +130,3 @@
   </script>
 </body>
 </html>
-

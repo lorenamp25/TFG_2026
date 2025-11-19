@@ -1,5 +1,19 @@
+<!-- Tarjeta que representa una categoría; al hacer click llama a verRecetasCategoria() -->
 <div class="tarjeta-categoria" (click)="verRecetasCategoria()">
-  <div class="icono-categoria">{{ categoria.icono }}</div>
-  <h3>{{ categoria.nombre }}</h3>
-  <p>{{ categoria.descripcion }}</p>
+
+  <!-- Muestra el icono de la categoría (emoji guardado en la BD) -->
+  <div class="icono-categoria">
+    {{ categoria.icono }}
+  </div>
+
+  <!-- Muestra el nombre de la categoría -->
+  <h3>
+    {{ categoria.nombre }}
+  </h3>
+
+  <!-- Muestra la descripción de la categoría -->
+  <p>
+    {{ categoria.descripcion }}
+  </p>
+
 </div>
