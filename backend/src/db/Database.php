@@ -297,7 +297,6 @@ SQL;
                     ':categoria' => $categoria,
                     ':imagen_url' => $imagen,
                     ':usuario_id' => $usuario_id,
-                    ':destacada' => $destacada,
                     ':votos_positivos' => rand(0,50),
                     ':votos_negativos' => rand(0,20)
                 ]);
