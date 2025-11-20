@@ -83,7 +83,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
     fecha_nacimiento DATE,
-    puntuacion INTEGER DEFAULT 0
+    puntuacion INTEGER DEFAULT 0,
+    es_admin BOOLEAN DEFAULT FALSE
 );
 
 -- Recetas
@@ -205,7 +206,7 @@ SQL;
             // --- Users (3) ---
             // Lista de usuarios de prueba
             $users = [
-                ['nickname' => 'lorena', 'nombre' => 'Lorena', 'apellido' => 'Gómez', 'email' => 'lorena@example.com', 'password' => password_hash('password1', PASSWORD_DEFAULT)],
+                ['nickname' => 'lorena', 'nombre' => 'Lorena', 'apellido' => 'Gómez', 'email' => 'lorena@example.com', 'password' => password_hash('password1', PASSWORD_DEFAULT), 'es_admin' => true],
                 ['nickname' => 'carlos', 'nombre' => 'Carlos', 'apellido' => 'Perez', 'email' => 'carlos@example.com', 'password' => password_hash('password2', PASSWORD_DEFAULT)],
                 ['nickname' => 'ana', 'nombre' => 'Ana', 'apellido' => 'Diaz', 'email' => 'ana@example.com', 'password' => password_hash('password3', PASSWORD_DEFAULT)]
             ];
@@ -214,14 +215,14 @@ SQL;
             // Consulta para buscar usuario por email
             $selectUser = $this->conn->prepare("SELECT id FROM usuarios WHERE email = :email LIMIT 1");
             // Inserta usuario si no existe
-            $insertUser = $this->conn->prepare("INSERT INTO usuarios (nickname, nombre, apellido, email, password, puntuacion) VALUES (:nickname, :nombre, :apellido, :email, :password, :puntuacion) RETURNING id");
+            $insertUser = $this->conn->prepare("INSERT INTO usuarios (nickname, nombre, apellido, email, password, es_admin, puntuacion) VALUES (:nickname, :nombre, :apellido, :email, :password, :es_admin, :puntuacion) RETURNING id");
             foreach ($users as $u) {
                 // Comprueba si ya existe este email
                 $selectUser->execute([':email' => $u['email']]);
                 $id = $selectUser->fetchColumn();
                 // Si no existe, lo inserta
                 if (!$id) {
-                    $insertUser->execute([':nickname' => $u['nickname'], ':nombre' => $u['nombre'], ':apellido' => $u['apellido'], ':email' => $u['email'], ':password' => $u['password'], ':puntuacion' => 0]);
+                    $insertUser->execute([':nickname' => $u['nickname'], ':nombre' => $u['nombre'], ':apellido' => $u['apellido'], ':email' => $u['email'], ':password' => $u['password'], ':es_admin' => $u['es_admin'], ':puntuacion' => 0]);
                     $id = $insertUser->fetchColumn();
                 }
                 // Guarda el ID en el array de usuarios

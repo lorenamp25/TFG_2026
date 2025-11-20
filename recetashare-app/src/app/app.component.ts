@@ -43,7 +43,7 @@ export class AppComponent {
     const usuarioStr = localStorage.getItem("usuario");
     if (usuarioStr) {
       const usuario = JSON.parse(usuarioStr);
-      return usuario.esAdmin === true;
+      return usuario.es_admin === true;
     }
     return false;
   }
@@ -55,6 +55,13 @@ export class AppComponent {
       return usuario.nombre || "Usuario";
     }
     return "Usuario";
+  }
+
+  logout() {
+    localStorage.removeItem("usuario");
+    // Elimina la información del usuario del almacenamiento local
+    window.location.reload();
+    // Recarga la página para reflejar el cambio de estado
   }
 
   toggleTheme() {

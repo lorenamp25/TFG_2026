@@ -50,6 +50,7 @@ if ($db && $dbInit !== '0' && strtolower($dbInit) !== 'false') {
 $router = new Router();
 
 // Importa todos los archivos de rutas (cada módulo tiene el suyo)
+require_once __DIR__ . '/routers/auth.routes.php';
 require_once __DIR__ . '/routers/categoria.routes.php';
 require_once __DIR__ . '/routers/comentario.routes.php';
 require_once __DIR__ . '/routers/ingrediente.routes.php';
@@ -58,6 +59,7 @@ require_once __DIR__ . '/routers/receta.routes.php';
 require_once __DIR__ . '/routers/usuario.routes.php';
 
 // Registra las rutas en el router, enviándole también la conexión $db
+registerAuthRoutes($router, $db);
 registerCategoriaRoutes($router, $db);
 registerComentarioRoutes($router, $db);
 registerIngredienteRoutes($router, $db);

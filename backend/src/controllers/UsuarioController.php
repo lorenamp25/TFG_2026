@@ -109,6 +109,7 @@ class UsuarioController {
         $model->nombre = $input['nombre'] ?? null;
         $model->apellido = $input['apellido'] ?? null;
         $model->email = $input['email'];
+        $model->es_admin = $input['es_admin'] ?? false;
 
         // Encripta la contraseña antes de guardarla (muy importante)
         $model->password = password_hash($input['password'], PASSWORD_DEFAULT);
@@ -149,6 +150,7 @@ class UsuarioController {
         $model->nombre = $input['nombre'] ?? null;
         $model->apellido = $input['apellido'] ?? null;
         $model->email = $input['email'] ?? null;
+        $model->es_admin = $input['es_admin'] ?? false;
 
         // Si el usuario envió una nueva contraseña, se hashea
         if (isset($input['password'])) {

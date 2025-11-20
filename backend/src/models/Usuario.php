@@ -25,7 +25,7 @@ class Usuario {
     // Obtener todos los usuarios
     public function getAll() {
         // Consulta SQL para traer todos los usuarios ordenados del más reciente al más antiguo
-        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion, es_admin FROM " . $this->table_name . " ORDER BY id DESC";
         // Preparar la consulta
         $stmt = $this->conn->prepare($query);
         // Ejecutar
@@ -37,7 +37,7 @@ class Usuario {
     // Obtener usuario por id
     public function getById($id) {
         // Consulta SQL para traer un usuario por su ID
-        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
+        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion, es_admin FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
         $stmt = $this->conn->prepare($query);
         // Asociar el parámetro :id con la variable $id
         $stmt->bindParam(":id", $id);
@@ -49,7 +49,7 @@ class Usuario {
     // Obtener usuario por email
     public function getByMail($email) {
         // Consulta SQL para buscar un usuario por su email
-        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion FROM " . $this->table_name . " WHERE email = :email LIMIT 1";
+        $query = "SELECT id, nickname, nombre, apellido, email, fecha_nacimiento, puntuacion, es_admin FROM " . $this->table_name . " WHERE email = :email LIMIT 1";
         $stmt = $this->conn->prepare($query);
         // Bind del parámetro email
         $stmt->bindParam(":email", $email);
@@ -61,7 +61,7 @@ class Usuario {
     // Crear usuario
     public function create() {
         // Consulta INSERT con RETURNING id (propio de PostgreSQL)
-        $query = "INSERT INTO " . $this->table_name . " (nickname, nombre, apellido, email, password, fecha_nacimiento, puntuacion) VALUES (:nickname, :nombre, :apellido, :email, :password, :fecha_nacimiento, :puntuacion) RETURNING id";
+        $query = "INSERT INTO " . $this->table_name . " (nickname, nombre, apellido, email, password, fecha_nacimiento, puntuacion, es_admin) VALUES (:nickname, :nombre, :apellido, :email, :password, :fecha_nacimiento, :puntuacion, :es_admin) RETURNING id";
         $stmt = $this->conn->prepare($query);
 
         // Garantizar que los valores no nulos tengan un valor por defecto
@@ -72,6 +72,7 @@ class Usuario {
         $this->password = $this->password ?? null; // Se asume que ya viene hasheada
         $this->fecha_nacimiento = $this->fecha_nacimiento ?? null;
         $this->puntuacion = $this->puntuacion ?? 0;
+        $this->es_admin = $this->es_admin ?? false;
 
         // Ejecutar el INSERT con los parámetros asignados
         $stmt->execute([
@@ -81,7 +82,8 @@ class Usuario {
             ':email' => $this->email,
             ':password' => $this->password,
             ':fecha_nacimiento' => $this->fecha_nacimiento,
-            ':puntuacion' => $this->puntuacion
+            ':puntuacion' => $this->puntuacion,
+            ':es_admin' => $this->es_admin
         ]);
 
         // Devolver el id del usuario recién creado
@@ -91,7 +93,7 @@ class Usuario {
     // Actualizar usuario
     public function update() {
         // Consulta UPDATE para actualizar todos los campos a partir del id
-        $query = "UPDATE " . $this->table_name . " SET nickname = :nickname, nombre = :nombre, apellido = :apellido, email = :email, password = :password, fecha_nacimiento = :fecha_nacimiento, puntuacion = :puntuacion WHERE id = :id";
+        $query = "UPDATE " . $this->table_name . " SET nickname = :nickname, nombre = :nombre, apellido = :apellido, email = :email, password = :password, fecha_nacimiento = :fecha_nacimiento, puntuacion = :puntuacion, es_admin = :es_admin WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
         // Sanitizar el ID
@@ -104,6 +106,7 @@ class Usuario {
         $this->password = $this->password ?? null;
         $this->fecha_nacimiento = $this->fecha_nacimiento ?? null;
         $this->puntuacion = $this->puntuacion ?? 0;
+        $this->es_admin = $this->es_admin ?? false;
 
         // Ejecutar la actualización
         return $stmt->execute([
@@ -114,6 +117,7 @@ class Usuario {
             ':password' => $this->password,
             ':fecha_nacimiento' => $this->fecha_nacimiento,
             ':puntuacion' => $this->puntuacion,
+            ':es_admin' => $this->es_admin,
             ':id' => $this->id
         ]);
     }
@@ -126,5 +130,4 @@ class Usuario {
         // Ejecutar pasando el id como parámetro
         return $stmt->execute([':id' => $id]);
     }
-
 }

@@ -29,7 +29,7 @@ constructor(private http: HttpClient) { }
     // Inyecta HttpClient para poder enviar solicitudes HTTP al backend
 
     login(email: string, password: string): Observable<any> {
-        return this.http.post(`${this.base}/auth/login`, { email, password });
+        return this.http.post(`${this.base}/login`, { email, password });
     }
 
 }

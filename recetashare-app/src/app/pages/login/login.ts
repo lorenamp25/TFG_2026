@@ -33,7 +33,7 @@ export class LoginPage {
         next: (response) => {
           console.log("Login exitoso:", response);
 
-          localStorage.setItem("usuario", JSON.stringify(response));
+          localStorage.setItem("usuario", JSON.stringify(response.usuario));
 
           this.router.navigate(['/']); // Redirige a la página principal
         },

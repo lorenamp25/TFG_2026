@@ -44,7 +44,8 @@
       </div>
 
       @if (isLoggedIn()) {
-        <span>Bienvenido {{ nombreUsuario() }}</span>
+        <span>Bienvenido/a {{ nombreUsuario() }}</span>
+        <button (click)="logout()" class="boton-secundario">🚪 Cerrar sesión</button>
       } @else {
         <a href="login" class="boton-secundario">👤 Iniciar sesión</a>
       }
