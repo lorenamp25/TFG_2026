@@ -22,7 +22,7 @@
         <a href="ingrediente">Ingredientes</a>
         <a href="receta">Recetas</a>
 
-        @if (isAdmin) {
+        @if (isAdmin()) {
           <ul class="submenu">
             <li>
               <a href="#">Admin</a>
@@ -41,9 +41,13 @@
             <span class="icono-luna">🌙</span>
         </button>
 
-        <a href="subireceta" class="boton-principal">➕ Subir receta</a>
       </div>
-      <a href="login" class="boton-secundario">👤 Iniciar sesión</a>
+
+      @if (isLoggedIn()) {
+        <span>Bienvenido {{ nombreUsuario() }}</span>
+      } @else {
+        <a href="login" class="boton-secundario">👤 Iniciar sesión</a>
+      }
     </div>
   </header>
 

@@ -97,7 +97,8 @@ CREATE TABLE IF NOT EXISTS recetas (
     imagen_url VARCHAR(1024),
     usuario_id INTEGER REFERENCES usuarios(id),
     votos_positivos INTEGER DEFAULT 0,
-    votos_negativos INTEGER DEFAULT 0
+    votos_negativos INTEGER DEFAULT 0,
+    destacada BOOLEAN DEFAULT FALSE
 );
 
 
@@ -152,9 +153,6 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
 );
 
 SQL;
-        // Añade al string SQL unas sentencias ALTER TABLE para asegurar
-        // que las columnas de votos existen aunque la tabla ya estuviera creada
-        $sql .= "\n-- Add votes columns if missing\nALTER TABLE recetas ADD COLUMN IF NOT EXISTS votos_positivos INTEGER DEFAULT 0;\nALTER TABLE recetas ADD COLUMN IF NOT EXISTS votos_negativos INTEGER DEFAULT 0;\n";
 
         try {
             // Ejecuta todo el bloque SQL (creación/alteración de tablas)
@@ -263,7 +261,7 @@ SQL;
             ];
 
             // Prepare para insertar recetas
-            $insertReceta = $this->conn->prepare("INSERT INTO recetas (titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, destacada, votos_positivos, votos_negativos) VALUES (:titulo, :descripcion, :tiempo_preparacion, :dificultad, :categoria, :imagen_url, :usuario_id, :destacada, :votos_positivos, :votos_negativos) RETURNING id");
+            $insertReceta = $this->conn->prepare("INSERT INTO recetas (titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, votos_positivos, votos_negativos) VALUES (:titulo, :descripcion, :tiempo_preparacion, :dificultad, :categoria, :imagen_url, :usuario_id, :votos_positivos, :votos_negativos) RETURNING id");
             // Prepare para insertar relación receta-ingredientes
             $insertRecIng = $this->conn->prepare("INSERT INTO receta_ingredientes (receta_id, ingrediente_id, cantidad, unidad) VALUES (:receta_id, :ingrediente_id, :cantidad, :unidad)");
             // Prepare para insertar instrucciones de receta

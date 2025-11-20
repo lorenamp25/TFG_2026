@@ -25,6 +25,9 @@ export class Usuario {
     // Puntuación o reputación del usuario dentro de la app
     puntuacion: number
 
+    // Indica si el usuario tiene privilegios de administrador
+    esAdmin: boolean = false;
+
     // Constructor que inicializa todos los campos al crear un usuario
     constructor(
       id: number,               // ID único
@@ -34,7 +37,8 @@ export class Usuario {
       email: string,            // Email
       password: string,         // Contraseña
       fecha_nacimiento: Date,   // Fecha de nacimiento
-      puntuacion: number        // Puntuación/reputación
+      puntuacion: number,        // Puntuación/reputación
+      esAdmin: boolean = false   // Indica si es admin (por defecto false)
     ) {
       this.id = id                                 // Asigna el ID
       this.nombre = nombre                         // Asigna el nombre
@@ -44,5 +48,6 @@ export class Usuario {
       this.password = password                     // Asigna la contraseña
       this.fecha_nacimiento = fecha_nacimiento     // Asigna la fecha de nacimiento
       this.puntuacion = puntuacion                 // Asigna la puntuación
+      this.esAdmin = esAdmin                       // Asigna si es admin
     }
 }

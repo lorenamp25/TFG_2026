@@ -7,11 +7,13 @@ import { Receta } from '../../models/receta.model';
 import { RecetaForm } from '../../components/receta-form/receta-form';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.model';
+import { ActivatedRoute } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,                               // Componente independiente
   selector: 'app-receta',                          // Selector para usar este componente
-  imports: [CommonModule, RecetaTabla, RecetaForm],// Importa módulos y componentes necesarios
+  imports: [CommonModule, RecetaTabla, RecetaForm, FormsModule],// Importa módulos y componentes necesarios
   templateUrl: './receta.html',                    // Archivo HTML asociado
   styleUrls: ['./receta.css']                      // Archivo CSS asociado
 })
@@ -20,25 +22,29 @@ export class RecetaPage {
   receta: Receta | null = null                     // Receta seleccionada para editar/eliminar
   estado: EstadoAccion = EstadoAccion.Listando     // Estado actual de la interfaz (listando/agregando/etc.)
   categorias: Categoria[] = []                     // Lista de categorías para filtrar
+  idCategoriaSeleccionada: String | null = null;   // ID de la categoría seleccionada para filtrar
+  selectedCategoria: any = 'all';                  // valor por defecto -> "Todas las Categorías"
 
   constructor(
     private recetaService: RecetaService,          // Servicio para hacer peticiones relacionadas a recetas
-    private categoriaService: CategoriaService     // Servicio de categorías
+    private categoriaService: CategoriaService,    // Servicio de categorías
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.cargarRecetas()                           // Al inicio, carga todas las recetas
-    this.cargarCategorias()                        // Y también carga las categorías
-  }
+    this.idCategoriaSeleccionada = this.route.snapshot.paramMap.get('categoria');
+    if (this.idCategoriaSeleccionada) {
+      this.selectedCategoria = this.idCategoriaSeleccionada
+      this.cargarRecetas({
+        value: this.idCategoriaSeleccionada
+      }); // Filtra recetas por categoría si se proporciona en la ruta
+    }
+    else {
+      this.idCategoriaSeleccionada = null;
+      this.cargarRecetas(null)                     // Carga todas las recetas si no hay categoría seleccionada
+    }
 
-  cargarRecetas() {
-    this.estado = EstadoAccion.Procesando          // Cambia el estado a “cargando”
-    this.recetaService.listarRecetas().subscribe(
-      (response: any) => {
-        this.recetas = response                    // Guarda las recetas recibidas
-        this.estado = EstadoAccion.Listando        // Vuelve al estado de listado
-      }
-    )
+    this.cargarCategorias()                        // Y también carga las categorías
   }
 
   cargarCategorias() {
@@ -49,14 +55,13 @@ export class RecetaPage {
     )
   }
 
-  filtrarPorCategoria(categoria: any) {
+  cargarRecetas(categoria: any) {
     this.estado = EstadoAccion.Procesando          // Cambia a modo “procesando”
 
     // Si existe un valor seleccionado
-    if (categoria && categoria.value) {
+    if (categoria && categoria.value && categoria.value !== 'all') {
       this.recetaService.listarRecetas().subscribe(
         (response: any) => {
-          console.log(response);
           // Filtra recetas por categoría seleccionada
           this.recetas = response.filter(
             (receta: Receta) => receta.categoria === parseInt(categoria.value, 10)
@@ -66,7 +71,13 @@ export class RecetaPage {
       )
     } else {
       // Si se selecciona “todas”, carga todas de nuevo
-      this.cargarRecetas()
+      this.recetaService.listarRecetas().subscribe(
+        (response: any) => {
+          this.selectedCategoria = "all"
+          this.recetas = response                    // Guarda las recetas recibidas
+          this.estado = EstadoAccion.Listando        // Vuelve al estado de listado
+        }
+      )
     }
   }
 
@@ -82,7 +93,7 @@ export class RecetaPage {
         this.recetaService.crearReceta(receta)
           .subscribe((receta) => {
             this.receta = null                      // Limpia selección
-            this.cargarRecetas()                    // Recarga datos
+            this.cargarRecetas(null)                    // Recarga datos
           })
         break
 
@@ -91,7 +102,7 @@ export class RecetaPage {
         this.recetaService.actualizarReceta(receta.id, receta)
           .subscribe((receta) => {
             this.receta = null
-            this.cargarRecetas()
+            this.cargarRecetas(null)
           })
         break
 
@@ -100,7 +111,7 @@ export class RecetaPage {
         this.recetaService.eliminarReceta(receta.id)
           .subscribe(() => {
             this.receta = null
-            this.cargarRecetas()
+            this.cargarRecetas(null)
           })
         break
     }
@@ -108,7 +119,7 @@ export class RecetaPage {
 
   onCancelar() {
     this.receta = null                              // Limpia la receta seleccionada
-    this.cargarRecetas()                            // Regresa al listado
+    this.cargarRecetas(null)                            // Regresa al listado
   }
 
   onEditarReceta(receta: any) {

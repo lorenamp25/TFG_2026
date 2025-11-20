@@ -22,10 +22,6 @@ export class AppComponent {
   title = 'Sistema de Turnos';
   // Título de la aplicación (puede usarse en el template)
 
-  isAdmin = true;  // TODO: TOMAR EL VALOR AL INGRESAR AL SISTEMA
-  // Variable para determinar si el usuario es admin (pendiente de conectar con login real)
-
-
   constructor () {
     // Se ejecuta cuando se crea el componente
 
@@ -39,6 +35,27 @@ export class AppComponent {
     // Aplica el tema actual como atributo HTML para que el CSS lo use
   }
 
+  isLoggedIn() {
+    return localStorage.getItem("usuario") !== null;
+  }
+
+  isAdmin() {
+    const usuarioStr = localStorage.getItem("usuario");
+    if (usuarioStr) {
+      const usuario = JSON.parse(usuarioStr);
+      return usuario.esAdmin === true;
+    }
+    return false;
+  }
+
+  nombreUsuario() {
+    const usuarioStr = localStorage.getItem("usuario");
+    if (usuarioStr) {
+      const usuario = JSON.parse(usuarioStr);
+      return usuario.nombre || "Usuario";
+    }
+    return "Usuario";
+  }
 
   toggleTheme() {
     // Método para alternar entre tema claro y oscuro

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Categoria } from '../../models/categoria.model';
 import { CommonModule } from '@angular/common';
+import { Route, Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -12,10 +13,11 @@ import { CommonModule } from '@angular/common';
 export class Cardcategoria {
   @Input() categoria!: Categoria
 
+  constructor(private router: Router) {}
+
   verRecetasCategoria() {
     // Lógica para navegar a la página de recetas de esta categoría
-    console.log(`Navegar a recetas de la categoría: ${this.categoria.nombre}`);
-    //TODO: Implementar navegación: Ir a la página de recetas filtradas por esta categoría
+    this.router.navigate(['receta', encodeURIComponent(this.categoria.id)]);
   }
 
 }

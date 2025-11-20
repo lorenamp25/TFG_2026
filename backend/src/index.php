@@ -43,6 +43,7 @@ if ($db && $dbInit !== '0' && strtolower($dbInit) !== 'false') {
 }
 
 // Para activar datos de prueba, puedes descomentar esta línea:
+// $database->createTables();
 // $database->crearDatosDummy();
 
 // --- Crear el router principal ---

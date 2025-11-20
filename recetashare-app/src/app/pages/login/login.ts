@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';               // Módulo básico con directivas comunes (ngIf, ngFor…)
 import { Component } from '@angular/core';                    // Decorador para definir un componente
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'; 
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 // ReactiveFormsModule: permite usar formularios reactivos (FormGroup, FormControl)
 
 @Component({
@@ -13,13 +15,33 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class LoginPage {
 
   // === Formulario reactivo ===
-  form = new FormGroup({
-    id: new FormControl(0)                                    // Control simple llamado "id", inicializado a 0
+  loginForm = new FormGroup({
+    email: new FormControl("", [Validators.required, Validators.email]),
+    password: new FormControl("", [Validators.required, Validators.minLength(6)])
   })
+
+  constructor(private router: Router, private authService: AuthService) {}
 
   // Método que se ejecuta al enviar el formulario (ngSubmit)
   onLogin() {
-    // Aquí irá la lógica para manejar el login
-  }
+    console.log(this.loginForm.value);
+    if (this.loginForm.valid) {
+      const email = this.loginForm.value.email;
+      const password = this.loginForm.value.password;
 
+      this.authService.login(email!, password!).subscribe({
+        next: (response) => {
+          console.log("Login exitoso:", response);
+
+          localStorage.setItem("usuario", JSON.stringify(response));
+
+          this.router.navigate(['/']); // Redirige a la página principal
+        },
+        error: (error) => {
+          console.error("Error de login:", error);
+          alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+        }
+      })
+    }
+  }
 }

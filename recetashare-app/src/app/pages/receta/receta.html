@@ -6,8 +6,8 @@
   }
 
   <div>
-    <select (change)="filtrarPorCategoria($event.target)">
-      <option value="">Todas las categorias</option>
+    <select (change)="cargarRecetas($event.target)" [(ngModel)]="selectedCategoria">
+      <option value="all">Todas las categorias</option>
       @for (categoria of categorias; track $index) {
         <option [value]="categoria.id">{{ categoria.nombre }}</option>
       }

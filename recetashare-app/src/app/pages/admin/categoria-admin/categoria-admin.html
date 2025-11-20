@@ -19,14 +19,14 @@
 
         <!-- Componente que muestra la tabla con la lista de categorías -->
         <app-categoria-tabla
-          [categorias]="categorias"                    
-          (editarCategoriaEvent)="onEditarCategoria($event)"     
-          (eliminarCategoriaEvent)="onEliminarCategoria($event)" 
+          [categorias]="categorias"
+          (editarCategoriaEvent)="onEditarCategoria($event)"
+          (eliminarCategoriaEvent)="onEliminarCategoria($event)"
         ></app-categoria-tabla>
 
       } @placeholder {
-        <!-- Contenido temporal mientras se cargan las categorías -->
-        <p>Cargando categorias...</p>
+        <!-- Contenido Cuando no hay categorias -->
+        <p>No hay categorias ingresadas.</p>
       }
     </div>
   }
@@ -38,9 +38,9 @@
 
       <!-- Formulario compartido para crear o editar -->
       <app-categoria-form
-          (guardarCategoria)="onGuardar($event)"   
-          (cancelarAccion)="onCancelar()"          
-          [categoria]="categoria"                  
+          (guardarCategoria)="onGuardar($event)"
+          (cancelarAccion)="onCancelar()"
+          [categoria]="categoria"
       ></app-categoria-form>
     </div>
   }
@@ -54,7 +54,7 @@
       <app-categoria-form
           (guardarCategoria)="onGuardar($event)"
           (cancelarAccion)="onCancelar()"
-          [categoria]="categoria"                  
+          [categoria]="categoria"
       ></app-categoria-form>
     </div>
   }
@@ -70,6 +70,11 @@
           (cancelarAccion)="onCancelar()"
           [categoria]="categoria"
       ></app-categoria-form>
+    </div>
+  }
+  @case (4) {
+    <div class="container">
+      <div>Procesando...</div>
     </div>
   }
 }

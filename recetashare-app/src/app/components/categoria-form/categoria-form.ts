@@ -48,6 +48,7 @@ export class CategoriaForm {
   // Método que se ejecuta al pulsar "Guardar".
   onGrabar() {
     // Solo ejecuta si el formulario es válido.
+    console.log(this.form.value);
     if (this.form.valid) {
       // Emite los datos completos del formulario al componente padre.
       this.guardarCategoria.emit(this.form.value as Categoria)

@@ -40,6 +40,7 @@ export class CategoriaAdmin {
 
   // Obtiene todas las categorías desde el backend
   cargarCategorias() {
+    this.estado = EstadoAccion.Procesando
     this.categoriaService.listarCategorias().subscribe(
       (response: any) => {
         this.categorias = response             // Guarda el resultado en el array
