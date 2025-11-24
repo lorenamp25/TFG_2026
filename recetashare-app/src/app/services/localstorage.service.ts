@@ -49,7 +49,7 @@ export class StorageService {
   logout() {
     localStorage.removeItem("usuario");
     // Elimina la información del usuario del almacenamiento local
-    window.location.reload();
+    window.location.href = "/";
     // Recarga la página para reflejar el cambio de estado
   }
 

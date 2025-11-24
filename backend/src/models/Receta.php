@@ -22,7 +22,7 @@ class Receta {
     public $dificultad;
     public $categoria;
     public $imagen_url;
-    public $usuario_id;
+    public $usuario;
     public $destacada;
     public $votos_positivos = 0;
     public $votos_negativos = 0;
@@ -106,8 +106,8 @@ class Receta {
             $this->dificultad = $this->dificultad ?? null;
             $this->categoria = $this->categoria ?? null;
             $this->imagen_url = $this->imagen_url ?? null;
-            $this->usuario_id = $this->usuario_id ?? null;
-            $this->destacada = $this->destacada ?? null;
+            $this->usuario = $this->usuario ?? null;
+            $this->destacada = $this->destacada ?? 'false';
             // Asegura que los votos sean enteros
             $this->votos_positivos = isset($this->votos_positivos) ? (int)$this->votos_positivos : 0;
             $this->votos_negativos = isset($this->votos_negativos) ? (int)$this->votos_negativos : 0;
@@ -119,7 +119,7 @@ class Receta {
             $stmt->bindParam(":dificultad", $this->dificultad);
             $stmt->bindParam(":categoria", $this->categoria);
             $stmt->bindParam(":imagen_url", $this->imagen_url);
-            $stmt->bindParam(":usuario_id", $this->usuario_id);
+            $stmt->bindParam(":usuario_id", $this->usuario['id']);
             $stmt->bindParam(":destacada", $this->destacada);
             $stmt->bindParam(":votos_positivos", $this->votos_positivos);
             $stmt->bindParam(":votos_negativos", $this->votos_negativos);
@@ -143,8 +143,8 @@ class Receta {
                 $insStmt = $this->conn->prepare($insQuery);
                 // Recorre cada ingrediente del array
                 foreach ($this->ingredientes as $ing) {
-                    // Obtiene el id del ingrediente (puede venir como ingrediente_id o id)
-                    $ingrediente_id = $ing['ingrediente_id'] ?? $ing['id'] ?? null;
+                    // Obtiene el id del ingrediente y otros campos
+                    $ingrediente_id = $ing['ingrediente']['id'];
                     $cantidad = $ing['cantidad'] ?? null;
                     $unidad = $ing['unidad'] ?? null;
                     // Ejecuta inserción para esa relación

@@ -21,7 +21,7 @@ class Ingrediente {
     // ---------------------------------------------------------
     public function getAll() {
         // Consulta SQL para obtener todos los ingredientes ordenados del más nuevo al más viejo
-        $query = "SELECT id, nombre FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT id, nombre FROM " . $this->table_name . " ORDER BY nombre DESC";
 
         // Prepara la consulta para evitar inyecciones SQL
         $stmt = $this->conn->prepare($query);

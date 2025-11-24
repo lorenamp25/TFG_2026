@@ -85,19 +85,7 @@ export class RecetaForm {
     if (this.form.valid) {
       let receta = this.form.value as Receta
       receta.usuario = this.receta?.usuario || this.storageService.getUsuario()
-      receta.ingredientes = []
-      for (let i = 0; i < receta.ingredientes.length; i++) {
-
-        const ing = this.ingredientes.find(ing => ing.id === receta.ingredientes[i].ingrediente.id)
-        if (ing) {
-          receta.ingredientes.push({
-            cantidad: receta.ingredientes[i].cantidad,
-            unidad: receta.ingredientes[i].unidad,
-            ingrediente: ing
-          })
-        }
-      }
-
+      receta.ingredientes = this.receta?.ingredientes || []
       receta.instrucciones = this.receta?.instrucciones || []
 
       console.log('Receta a guardar:', receta);
