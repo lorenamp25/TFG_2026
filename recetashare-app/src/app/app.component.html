@@ -22,7 +22,7 @@
         <a href="ingrediente">Ingredientes</a>
         <a href="receta">Recetas</a>
 
-        @if (isAdmin()) {
+        @if (storageService.isAdmin()) {
           <ul class="submenu">
             <li>
               <a href="#">Admin</a>
@@ -43,9 +43,9 @@
 
       </div>
 
-      @if (isLoggedIn()) {
-        <span>Bienvenido/a {{ nombreUsuario() }}</span>
-        <button (click)="logout()" class="boton-secundario">🚪 Cerrar sesión</button>
+      @if (storageService.isLoggedIn()) {
+        <span>Bienvenido/a {{ storageService.nombreUsuario() }}</span>
+        <button (click)="storageService.logout()" class="boton-secundario">🚪 Cerrar sesión</button>
       } @else {
         <a href="login" class="boton-secundario">👤 Iniciar sesión</a>
       }
@@ -69,20 +69,20 @@
         <h4>Enlaces útiles</h4>
         <ul>
           <li><a href="index.html">Inicio</a></li>
-          <li><a href="categorias.html">Categorías</a></li>
-          <li><a href="recetas.html">Recetas</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="categoria">Categorías</a></li>
+          <li><a href="receta">Recetas</a></li>
+          <li><a href="contacto">Contacto</a></li>
         </ul>
       </div>
       <div class="seccion-pie">
         <h4>Síguenos</h4>
         <div class="redes-sociales">
-          
+
           <a href="#">📸</a>
           <a href="#">🎵</a>
           <a href="#">🐦</a>
           <a href="#">📘</a>
-          
+
         </div>
       </div>
     </div>

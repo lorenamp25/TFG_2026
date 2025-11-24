@@ -4,10 +4,12 @@
       @for (receta of recetas; track $index) {
       <li>
         <span class="receta-titulo">{{ receta.titulo }}</span>
+        @if (receta.usuario_id === storageService.getUserId()) {
         <div class="actions">
           <button class="edit" (click)="onEditar(receta)">✏️</button>
           <button class="delete" (click)="onEliminar(receta)">🗑️</button>
         </div>
+        }
       </li>
       }
     </ul>

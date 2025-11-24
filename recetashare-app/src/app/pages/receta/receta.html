@@ -21,7 +21,7 @@
       <option [value]="categoria.id">{{ categoria.nombre }}</option>
     }
   </select>
-  
+
 
 
 
@@ -34,10 +34,11 @@
   <br>
   <br>
   <br>
+  @if (storageService.isLoggedIn()) {
   <div>
     <button class="agregar-receta" (click)="agregarReceta()">Agregar Receta</button>
-
   </div>
+  }
 
 
 @switch (estado) {

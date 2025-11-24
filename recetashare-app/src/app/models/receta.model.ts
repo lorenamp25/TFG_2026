@@ -3,6 +3,7 @@ import { Categoria } from "./categoria.model"
 
 // Importa el modelo Ingrediente
 import { Ingrediente } from "./ingrediente.model"
+import { Usuario } from "./usuario.model"
 
 // Clase que representa una instrucción dentro de una receta
 export class Instruccion {
@@ -24,6 +25,19 @@ export class Instruccion {
     }
 }
 
+export class RecetaIngrediente {
+    cantidad: number
+    unidad: string
+    ingrediente: Ingrediente
+
+    constructor(cantidad: number, unidad: string, ingrediente: Ingrediente) {
+        this.cantidad = cantidad
+        this.unidad = unidad
+        this.ingrediente = ingrediente
+    }
+}
+
+
 // Clase principal que representa una receta completa
 export class Receta {
 
@@ -37,13 +51,13 @@ export class Receta {
     descripcion: string
 
     // Lista de ingredientes usados en la receta
-    ingredientes: Ingrediente[] | []
+    ingredientes: RecetaIngrediente[]
 
     // Lista de instrucciones paso a paso
-    instrucciones: Instruccion[] | []
+    instrucciones: Instruccion[]
 
     // Tiempo estimado de preparación (string o vacío)
-    tiempo_preparacion: string | undefined
+    tiempo_preparacion: number | undefined
 
     // Nivel de dificultad (fácil, media, alta, etc.)
     dificultad: string | undefined
@@ -55,7 +69,7 @@ export class Receta {
     imagen_url: string | undefined
 
     // ID del usuario autor de la receta
-    usuario_id: number | undefined
+    usuario: Usuario | undefined
 
     // Indicador de si la receta es destacada o especial
     destacada: boolean | undefined
@@ -68,17 +82,17 @@ export class Receta {
 
     // Constructor que recibe todos los campos necesarios para crear una receta
     constructor(
-        id: number,
-        titulo: string,
-        descripcion: string,
-        ingredientes: Ingrediente[],
-        instrucciones: Instruccion[],
-        tiempo_preparacion: string,
-        dificultad: string,
-        categoria: number,
-        imagen_url: string,
-        usuario_id: number,
-        destacada: boolean,
+        id: number = 0,
+        titulo: string = '',
+        descripcion: string = '',
+        ingredientes: RecetaIngrediente[] = [],
+        instrucciones: Instruccion[] = [],
+        tiempo_preparacion: number = 0,
+        dificultad: string = '',
+        categoria: number = 0,
+        imagen_url: string = '',
+        usuario: Usuario = new Usuario(),
+        destacada: boolean = false,
         votos_positivos: number = 0,
         votos_negativos: number = 0
     ) {
@@ -91,7 +105,7 @@ export class Receta {
         this.dificultad = dificultad                   // Asigna la dificultad
         this.categoria = categoria                     // Asigna la categoría
         this.imagen_url = imagen_url                   // Asigna la imagen
-        this.usuario_id = usuario_id                   // Asigna el autor
+        this.usuario = usuario                   // Asigna el autor
         this.destacada = destacada                     // Marca si es destacada
         this.votos_positivos = votos_positivos         // Asigna votos positivos
         this.votos_negativos = votos_negativos         // Asigna votos negativos

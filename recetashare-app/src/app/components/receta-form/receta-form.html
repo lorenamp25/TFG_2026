@@ -1,17 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onGrabar()">
-
   <!-- ID oculto -->
   <input type="hidden" formControlName="id" />
 
   <!-- TÍTULO -->
   <div class="form-group">
     <label for="titulo">Título</label>
-    <input
-      id="titulo"
-      type="text"
-      formControlName="titulo"
-      placeholder="Ej: Tarta de queso"
-    />
+    <input id="titulo" type="text" formControlName="titulo" placeholder="Ej: Tarta de queso" />
   </div>
 
   <!-- DESCRIPCIÓN -->
@@ -19,7 +13,8 @@
     <label for="descripcion">Descripción</label>
     <textarea
       id="descripcion"
-      formControlName="Descripcion"
+      formControlName="descripcion"
+      name="descripcion"
       placeholder="Describe brevemente la receta"
       rows="3"
     ></textarea>
@@ -27,78 +22,139 @@
 
   <!-- TIEMPO DE PREPARACIÓN -->
   <div class="form-group">
-    <label for="tiempoPrep">Tiempo de preparación (minutos)</label>
+    <label for="tiempoPreparacion">Tiempo de preparación (minutos)</label>
     <input
-      id="tiempoPrep"
+      id="tiempoPreparacion"
       type="number"
       min="1"
       max="999"
-      formControlName="TiempoPreparacion"
+      formControlName="tiempoPreparacion"
+      name="tiempoPreparacion"
       placeholder="Ej: 45"
     />
   </div>
 
   <!-- DIFICULTAD: radio -->
   <div class="form-group">
-  <label>Dificultad</label>
+    <label>Dificultad</label>
 
-  <div class="radio-group">
-    <label>
-      <input type="radio" formControlName="Dificultad" value="baja" />
-      <span>Baja</span>
-    </label>
+    <div class="radio-group">
+      <label>
+        <input
+          type="radio"
+          formControlName="dificultad"
+          id="dificultad"
+          name="dificultad"
+          value="baja"
+        />
+        <span>Baja</span>
+      </label>
 
-    <label>
-      <input type="radio" formControlName="Dificultad" value="media" />
-      <span>Media</span>
-    </label>
+      <label>
+        <input
+          type="radio"
+          formControlName="dificultad"
+          id="dificultad"
+          name="dificultad"
+          value="media"
+        />
+        <span>Media</span>
+      </label>
 
-    <label>
-      <input type="radio" formControlName="Dificultad" value="alta" />
-      <span>Alta</span>
-    </label>
+      <label>
+        <input
+          type="radio"
+          formControlName="dificultad"
+          id="dificultad"
+          name="dificultad"
+          value="alta"
+        />
+        <span>Alta</span>
+      </label>
+    </div>
   </div>
-</div>
 
   <!-- CATEGORÍA: SELECT -->
   <div class="form-group">
     <label for="categoria">Categoría</label>
-    <select id="categoria" formControlName="Categoria">
+    <select id="categoria" formControlName="categoria">
       <option value="" disabled selected>Selecciona categoría</option>
-      <option value="postres">Postres</option>
-      <option value="carnes">Carnes</option>
-      <option value="ensaladas">Ensaladas</option>
-      <option value="pastas">Pastas</option>
-      <option value="sopas">Sopas</option>
-      <option value="otros">Otros</option>
+      @for (categoria of categorias; track categoria.id) {
+      <option [value]="categoria.id">{{ categoria.nombre }}</option>
+      }
     </select>
   </div>
 
   <!-- IMAGEN TYPE="FILE" -->
   <div class="form-group">
     <label for="imagen">Imagen de la receta</label>
-    <input
-      id="imagen"
-      type="file"
-      accept="image/*"
-      (change)="onImagenSeleccionada($event)"
-    />
+    <input id="imagen" type="file" accept="image/*" (change)="onImagenSeleccionada($event)" />
 
     <!-- Vista previa -->
     @if (imagenPreview) {
-      <img [src]="imagenPreview" alt="Vista previa" class="preview-img" />
+    <img [src]="imagenPreview" alt="Vista previa" class="preview-img" />
     }
   </div>
 
   <!-- USUARIO -->
   <div class="form-group">
     <label for="usuario">Nombre del Usuario</label>
-    <input
-      id="usuario"
-      type="text"
-      formControlName="Usuario"
-      placeholder="Ej: Jose Martín"
-    />
+    <input id="usuario" type="text" readonly [(ngModel)]="receta!.usuario!.nombre" [ngModelOptions]="{ standalone: true }"/>
+  </div>
+
+  <div>
+    <table id="tabla-ingredientes">
+      <thead>
+        <tr>
+          <th>Ingrediente</th>
+          <th>Cantidad</th>
+          <th>Unidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (ingrediente of receta!.ingredientes; track $index) {
+        <tr>
+          <td>
+            <select
+              [(ngModel)]="ingrediente.ingrediente.nombre"
+              name="nombre-{{ $index }}"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <option value="" disabled>Seleccione un ingrediente</option>
+
+              @for (ingrediente of ingredientes; track $index) {
+              <option [value]="ingrediente.id">{{ ingrediente.nombre }}</option>
+              }
+            </select>
+          </td>
+          <td>
+            <input
+              type="number"
+              min="0"
+              [(ngModel)]="ingrediente.cantidad"
+              name="cantidad-{{ $index }}"
+              placeholder="Ej: 200"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              [(ngModel)]="ingrediente.unidad"
+              name="unidad-{{ $index }}"
+              placeholder="Ej: gramos"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </td>
+          <td>
+            <button type="button" (click)="eliminarIngrediente($index)">Eliminar</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <button type="button" (click)="agregarIngrediente()">Agregar Ingrediente</button>
   </div>
 
   <!-- BOTONES -->
@@ -106,5 +162,4 @@
     <button type="submit" [disabled]="form.invalid">Confirmar</button>
     <button type="button" (click)="onCancelar()">Cancelar</button>
   </div>
-
 </form>

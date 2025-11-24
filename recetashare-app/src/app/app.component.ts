@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 // Importa el decorador Component para definir un componente Angular
 
 import { RouterOutlet } from '@angular/router';
+import { StorageService } from './services/localstorage.service';
 // Importa RouterOutlet para poder renderizar rutas dentro del componente raíz
 
 
@@ -23,7 +24,7 @@ export class AppComponent {
 menuAbierto: any;
   // Título de la aplicación (puede usarse en el template)
 
-  constructor () {
+  constructor (public storageService: StorageService) {
     // Se ejecuta cuando se crea el componente
 
     let temaActual = localStorage.getItem("data-tema") || "claro";
@@ -34,35 +35,6 @@ menuAbierto: any;
 
     cuerpo.setAttribute("data-tema", temaActual);
     // Aplica el tema actual como atributo HTML para que el CSS lo use
-  }
-
-  isLoggedIn() {
-    return localStorage.getItem("usuario") !== null;
-  }
-
-  isAdmin() {
-    const usuarioStr = localStorage.getItem("usuario");
-    if (usuarioStr) {
-      const usuario = JSON.parse(usuarioStr);
-      return usuario.es_admin === true;
-    }
-    return false;
-  }
-
-  nombreUsuario() {
-    const usuarioStr = localStorage.getItem("usuario");
-    if (usuarioStr) {
-      const usuario = JSON.parse(usuarioStr);
-      return usuario.nombre || "Usuario";
-    }
-    return "Usuario";
-  }
-
-  logout() {
-    localStorage.removeItem("usuario");
-    // Elimina la información del usuario del almacenamiento local
-    window.location.reload();
-    // Recarga la página para reflejar el cambio de estado
   }
 
   toggleTheme() {
