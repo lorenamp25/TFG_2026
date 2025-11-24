@@ -20,6 +20,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/receta/receta').then((m) => m.RecetaPage),
   },
+  {
+    path: 'ingrediente',
+    loadComponent: () =>
+      import('./components/ingrediente/ingrediente').then((m) => m.IngredientesComponent),
+  },
 
   {
     path: 'login',

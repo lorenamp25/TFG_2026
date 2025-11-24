@@ -19,6 +19,9 @@ import { Receta } from '../../models/receta.model';
   styleUrl: './receta-form.css',           // Archivo CSS asociado
 })
 export class RecetaForm {
+onImagenSeleccionada($event: Event) {
+throw new Error('Method not implemented.');
+}
 
   // Recibe una receta desde el componente padre (para editar)
   @Input() receta: Receta | null = null
@@ -35,6 +38,7 @@ export class RecetaForm {
     titulo: new FormControl('', [Validators.required, Validators.minLength(3)])  
     // TODO: completar el formulario con los demás campos de Receta
   })
+imagenPreview: any;
 
   // Ciclo de vida: se ejecuta cuando inicia el componente
   ngOnInit() {
@@ -57,4 +61,5 @@ export class RecetaForm {
     this.cancelarAccion.emit()
     this.form.reset()
   }
+  
 }

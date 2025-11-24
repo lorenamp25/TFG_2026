@@ -1,5 +1,5 @@
 /* ================================
-   📦 CONTENEDOR GENERAL
+   🧅 CONTENEDOR LISTA INGREDIENTES
 ================================ */
 .container {
   display: flex;
@@ -8,8 +8,8 @@
   animation: fadeIn .6s ease;
 }
 
-/* Lista de categorías estilo rejilla */
-#categoryList {
+/* Lista como rejilla */
+#ingredienteList {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -23,9 +23,9 @@
 }
 
 /* ================================
-   💠 ITEM DE CATEGORÍA
+   🔥 ITEM DE INGREDIENTE (LI)
 ================================ */
-#categoryList li {
+#ingredienteList li {
   position: relative;
   overflow: hidden;
 
@@ -43,12 +43,12 @@
   justify-content: space-between;
   gap: .8rem;
 
-  box-shadow: 0 14px 35px rgba(0,0,0,0.7);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 
-/* Brillo neón */
-#categoryList li::before {
+/* Glow de borde */
+#ingredienteList li::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -61,23 +61,23 @@
   transition: opacity .25s ease;
 }
 
-/* Hover */
-#categoryList li:hover {
+/* Hover potente */
+#ingredienteList li:hover {
   transform: translateY(-5px);
-  box-shadow: 0 18px 45px rgba(0,0,0,0.85);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
   border-color: rgba(0, 255, 255, 0.45);
 }
 
-#categoryList li:hover::before {
+#ingredienteList li:hover::before {
   opacity: 0.5;
 }
 
 /* ================================
-   🏷️ TEXTO DE CATEGORÍA
+   🧂 TEXTO DEL INGREDIENTE
 ================================ */
 .category-name {
   flex: 1;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   color: #fff;
   letter-spacing: .03em;
@@ -88,7 +88,7 @@
 }
 
 /* ================================
-   🎛 ACCIONES
+   🎛 ACCIONES (BOTONES)
 ================================ */
 .actions {
   display: flex;
@@ -111,18 +111,18 @@
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 
-/* Editar */
+/* Editar – verde neón */
 .actions .edit {
   background: #06ff6ed7;
   color: #003b1b;
-  box-shadow: 0 0 12px rgba(6,255,110,0.8);
+  box-shadow: 0 0 12px rgba(6, 255, 110, 0.8);
 }
 
-/* Eliminar */
+/* Eliminar – rojo neón */
 .actions .delete {
   background: #ff0436d5;
   color: #42000c;
-  box-shadow: 0 0 12px rgba(255,4,54,0.8);
+  box-shadow: 0 0 12px rgba(255, 4, 54, 0.8);
 }
 
 .actions button:hover {
@@ -134,17 +134,17 @@
    📱 RESPONSIVE
 ================================ */
 @media (max-width: 700px) {
-  #categoryList {
+  #ingredienteList {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  #categoryList li {
+  #ingredienteList li {
     padding: .9rem 1rem;
   }
 }
 
-/* Animación */
+/* Animación entrada */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }

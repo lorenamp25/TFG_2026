@@ -14,14 +14,14 @@ form {
   color: var(--text-main, #f9fafb);
 }
 
-/* Wrapper interno (el primer div del form) */
+/* Wrapper interno */
 form > div {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
 
-/* Cada bloque de campo (los div que envuelven label + input + errores) */
+/* Cada bloque de campo */
 form > div > div {
   display: flex;
   flex-direction: column;
@@ -55,13 +55,13 @@ input[type="text"] {
     transform 0.12s ease;
 }
 
-/* Placeholder de los inputs */
+/* Placeholder */
 input::placeholder {
   color: rgba(148, 163, 184, 0.85);
   font-size: 0.9rem;
 }
 
-/* Focus en inputs */
+/* Focus */
 input[type="text"]:focus {
   border-color: #4f46e5;
   background: rgba(15, 23, 42, 0.98);
@@ -71,7 +71,7 @@ input[type="text"]:focus {
   transform: translateY(-1px);
 }
 
-/* Estados inválidos (cuando Angular marca el control como ng-invalid y ng-touched) */
+/* Error: invalido + tocado */
 input.ng-invalid.ng-touched {
   border-color: #ef4444;
   box-shadow:
@@ -79,7 +79,7 @@ input.ng-invalid.ng-touched {
     0 12px 26px rgba(15, 23, 42, 0.9);
 }
 
-/* Mensajes de error (los div internos que muestran texto de validación) */
+/* Mensajes de error */
 form > div > div > div {
   margin-top: 0.1rem;
   font-size: 0.8rem;
@@ -90,7 +90,7 @@ form > div > div > div {
   border: 1px solid rgba(248, 113, 113, 0.6);
 }
 
-/* Botones del formulario */
+/* Botones */
 form > button {
   margin-top: 1.2rem;
   padding: 0.55rem 1.2rem;
@@ -112,32 +112,33 @@ form > button {
     color 0.15s ease;
 }
 
-/* Botón Confirmar (primer botón) */
+/* Botón Confirmar */
 form > button[type="submit"] {
   background: radial-gradient(circle at top left, #4ade80, #16a34a);
   color: #022c22;
   margin-right: 0.6rem;
 }
 
-/* Botón Cancelar (segundo botón) */
+/* Botón Cancelar */
 form > button[type="button"] {
   background: radial-gradient(circle at top left, #e5e7eb, #9ca3af);
   color: #020617;
 }
 
-/* Hover / active de botones */
+/* Hover */
 form > button:hover:not(:disabled) {
   transform: translateY(-1px) scale(1.02);
   box-shadow: 0 16px 32px rgba(15, 23, 42, 0.95);
   filter: brightness(1.06);
 }
 
+/* Active */
 form > button:active:not(:disabled) {
   transform: translateY(0) scale(0.97);
   box-shadow: 0 8px 18px rgba(15, 23, 42, 0.8);
 }
 
-/* Estado deshabilitado para el botón Confirmar */
+/* Estado deshabilitado */
 form > button[type="submit"]:disabled {
   background: rgba(148, 163, 184, 0.5);
   color: rgba(15, 23, 42, 0.9);
@@ -146,7 +147,7 @@ form > button[type="submit"]:disabled {
   filter: grayscale(0.15);
 }
 
-/* Un poco de responsividad */
+/* Responsivo */
 @media (max-width: 600px) {
   form {
     margin: 1.8rem 1rem 0;
@@ -155,7 +156,6 @@ form > button[type="submit"]:disabled {
 
   form > button {
     width: 100%;
-    justify-content: center;
   }
 
   form > button[type="submit"] {

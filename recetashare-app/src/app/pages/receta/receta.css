@@ -1,60 +1,231 @@
 @import url('../index/index.css');
 
+/* ================================
+   🧾 CABECERA ADMIN RECETAS
+================================ */
 
-/* ======== GRID DE RECETAS ======== */
-.recetas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-bottom: 50px;
+:host {
+  display: block;
+  padding: 1.5rem 0;
 }
 
-.recipe-card {
-  background: #fff;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+/* Texto "Listado de recetas" */
+div:first-child {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 1rem;
+
+  color: #e0f7ff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
 }
 
-.recipe-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+/* "Procesando datos" */
+p {
+  text-align: center;
+  color: #b8d8e5;
+  margin-bottom: 1rem;
 }
 
-.recipe-card img {
+/* ================================
+   🔽 SELECT CATEGORÍAS (super bonito)
+================================ */
+
+select {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
+  max-width: 300px;
+  padding: 0.8rem 1rem;
+  margin: 0.8rem auto 1.2rem;
+  display: block;
+
+  border-radius: 12px;
+  border: 1px solid rgba(0,255,255,0.35);
+  background: rgba(0,0,0,0.45);
+  color: #e9f5ff;
+
+  font-size: 1rem;
+  cursor: pointer;
+
+  box-shadow: 0 0 10px rgba(0,255,255,0.25);
+  backdrop-filter: blur(8px);
+
+  transition: border-color .2s, box-shadow .2s, transform .2s;
 }
 
-.recipe-card .info {
-  padding: 15px;
-}
-
-.recipe-card .info h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #d35400;
-}
-
-.recipe-card .info p {
-  margin: 0 0 10px;
-  font-size: 0.95rem;
-  color: #555;
-}
-
-.recipe-card .ver-btn {
-  display: inline-block;
-  padding: 8px 15px;
-  background: #ff9f43;
-  color: white;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  transition: transform 0.2s;
-}
-
-.recipe-card .ver-btn:hover {
+select:hover {
+  border-color: rgba(0,255,255,0.55);
+  box-shadow: 0 0 16px rgba(0,255,255,0.6);
   transform: translateY(-2px);
 }
 
+/* ================================
+   ➕ BOTÓN AGREGAR RECETA
+================================ */
+
+div:nth-child(3) button {
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+
+  font-weight: 700;
+  font-size: .95rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+
+  background: linear-gradient(135deg, #00fff2, #00ff5e);
+  color: #01201c;
+
+  cursor: pointer;
+  display: block;
+  margin: 0.5rem auto 1.5rem;
+
+  box-shadow: 0 0 14px rgba(0,255,200,0.7);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+div:nth-child(3) button:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px rgba(0,255,200,0.95);
+}
+
+/* ================================
+   📦 BLOQUE CONTAINER GLASS-NEÓN
+================================ */
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 1.2rem auto;
+  padding: 1.5rem 1.8rem;
+
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+
+  background: radial-gradient(circle at top left, rgba(0,255,255,0.12), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(0,255,120,0.15), transparent 55%),
+              rgba(0,0,0,0.55);
+
+  border: 1px solid rgba(0,255,255,0.25);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 18px 45px rgba(0,0,0,0.75);
+}
+
+/* Marco neón */
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid transparent;
+
+  background: linear-gradient(120deg,#00fff2,#00ff5e,#008cff) border-box;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Títulos dentro del contenedor */
+.container > div:first-child {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.85);
+  margin-bottom: 1rem;
+}
+
+/* mensaje "No hay recetas" */
+.container p {
+  color: #cfe7f2;
+  font-size: 1rem;
+  text-shadow: none;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ================================
+   📱 RESPONSIVE
+================================ */
+@media (max-width: 700px) {
+  .container {
+    padding: 1.2rem 1rem;
+  }
+
+  div:first-child {
+    font-size: 1.25rem;
+  }
+
+  select {
+    max-width: 100%;
+  }
+
+  div:nth-child(3) button {
+    width: 90%;
+  }
+}
+
+/* Animación aparecer */
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(20px); }
+  to   { opacity:1; transform: translateY(0);   }
+}
+/* ================================================
+   🔥 BOTÓN AGREGAR RECETA — ESTILO NEÓN UNIVERSAL
+   (Funciona en cualquier posición del HTML)
+================================================= */
+
+/* Botón general por texto */
+button.agregar-receta,
+button.agregar,
+button.btn-add {
+    padding: 0.8rem 1.6rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: .95rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+
+    background: linear-gradient(135deg, #00fff2, #00ff5e);
+    color: #01201c;
+
+    box-shadow: 0 0 14px rgba(0,255,200,0.7);
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+/* Hover */
+button.agregar-receta:hover,
+button.agregar:hover,
+button.btn-add:hover {
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px rgba(0,255,200,0.95);
+}
+
+/* Centrado automático cuando está solo en un div */
+div > .agregar-receta,
+div > .agregar {
+    margin: 0 auto 1.5rem;
+}
+/* Opciones del select */
+.select-recetas option {
+  background: #001922;
+  color: #e8ffff;
+  padding: 10px;
+  border: none;
+}
+
+/* Hover (solo funciona en algunos navegadores) */
+.select-recetas option:hover {
+  background: #003840;
+  color: #00fff2;
+}

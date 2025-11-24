@@ -18,6 +18,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./receta.css']                      // Archivo CSS asociado
 })
 export class RecetaPage {
+seleccionarCategoria(arg0: string) {
+throw new Error('Method not implemented.');
+}
+dropdownAbierto: any;
+toggleDropdown() {
+throw new Error('Method not implemented.');
+}
   recetas: Receta[] = []                           // Lista de recetas obtenidas del backend
   receta: Receta | null = null                     // Receta seleccionada para editar/eliminar
   estado: EstadoAccion = EstadoAccion.Listando     // Estado actual de la interfaz (listando/agregando/etc.)

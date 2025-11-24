@@ -6,16 +6,37 @@
   }
 
   <div>
-    <select (change)="cargarRecetas($event.target)" [(ngModel)]="selectedCategoria">
+    <!--<select (change)="cargarRecetas($event.target)" [(ngModel)]="selectedCategoria">
       <option value="all">Todas las categorias</option>
       @for (categoria of categorias; track $index) {
         <option [value]="categoria.id">{{ categoria.nombre }}</option>
       }
-    </select>
-  </div>
+    </select><-->
+    <div class="select-wrapper">
+  <select class="select-recetas"
+          (change)="cargarRecetas($event.target)"
+          [(ngModel)]="selectedCategoria">
+    <option value="all">Todas las categorías</option>
+    @for (categoria of categorias; track $index) {
+      <option [value]="categoria.id">{{ categoria.nombre }}</option>
+    }
+  </select>
+  
 
+
+
+</div>
+
+
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
   <div>
-    <button (click)="agregarReceta()">Agregar Receta</button>
+    <button class="agregar-receta" (click)="agregarReceta()">Agregar Receta</button>
+
   </div>
 
 

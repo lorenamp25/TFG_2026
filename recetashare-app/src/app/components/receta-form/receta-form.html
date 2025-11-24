@@ -1,42 +1,110 @@
-<!-- Formulario reactivo que usa Angular: formGroup enlaza el formulario a la clase -->
 <form [formGroup]="form" (ngSubmit)="onGrabar()">
 
-  <div>
-    <!-- Campo oculto para guardar el ID de la receta (en edición) -->
+  <!-- ID oculto -->
+  <input type="hidden" formControlName="id" />
+
+  <!-- TÍTULO -->
+  <div class="form-group">
+    <label for="titulo">Título</label>
     <input
-      id="id"
+      id="titulo"
       type="text"
-      formControlName="id"
-      hidden="true"
+      formControlName="titulo"
+      placeholder="Ej: Tarta de queso"
     />
-
-    <div>
-      <!-- Etiqueta del campo de título -->
-      <label for="titulo">Titulo</label>
-
-      <!-- Input que se enlaza al formControl 'titulo' -->
-      <input
-        id="titulo"
-        type="text"
-        formControlName="titulo"
-        placeholder="Ingrese nombre de la receta"
-      />
-
-      <!-- Validación: si el campo es inválido y ha sido tocado, muestra los errores -->
-      @if (form.get('titulo')?.invalid && form.get('titulo')?.touched) {
-        <div>
-          <!-- Error: campo requerido vacío -->
-          @if (form.get('titulo')?.errors?.['required']) { Titulo obligatorio }
-          <!-- Error: menos de 3 letras -->
-          @if (form.get('titulo')?.errors?.['minlength']) { Min 3 letras }
-        </div>
-      }
-    </div>
   </div>
 
-  <!-- Botón de guardar: se deshabilita si el formulario es inválido -->
-  <button type="submit" [disabled]="form.invalid">Confirmar</button>
+  <!-- DESCRIPCIÓN -->
+  <div class="form-group">
+    <label for="descripcion">Descripción</label>
+    <textarea
+      id="descripcion"
+      formControlName="Descripcion"
+      placeholder="Describe brevemente la receta"
+      rows="3"
+    ></textarea>
+  </div>
 
-  <!-- Botón para cancelar la edición y volver atrás -->
-  <button type="button" (click)="onCancelar()">Cancelar</button>
+  <!-- TIEMPO DE PREPARACIÓN -->
+  <div class="form-group">
+    <label for="tiempoPrep">Tiempo de preparación (minutos)</label>
+    <input
+      id="tiempoPrep"
+      type="number"
+      min="1"
+      max="999"
+      formControlName="TiempoPreparacion"
+      placeholder="Ej: 45"
+    />
+  </div>
+
+  <!-- DIFICULTAD: radio -->
+  <div class="form-group">
+  <label>Dificultad</label>
+
+  <div class="radio-group">
+    <label>
+      <input type="radio" formControlName="Dificultad" value="baja" />
+      <span>Baja</span>
+    </label>
+
+    <label>
+      <input type="radio" formControlName="Dificultad" value="media" />
+      <span>Media</span>
+    </label>
+
+    <label>
+      <input type="radio" formControlName="Dificultad" value="alta" />
+      <span>Alta</span>
+    </label>
+  </div>
+</div>
+
+  <!-- CATEGORÍA: SELECT -->
+  <div class="form-group">
+    <label for="categoria">Categoría</label>
+    <select id="categoria" formControlName="Categoria">
+      <option value="" disabled selected>Selecciona categoría</option>
+      <option value="postres">Postres</option>
+      <option value="carnes">Carnes</option>
+      <option value="ensaladas">Ensaladas</option>
+      <option value="pastas">Pastas</option>
+      <option value="sopas">Sopas</option>
+      <option value="otros">Otros</option>
+    </select>
+  </div>
+
+  <!-- IMAGEN TYPE="FILE" -->
+  <div class="form-group">
+    <label for="imagen">Imagen de la receta</label>
+    <input
+      id="imagen"
+      type="file"
+      accept="image/*"
+      (change)="onImagenSeleccionada($event)"
+    />
+
+    <!-- Vista previa -->
+    @if (imagenPreview) {
+      <img [src]="imagenPreview" alt="Vista previa" class="preview-img" />
+    }
+  </div>
+
+  <!-- USUARIO -->
+  <div class="form-group">
+    <label for="usuario">Nombre del Usuario</label>
+    <input
+      id="usuario"
+      type="text"
+      formControlName="Usuario"
+      placeholder="Ej: Jose Martín"
+    />
+  </div>
+
+  <!-- BOTONES -->
+  <div class="form-buttons">
+    <button type="submit" [disabled]="form.invalid">Confirmar</button>
+    <button type="button" (click)="onCancelar()">Cancelar</button>
+  </div>
+
 </form>

@@ -1,124 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8"> <!-- Codificación estándar UTF-8 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive -->
-  <title>Ingredientes 🥦</title> <!-- Título del navegador -->
-</head>
+<section class="ingredientes-pagina contenedor">
 
-<body>
+  <h1 class="titulo-seccion">🧅 Ingredientes</h1>
 
-  <div class="container"> <!-- Contenedor principal de la página -->
-    <h1>🥕 Lista de Ingredientes</h1>
+  <p class="descripcion-seccion">
+    Lista de ingredientes disponibles en el sistema.
+  </p>
 
-    <!-- Formulario para agregar o editar ingredientes -->
-    <form id="ingredientForm">
-      <input type="text" id="ingredientInput" placeholder="Nuevo ingrediente...">
-      <button type="submit" class="add-btn">Agregar</button>
-    </form>
+  <div class="lista-ingredientes">
 
-    <!-- Lista donde se mostrarán los ingredientes -->
-    <ul id="ingredientList"></ul>
+    @defer (when ingredientes.length > 0) {
+
+      @for (ingrediente of ingredientes; track $index) {
+
+        <div class="ingrediente-item">
+          <span class="nombre-ingrediente">{{ ingrediente.nombre }}</span>
+
+          
+        </div>
+
+      }
+
+    } @placeholder {
+
+      <p>Cargando ingredientes...</p>
+
+    }
+
   </div>
 
-  <script>
-  // === CAPTURA DE ELEMENTOS DEL DOM ===
-  const form = document.getElementById('ingredientForm');     // Formulario
-  const input = document.getElementById('ingredientInput');   // Campo de texto
-  const list = document.getElementById('ingredientList');     // Lista de ingredientes
-
-  // Cargar ingredientes desde localStorage o crear array vacío si no hay nada
-  let ingredients = JSON.parse(localStorage.getItem('ingredients')) || [];
-
-  // Índice del ingrediente que se está editando (null si no es edición)
-  let editingIndex = null;
-
-  // Renderiza los ingredientes al iniciar la página
-  renderIngredients();
-
-  // Evento de envío del formulario (Agregar/Guardar)
-  form.addEventListener('submit', e => {
-    e.preventDefault(); // Evita refrescar la página
-
-    const name = input.value.trim();  // Limpia espacios
-    if (!name) return;                // No permitir valores vacíos
-
-    // Si estamos editando, reemplaza el ingrediente correspondiente
-    if (editingIndex !== null) {
-      ingredients[editingIndex] = name;
-      editingIndex = null;
-
-      // Cambia texto del botón a "Agregar"
-      form.querySelector('button').textContent = "Agregar";
-    } else {
-      // Si no, agregamos uno nuevo al array
-      ingredients.push(name);
-    }
-
-    input.value = ""; // Limpia el input
-    saveAndRender();  // Guarda y actualiza la lista
-  });
-
-  // Guarda en localStorage y actualiza la vista
-  function saveAndRender() {
-    localStorage.setItem('ingredients', JSON.stringify(ingredients));
-    renderIngredients();
-  }
-
-  // Reconstruye la lista completa de ingredientes
-  function renderIngredients() {
-    list.innerHTML = ""; // Limpia la lista antes de dibujar
-
-    ingredients.forEach((ing, i) => {
-      const li = document.createElement('li'); // Crea un <li>
-      li.classList.add("fade-in");             // Animación opcional
-
-      const span = document.createElement('span'); // Contenedor del nombre
-      span.textContent = ing;
-      span.classList.add("ingredient-name");
-
-      const actions = document.createElement('div'); // Botonera de acciones
-      actions.classList.add("actions");
-
-      // Botón de editar
-      const editBtn = document.createElement('button');
-      editBtn.textContent = "✏️";
-      editBtn.classList.add("edit");
-      editBtn.onclick = () => editIngredient(i);
-
-      // Botón de borrar
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = "🗑️";
-      deleteBtn.classList.add("delete");
-      deleteBtn.onclick = () => deleteIngredient(i);
-
-      // Agregar acciones dentro del contenedor
-      actions.append(editBtn, deleteBtn);
-
-      // Añadir nombre + acciones al <li>
-      li.append(span, actions);
-
-      // Agregar elemento a <ul>
-      list.appendChild(li);
-    });
-  }
-
-  // Cargar un ingrediente para editarlo
-  function editIngredient(index) {
-    input.value = ingredients[index];          // Rellena el input con el ingrediente
-    editingIndex = index;                       // Marca índice que estamos editando
-    form.querySelector('button').textContent = "Guardar"; // Cambia botón
-    input.focus();                              // Lleva el cursor al input
-  }
-
-  // Eliminar ingrediente con confirmación
-  function deleteIngredient(index) {
-    if (confirm("¿Eliminar este ingrediente?")) {
-      ingredients.splice(index, 1); // Quita el elemento del array
-      saveAndRender();              // Re-renderiza y guarda cambios
-    }
-  }
-  </script>
-
-</body>
-</html>
+</section>

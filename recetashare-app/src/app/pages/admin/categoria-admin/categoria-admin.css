@@ -1,0 +1,135 @@
+/* ================================
+   🏷️ CABECERA ADMIN CATEGORÍAS
+================================ */
+
+/* Contenedor principal del componente */
+:host {
+  display: block;
+  padding: 1.5rem 0;
+}
+
+/* Texto principal */
+p {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 1rem;
+
+  color: #e0f7ff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+}
+
+/* Contenedor del botón de agregar */
+p + div {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Botón "Agregar Categoría" */
+p + div button {
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+
+  font-weight: 700;
+  font-size: .95rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+
+  background: linear-gradient(135deg, #00fff2, #00ff5e);
+  color: #01201c;
+
+  box-shadow: 0 0 14px rgba(0,255,200,0.7);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+p + div button:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.08);
+  box-shadow: 0 0 20px rgba(0,255,200,0.95);
+}
+
+/* ================================
+   📦 BLOQUE CONTAINER
+================================ */
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 1.5rem 1.8rem;
+
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+
+  background: radial-gradient(circle at top left, rgba(0,255,255,0.12), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(0,255,120,0.16), transparent 55%),
+              rgba(0,0,0,0.6);
+
+  border: 1px solid rgba(0,255,255,0.25);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 18px 45px rgba(0,0,0,0.75);
+}
+
+/* Efecto de borde neón */
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid transparent;
+
+  background: linear-gradient(120deg, #00fff2, #00ff5e, #008cff) border-box;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Título dentro del container */
+.container > div:first-child {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+}
+
+/* Placeholder cuando no hay categorías */
+.container p {
+  text-align: center;
+  font-size: 1rem;
+  color: #cfd8dc;
+  text-shadow: none;
+  margin-top: 1rem;
+}
+
+/* ================================
+   📱 RESPONSIVE
+================================ */
+@media (max-width: 700px) {
+  .container {
+    padding: 1.2rem 1.1rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  p + div button {
+    width: 90%;
+    justify-content: center;
+  }
+}
+
+/* Animación entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

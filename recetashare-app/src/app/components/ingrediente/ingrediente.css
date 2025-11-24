@@ -1,130 +1,165 @@
-/* === ESTILO GENERAL === */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", sans-serif;
-}
-
-body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #142f24, #235b3f, #11261c);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
-}
-
-/* === CONTENEDOR === */
-.container {
-  width: 100%;
-  max-width: 500px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  padding: 30px 24px;
+/* ================================
+   🧅 CONTENEDOR GENERAL
+================================ */
+.ingredientes-pagina {
+  padding: 1.5rem 0;
   text-align: center;
+  animation: fadeIn .6s ease;
 }
 
-h1 {
-  font-size: 1.7rem;
-  background: linear-gradient(90deg, #6bff95, #b8ff6b);
+.titulo-seccion {
+  font-size: 2.3rem;
+  font-weight: 900;
+  margin-bottom: .3rem;
+  background: var(--degradado-secundario);
   -webkit-background-clip: text;
-  color: transparent;
-  margin-bottom: 20px;
+  -webkit-text-fill-color: transparent;
 }
 
-/* === FORMULARIO === */
-form {
+.descripcion-seccion {
+  font-size: 1.1rem;
+  opacity: .8;
+  margin-bottom: 2rem;
+}
+
+/* ================================
+   🧪 LISTA DE INGREDIENTES
+================================ */
+.lista-ingredientes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ================================
+   🔥 ITEM DE INGREDIENTE (como receta)
+================================ */
+.ingrediente-item {
+  position: relative;
+  overflow: hidden;
+
+  padding: 1rem 1.2rem;
+  border-radius: 20px;
+
+  background: radial-gradient(circle at top left, rgba(0, 255, 255, 0.12), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(0, 255, 120, 0.18), transparent 55%),
+              rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-input {
-  flex: 1;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-}
-
-button {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.2s, background 0.3s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-.add-btn {
-  background: linear-gradient(90deg, #6bff95, #b8ff6b);
-  color: #0f172a;
-}
-
-/* === LISTA === */
-ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 0;
-}
-
-li {
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 10px 14px;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: 0.2s;
+  justify-content: space-between;
+  gap: .8rem;
+
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 
-li:hover {
-  background: rgba(255,255,255,0.15);
+/* Glow de borde */
+.ingrediente-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  background: linear-gradient(120deg, #00fff2, #00ff5e, #008cff) border-box;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: opacity .25s ease;
 }
 
-.ingredient-name {
-  font-weight: 500;
+/* Hover */
+.ingrediente-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
+  border-color: rgba(0, 255, 255, 0.45);
 }
 
-.actions {
-  display: flex;
-  gap: 8px;
+.ingrediente-item:hover::before {
+  opacity: 0.5;
 }
 
-.edit, .delete {
-  background: none;
-  border: none;
-  cursor: pointer;
+/* ================================
+   🧂 TEXTO DEL INGREDIENTE
+================================ */
+.nombre-ingrediente {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: #fff;
+  letter-spacing: .03em;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ================================
+   🎛 ACCIONES
+================================ */
+.acciones-ingrediente {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.acciones-ingrediente button {
+  border: none;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1rem;
-  transition: color 0.2s;
+
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 
-.edit:hover {
-  color: #b8ff6b;
+/* Editar */
+.acciones-ingrediente .edit {
+  background: #06ff6ed7;
+  color: #003b1b;
+  box-shadow: 0 0 12px rgba(6, 255, 110, 0.8);
 }
 
-.delete:hover {
-  color: #ff6b6b;
+/* Eliminar */
+.acciones-ingrediente .delete {
+  background: #ff0436d5;
+  color: #42000c;
+  box-shadow: 0 0 12px rgba(255, 4, 54, 0.8);
 }
 
-/* === ANIMACIÓN === */
-.fade-in {
-  animation: fadeIn 0.4s ease forwards;
+.acciones-ingrediente button:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.1);
 }
+
+/* ================================
+   📱 RESPONSIVE
+================================ */
+@media (max-width: 700px) {
+  .lista-ingredientes {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .ingrediente-item {
+    padding: .9rem 1rem;
+  }
+}
+
+/* ================================
+   Animación entrada
+================================ */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

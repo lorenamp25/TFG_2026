@@ -20,6 +20,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'Sistema de Turnos';
+menuAbierto: any;
   // Título de la aplicación (puede usarse en el template)
 
   constructor () {
