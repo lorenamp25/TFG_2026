@@ -23,10 +23,10 @@
   max-width:var(--ancho-contenedor);
   margin:0 auto;
   padding-inline:var(--espaciado-md);
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
 }
 
-/* ============ LOGO NUEVO ============ */
+/* ============ LOGO ============ */
 .logo{
   display:flex;
   align-items:center;
@@ -37,7 +37,6 @@
   color:#e9f5ff;
 }
 
-/* icono marca redondo */
 .logo::before{
   content:"RS";
   display:flex;
@@ -49,13 +48,11 @@
   font-size:.95rem;
   font-weight:800;
   letter-spacing:.08em;
-
   background:radial-gradient(circle at 30% 20%, #ffffff, #00ffd5 70%);
   color:#021318;
   box-shadow:0 0 14px rgba(0,255,213,0.75);
 }
 
-/* texto RecetasApp con degradado */
 .logo span{
   font-size:1.15rem;
   background:linear-gradient(120deg,#00fff2,#4ecdc4,#00aaff);
@@ -63,12 +60,14 @@
   -webkit-text-fill-color:transparent;
 }
 
-/* ============ Navegación principal ============ */
+/* ============ NAV ============ */
 .navegacion{
   display:flex;
   align-items:center;
   gap:var(--espaciado-md);
   flex-wrap:wrap;
+  flex:1;
+  justify-content:center;
 }
 
 .navegacion a{
@@ -81,7 +80,6 @@
   transition:var(--transicion);
 }
 
-/* subrayado fino degradado */
 .navegacion a::after{
   content:"";
   position:absolute;
@@ -93,28 +91,44 @@
   background:linear-gradient(90deg,#00fff2,#00ff5e,#008cff);
   opacity:0;
   transform:scaleX(0.4);
-  transform-origin:center;
   transition:opacity .2s ease,transform .2s ease;
 }
 
-.navegacion a:hover,
-.navegacion a:focus-visible{
+.navegacion a:hover{
   color:#ffffff;
   background:rgba(255,255,255,0.05);
-  outline:none;
 }
 
-.navegacion a:hover::after,
-.navegacion a:focus-visible::after{
+.navegacion a:hover::after{
   opacity:1;
   transform:scaleX(1);
 }
 
-/* ============ Acciones header (tema, login, etc.) ============ */
+/* ============ BOTÓN MENÚ (HAMBURGUESA) ============ */
+.boton-menu{
+  display:none;
+  background:transparent;
+  border:none;
+  font-size:2rem;
+  color:#e9f5ff;
+  cursor:pointer;
+}
+
+/* ============ ACCIONES (escritorio) ============ */
 .acciones-encabezado{
   display:flex;
   align-items:center;
   gap:var(--espaciado-sm);
+}
+
+.bienvenida{
+  color:#cfd8e3;
+  font-weight:500;
+}
+
+.boton-logout{
+  margin-left:.5rem;
+  white-space:nowrap;
 }
 
 /* Botón cambio de tema */
@@ -128,14 +142,6 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:var(--transicion);
-  box-shadow:0 0 10px rgba(0,255,255,0.3);
-}
-
-.cambiar-tema:hover{
-  background:rgba(0,0,0,0.6);
-  transform:translateY(-1px) scale(1.05);
-  box-shadow:0 0 16px rgba(0,255,255,0.6);
 }
 
 .icono-sol{display:block;}
@@ -143,8 +149,7 @@
 [data-tema="oscuro"] .icono-sol{display:none;}
 [data-tema="oscuro"] .icono-luna{display:block;}
 
-/* ============ Submenú Admin ============ */
-
+/* ============ SUBMENÚ ADMIN ============ */
 .submenu{
   list-style:none;
   margin:0;
@@ -152,37 +157,16 @@
   position:relative;
 }
 
-.submenu > li{
-  position:relative;
-}
-
-/* Enlace "Admin" */
 .submenu > li > a{
   display:inline-flex;
   align-items:center;
   gap:6px;
   padding:.4rem .9rem;
   border-radius:999px;
-  text-decoration:none;
   color:#cfd8e3;
   cursor:pointer;
-  transition:var(--transicion);
 }
 
-.submenu > li > a::after{
-  content:"▾";
-  font-size:.75rem;
-}
-
-/* Hover/focus Admin */
-.submenu > li > a:hover,
-.submenu > li > a:focus-visible{
-  background:rgba(255,255,255,0.06);
-  color:#ffffff;
-  outline:none;
-}
-
-/* Lista desplegable */
 .submenu-desplegable{
   list-style:none;
   margin:0;
@@ -191,17 +175,22 @@
   top:calc(100% + 8px);
   left:0;
   min-width:190px;
-
   background:rgba(3,16,30,0.98);
   border:1px solid rgba(0,255,255,0.25);
   border-radius:16px;
   box-shadow:0 18px 40px rgba(0,0,0,0.85);
-
   opacity:0;
   pointer-events:none;
   transform:translateY(-6px);
   transition:opacity .18s ease, transform .18s ease;
   z-index:50;
+}
+
+.submenu > li:hover .submenu-desplegable,
+.submenu > li:focus-within .submenu-desplegable{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
 }
 
 .submenu-desplegable li a{
@@ -210,61 +199,69 @@
   text-decoration:none;
   color:#e2ebf5;
   font-size:.9rem;
-  transition:background-color .18s ease,color .18s ease;
 }
 
-.submenu-desplegable li a:hover,
-.submenu-desplegable li a:focus-visible{
-  background:rgba(0,255,255,0.08);
+/* ============ Login dentro del menú en móvil ============ */
+.nav-auth-movil{
+  display:none;
+  width:100%;
+  margin-top:.5rem;
+}
+
+.nav-auth-link{
+  display:block;
+  width:100%;
+  padding:.45rem .9rem;
+  border-radius:999px;
+  border:1px solid transparent;
+  background:transparent;
+  color:#cfd8e3;
+  text-align:left;
+  text-decoration:none;
+  font:inherit;
+  cursor:pointer;
+  transition:var(--transicion);
+}
+
+.nav-auth-link:hover{
+  background:rgba(255,255,255,0.06);
+  border-color:rgba(0,255,255,0.25);
   color:#ffffff;
-  outline:none;
 }
 
-/* Mostrar el desplegable en desktop (hover/focus) */
-.submenu > li:hover .submenu-desplegable,
-.submenu > li:focus-within .submenu-desplegable{
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-}
-
-/* ============ Navbar Responsive ============ */
-
-/* Tablet / pantallas medias */
+/* ============ RESPONSIVE TABLET ============ */
 @media (max-width: 968px){
-  .contenido-encabezado{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:var(--espaciado-sm);
+
+  .boton-menu{
+    display:block;
+    margin-left:auto;
   }
 
   .navegacion{
-    width:100%;
-    border-top:1px solid rgba(0,255,255,0.18);
-    padding-top:var(--espaciado-sm);
-  }
-}
-
-/* Móvil */
-@media (max-width: 640px){
-  .navegacion{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:rgba(3,16,30,0.98);
+    padding:1rem var(--espaciado-md);
     flex-direction:column;
     align-items:flex-start;
-    gap:var(--espaciado-xs);
+    gap:1rem;
+    border-bottom:1px solid rgba(0,255,255,0.25);
+    display:none;
+    z-index:200;
   }
 
-  .navegacion a{
-    padding:.4rem .6rem;
-    width:100%;
+  .navegacion.navegacion--abierta{
+    display:flex;
   }
 
-  /* En móvil el submenu baja como lista simple */
   .submenu-desplegable{
     position:static;
-    box-shadow:none;
-    border:none;
     background:transparent;
-    padding:.15rem 0 0 .8rem;
+    border:none;
+    box-shadow:none;
+    padding:.25rem 0 0 1rem;
     opacity:1;
     pointer-events:auto;
     transform:none;
@@ -274,5 +271,27 @@
   .submenu-desplegable li a{
     padding:.3rem 0;
   }
-  
+
+  .nav-auth-movil{
+    display:block;
+  }
+
+}
+
+/* ============ RESPONSIVE MÓVIL ============ */
+@media (max-width: 640px){
+
+  .navegacion{
+    width:100%;
+  }
+
+  .navegacion a{
+    width:100%;
+  }
+
+  /* Desktop actions ocultas en móvil */
+  .acciones-encabezado{
+    display:none;
+  }
+
 }

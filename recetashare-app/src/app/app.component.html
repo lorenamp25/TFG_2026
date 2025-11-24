@@ -11,46 +11,79 @@
 </head>
 <body>
   <header class="encabezado">
-    <div class="contenido-encabezado contenedor">
-      <div class="logo">
-         <span>RecetasApp</span>
-      </div>
+  <div class="contenido-encabezado contenedor">
+    <div class="logo">
+      <span>RecetasApp</span>
+    </div>
 
-      <nav class="navegacion">
-        <a href="">Inicio</a>
-        <a href="categoria">Categorías</a>
-        <a href="ingrediente">Ingredientes</a>
-        <a href="receta">Recetas</a>
+    <!-- Botón menú hamburguesa (visible en móvil) -->
+    <button class="boton-menu" (click)="toggleMenu()">
+      ☰
+    </button>
 
-        @if (storageService.isAdmin()) {
-          <ul class="submenu">
-            <li>
-              <a href="#">Admin</a>
-              <ul class="submenu-desplegable">
-                <li><a href="admin-categoria">Categorias</a></li>
-                <li><a href="admin-ingrediente">Ingredientes</a></li>
-              </ul>
-            </li>
-          </ul>
+    <!-- NAV: se oculta / muestra con menuAbierto -->
+    <nav class="navegacion" [class.navegacion--abierta]="menuAbierto">
+      <a href="">Inicio</a>
+      <a href="categoria">Categorías</a>
+      <a href="ingrediente">Ingredientes</a>
+      <a href="receta">Recetas</a>
+
+      @if (storageService.isAdmin()) {
+        <ul class="submenu">
+          <li>
+            <a href="javascript:void(0)">Admin</a>
+            <ul class="submenu-desplegable">
+              <li><a href="admin-categoria">Categorias</a></li>
+              <li><a href="admin-ingrediente">Ingredientes</a></li>
+            </ul>
+          </li>
+        </ul>
+      }
+
+      <!-- 🔹 Zona de login/logout SOLO para móvil -->
+      <div class="nav-auth-movil">
+        @if (storageService.isLoggedIn()) {
+          <button
+            (click)="storageService.logout(); menuAbierto = false"
+            class="nav-auth-link">
+            🚪 Cerrar sesión
+          </button>
+        } @else {
+          <a
+            href="login"
+            class="nav-auth-link"
+            (click)="menuAbierto = false">
+            👤 Iniciar sesión
+          </a>
         }
-      </nav>
-
-      <div class="acciones-encabezado">
-        <button class="cambiar-tema" id="boton-tema" (click)="toggleTheme()">
-            <span class="icono-sol">☀️</span>
-            <span class="icono-luna">🌙</span>
-        </button>
-
       </div>
+    </nav>
+
+    <!-- 🔹 Zona de login/logout SOLO escritorio -->
+    <div class="acciones-encabezado">
+      <button class="cambiar-tema" id="boton-tema" (click)="toggleTheme()">
+        <span class="icono-sol">☀️</span>
+        <span class="icono-luna">🌙</span>
+      </button>
 
       @if (storageService.isLoggedIn()) {
-        <span>Bienvenido/a {{ storageService.nombreUsuario() }}</span>
-        <button (click)="storageService.logout()" class="boton-secundario">🚪 Cerrar sesión</button>
+        <span class="bienvenida">
+          Bienvenido/a {{ storageService.nombreUsuario() }}
+        </span>
+
+        <button
+          (click)="storageService.logout()"
+          class="boton-secundario boton-logout">
+          🚪 Cerrar sesión
+        </button>
       } @else {
-        <a href="login" class="boton-secundario">👤 Iniciar sesión</a>
+        <a href="login" class="boton-secundario">
+          👤 Iniciar sesión
+        </a>
       }
     </div>
-  </header>
+  </div>
+</header>
 
 
 
@@ -60,7 +93,7 @@
 
   <footer class="pie">
     <div class="contenido-pie contenedor">
-      <div class="logo-pie">🍳 RecetasApp</div>
+      <div class="logo-pie">RecetasApp</div>
       <div class="seccion-pie">
         <h4>Sobre nosotros</h4>
         <p>RecetasApp es tu comunidad culinaria para compartir y descubrir nuevas ideas de cocina.</p>
@@ -69,19 +102,19 @@
         <h4>Enlaces útiles</h4>
         <ul>
           <li><a href="index.html">Inicio</a></li>
-          <li><a href="categoria">Categorías</a></li>
-          <li><a href="receta">Recetas</a></li>
-          <li><a href="contacto">Contacto</a></li>
+          <li><a href="./pages/categoria/categoria">Categorías</a></li>
+          <li><a href="./pages/receta/receta">Recetas</a></li>
+          
         </ul>
       </div>
       <div class="seccion-pie">
         <h4>Síguenos</h4>
         <div class="redes-sociales">
 
-          <a href="#">📸</a>
-          <a href="#">🎵</a>
-          <a href="#">🐦</a>
-          <a href="#">📘</a>
+          <a href="https://www.youtube.com/user/lasrecetasdemj/videos">📸</a>
+          <a href="https://www.youtube.com/watch?v=g7gQqvMIn3s">🎵</a>
+          <a href="https://elpais.com/gastronomia/recetas">🐦</a>
+          
 
         </div>
       </div>

@@ -25,34 +25,6 @@ body{
 }
 .contenedor{max-width:var(--ancho-contenedor);margin:0 auto;padding:0 var(--espaciado-md)}
 
-/* ============ Header ============ */
-.encabezado{
-  position:sticky;top:0;z-index:100;background:var(--fondo-principal);
-  border-bottom:1px solid var(--color-borde);backdrop-filter:blur(10px);transition:var(--transicion)
-}
-.contenido-encabezado{
-  display:flex;align-items:center;justify-content:space-between;padding:var(--espaciado-md) 0
-}
-.logo{display:flex;align-items:center;gap:var(--espaciado-sm);font-size:1.5rem;font-weight:700;color:var(--color-principal)}
-.navegacion{display:flex;gap:var(--espaciado-lg)}
-.navegacion a{
-  color:var(--texto-secundario);text-decoration:none;font-weight:500;transition:var(--transicion);position:relative
-}
-.navegacion a:hover{color:var(--color-principal)}
-.navegacion a::after{
-  content:"";position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--degradado-principal);transition:width .3s ease
-}
-.navegacion a:hover::after{width:100%}
-.acciones-encabezado{display:flex;align-items:center;gap:var(--espaciado-sm)}
-.cambiar-tema{
-  width:40px;height:40px;border-radius:var(--radio-total);border:1px solid var(--color-borde);
-  background:var(--fondo-secundario);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transicion)
-}
-.cambiar-tema:hover{background:var(--fondo-terciario);transform:scale(1.05)}
-.icono-sol{display:block}.icono-luna{display:none}
-[data-tema="oscuro"] .icono-sol{display:none}
-[data-tema="oscuro"] .icono-luna{display:block}
-
 /* ============ Botones ============ */
 .boton-principal,.boton-secundario{
   padding:var(--espaciado-sm) var(--espaciado-md);border-radius:var(--radio-total);border:none;font-weight:600;cursor:pointer;
@@ -303,9 +275,31 @@ body{
     text-align:center;
   }
 }
- app-login {
+
+/* Login centrado global */
+app-login {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100%;
+}
+
+/* Extra de layout opcional */
+:root {
+  --max-width: 1200px;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
 }
