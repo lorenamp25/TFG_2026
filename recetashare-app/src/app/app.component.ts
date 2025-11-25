@@ -21,7 +21,8 @@ import { StorageService } from './services/localstorage.service';
 })
 export class AppComponent {
   title = 'Sistema de Turnos';
-menuAbierto: any;
+  
+menuAbierto= false;
   // Título de la aplicación (puede usarse en el template)
 
   constructor (public storageService: StorageService) {
@@ -36,6 +37,8 @@ menuAbierto: any;
     cuerpo.setAttribute("data-tema", temaActual);
     // Aplica el tema actual como atributo HTML para que el CSS lo use
   }
+  
+toggleMenu() {this.menuAbierto = !this.menuAbierto;}
 
   toggleTheme() {
     // Método para alternar entre tema claro y oscuro
@@ -57,3 +60,7 @@ menuAbierto: any;
   }
 
 }
+  function toggleTheme() {
+    throw new Error('Function not implemented.');
+  }
+
