@@ -101,7 +101,6 @@ export class RecetaForm {
   }
 
   agregarIngrediente() {
-    console.log('Agregar ingrediente');
     this.receta?.ingredientes.push({ cantidad: 0, unidad: '', ingrediente: { id: 0, nombre: '' } });
   }
 
@@ -109,29 +108,22 @@ export class RecetaForm {
     this.receta?.ingredientes.splice(index, 1);
   }
 
-  // agregarIngrediente() {
-  //   const tablaIngredientes = document.getElementById('tabla-ingredientes') as HTMLTableElement;
-  //   const nuevaFila = tablaIngredientes.insertRow();
-  //   const celdaCantidad = nuevaFila.insertCell(0);
-  //   const celdaUnidad = nuevaFila.insertCell(1);
-  //   const celdaNombre = nuevaFila.insertCell(2);
-  //   const celdaAcciones = nuevaFila.insertCell(3);
-  //   celdaCantidad.innerHTML = '<input type="text" name="cantidad" placeholder="Cantidad">';
-  //   celdaUnidad.innerHTML = '<input type="text" name="unidad" placeholder="Unidad">';
-  //   celdaNombre.innerHTML = '<input type="text" name="nombre" placeholder="Nombre del ingrediente">';
+  agregarInstruccion() {
+    const nuevoPaso = this.receta ? this.receta.instrucciones.length + 1 : 1;
+    this.receta?.instrucciones.push({ orden: nuevoPaso, descripcion: '' });
+  }
 
-  //   const btn = document.createElement("button");
-  //   btn.type = "button";
-  //   btn.innerText = "Eliminar";
-  //   btn.onclick = () => this.eliminarIngrediente(nuevaFila);
-  //   celdaAcciones.appendChild(btn);
-  // }
+  eliminarInstruccion(index: number) {
+    this.receta?.instrucciones.splice(index, 1);
+  }
+  onInstruccionImagenSeleccionada(event: Event, instruccion: any) {
+    const input = event.target as HTMLInputElement;
 
-  // eliminarIngrediente(fila: any) {
-  //   fila.remove();
-  // }
+
+  }
 
   onImagenSeleccionada($event: Event) {
-    throw new Error('Method not implemented.');
+
+
   }
 }

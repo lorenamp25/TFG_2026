@@ -102,6 +102,7 @@
     <input id="usuario" type="text" readonly [(ngModel)]="receta!.usuario!.nombre" [ngModelOptions]="{ standalone: true }"/>
   </div>
 
+  <!-- INGREDIENTES: TABLA DINÁMICA -->
   <div>
     <table id="tabla-ingredientes">
       <thead>
@@ -156,6 +157,49 @@
     </table>
     <button type="button" (click)="agregarIngrediente()">Agregar Ingrediente</button>
   </div>
+
+  <!-- INTRUCCIONES: TABLA DINAMICA -->
+   <div>
+    <table id="tabla-instrucciones">
+      <thead>
+        <tr>
+          <th>Instrucción</th>
+          <th>Imagen</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (instruccion of receta!.instrucciones; track $index) {
+        <tr>
+          <td>
+            <textarea
+              [(ngModel)]="instruccion.descripcion"
+              name="instruccion-{{ $index }}"
+              placeholder="Describe la instrucción"
+              rows="2"
+              [ngModelOptions]="{ standalone: true }"
+            ></textarea>
+          </td>
+          <td>
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onInstruccionImagenSeleccionada($event, $index)"
+            />
+            <!-- Vista previa -->
+            <!-- @if (instruccion.imagenPreview) {
+            <img [src]="instruccion.imagenPreview" alt="Vista previa" class="preview-img" />
+            } -->
+          </td>
+          <td>
+            <button type="button" (click)="eliminarInstruccion($index)">Eliminar</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <button type="button" (click)="agregarInstruccion()">Agregar Instrucción</button>
+   </div>
 
   <!-- BOTONES -->
   <div class="form-buttons">
