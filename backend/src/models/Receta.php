@@ -1,7 +1,10 @@
 <?php
 
+require_once __DIR__ . '/Usuario.php';
+
 // Modelo que representa la tabla "recetas" y sus relaciones (ingredientes e instrucciones)
-class Receta {
+class Receta
+{
     // Conexión a la base de datos (PDO)
     private $conn;
     // Nombre de la tabla principal
@@ -28,14 +31,16 @@ class Receta {
     public $votos_negativos = 0;
 
     // Constructor: recibe la conexión y la guarda
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
     // ------------------------------------------------------------
     // Obtener todas las recetas, con sus ingredientes e instrucciones
     // ------------------------------------------------------------
-    public function getAll() {
+    public function getAll()
+    {
         // Consulta que obtiene todas las recetas con sus campos principales
         $query = "SELECT id, titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, destacada, votos_positivos, votos_negativos FROM " . $this->table_name . " ORDER BY id DESC";
         // Prepara la consulta
@@ -53,6 +58,9 @@ class Receta {
             $row['ingredientes'] = $this->getIngredientesByRecetaId($row['id']);
             // Añade las instrucciones de esa receta
             $row['instrucciones'] = $this->getInstruccionesByRecetaId($row['id']);
+
+            $row['usuario'] =  $this->getUsuarioById($row['usuario_id']);
+
             // Mete la receta completa en el array de resultados
             $results[] = $row;
         }
@@ -63,7 +71,8 @@ class Receta {
     // ------------------------------------------------------------
     // Obtener una receta por ID, incluyendo ingredientes e instrucciones
     // ------------------------------------------------------------
-    public function getById($id) {
+    public function getById($id)
+    {
         // Consulta para obtener una receta concreta por su id
         $query = "SELECT id, titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, destacada, votos_positivos, votos_negativos FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
         // Prepara la consulta
@@ -82,6 +91,8 @@ class Receta {
         // Añade las instrucciones relacionadas
         $row['instrucciones'] = $this->getInstruccionesByRecetaId($id);
 
+        $row['usuario'] =  $this->getUsuarioById($row['usuario_id']);
+
         // Devuelve la receta completa
         return $row;
     }
@@ -89,7 +100,8 @@ class Receta {
     // ------------------------------------------------------------
     // Crear una receta nueva con ingredientes e instrucciones (transacción)
     // ------------------------------------------------------------
-    public function create() {
+    public function create()
+    {
         try {
             // Comienza una transacción: todo o nada
             $this->conn->beginTransaction();
@@ -195,7 +207,8 @@ class Receta {
     // ------------------------------------------------------------
     // Actualizar una receta y reemplazar ingredientes + instrucciones
     // ------------------------------------------------------------
-    public function update() {
+    public function update()
+    {
         try {
             // Empieza transacción
             $this->conn->beginTransaction();
@@ -305,7 +318,8 @@ class Receta {
     // ------------------------------------------------------------
     // Eliminar una receta (las relaciones se borran por ON DELETE CASCADE)
     // ------------------------------------------------------------
-    public function delete($id) {
+    public function delete($id)
+    {
         // Consulta para borrar la receta principal
         $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
@@ -320,7 +334,8 @@ class Receta {
     // ------------------------------------------------------------
 
     // Obtener ingredientes de una receta por su id
-    private function getIngredientesByRecetaId($recetaId) {
+    private function getIngredientesByRecetaId($recetaId)
+    {
         // Consulta a la tabla relación receta_ingredientes
         $q = "SELECT ingrediente_id, cantidad, unidad FROM receta_ingredientes WHERE receta_id = :receta_id ORDER BY ingrediente_id";
         $s = $this->conn->prepare($q);
@@ -331,7 +346,8 @@ class Receta {
     }
 
     // Obtener instrucciones de una receta por su id
-    private function getInstruccionesByRecetaId($recetaId) {
+    private function getInstruccionesByRecetaId($recetaId)
+    {
         // Consulta a la tabla receta_instrucciones
         $q = "SELECT orden, descripcion, imagen_url FROM receta_instrucciones WHERE receta_id = :receta_id ORDER BY orden";
         $s = $this->conn->prepare($q);
@@ -341,4 +357,12 @@ class Receta {
         return $s->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    private function getUsuarioById($usuarioId)
+    {
+        if (!$usuarioId) return null;
+
+        // Usar el modelo Usuario existente
+        $usuarioModel = new Usuario($this->conn);
+        return $usuarioModel->getById($usuarioId);
+    }
 }

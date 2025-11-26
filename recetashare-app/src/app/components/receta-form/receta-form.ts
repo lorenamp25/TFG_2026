@@ -47,7 +47,7 @@ export class RecetaForm {
   form = new FormGroup({
     id: new FormControl(0), // Campo ID (oculto normalmente)
     titulo: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    tiempoPreparacion: new FormControl(0),
+    tiempo_preparacion: new FormControl(0),
     dificultad: new FormControl(''),
     categoria: new FormControl(),
     descripcion: new FormControl('', [Validators.required, Validators.minLength(10)]),
@@ -83,12 +83,12 @@ export class RecetaForm {
   // Guardar receta si el formulario es válido
   onGrabar() {
     if (this.form.valid) {
-      let receta = this.form.value as Receta
-      receta.usuario = this.receta?.usuario || this.storageService.getUsuario()
-      receta.ingredientes = this.receta?.ingredientes || []
-      receta.instrucciones = this.receta?.instrucciones || []
+      let receta = this.form.value as Receta;
+      receta.usuario = this.receta?.usuario || this.storageService.getUsuario();
+      receta.ingredientes = this.receta?.ingredientes || [];
+      receta.instrucciones = this.receta?.instrucciones || [];
+      receta.imagen_file = this.receta?.imagen_file;
 
-      console.log('Receta a guardar:', receta);
       this.guardarReceta.emit(receta); // Emite la receta al padre
       this.form.reset(); // Limpia el formulario
     }
@@ -98,6 +98,22 @@ export class RecetaForm {
   onCancelar() {
     this.cancelarAccion.emit();
     this.form.reset();
+  }
+
+  onImagenSeleccionada($event: Event) {
+    const input = $event.target as HTMLInputElement;
+
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      if (this.receta) {
+        this.receta.imagen_file = file;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.receta!.imagen_preview = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
   }
 
   agregarIngrediente() {
@@ -118,12 +134,5 @@ export class RecetaForm {
   }
   onInstruccionImagenSeleccionada(event: Event, instruccion: any) {
     const input = event.target as HTMLInputElement;
-
-
-  }
-
-  onImagenSeleccionada($event: Event) {
-
-
   }
 }

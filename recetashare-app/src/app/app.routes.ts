@@ -32,6 +32,11 @@ export const routes: Routes = [
       import('./pages/login/login').then((m) => m.LoginPage),
   },
   {
+    path: 'registrar',
+    loadComponent: () =>
+      import('./pages/registrar/registrar').then((m) => m.Registrar)
+  },
+  {
     path: 'admin-categoria',
     loadComponent: () =>
       import('./pages/admin/categoria-admin/categoria-admin').then((m) => m.CategoriaAdmin),

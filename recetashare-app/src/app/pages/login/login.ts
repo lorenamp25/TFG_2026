@@ -14,6 +14,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginPage {
 
+
   // === Formulario reactivo ===
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
@@ -43,5 +44,8 @@ export class LoginPage {
         }
       })
     }
+  }
+    irARegistro() {
+    this.router.navigate(['/registrar']);
   }
 }

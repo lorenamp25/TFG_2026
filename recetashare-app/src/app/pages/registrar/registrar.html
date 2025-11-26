@@ -1,1 +1,31 @@
-<p>registrar works!</p>
+<div class="register-page">
+  <div class="register-card">
+    <div class="register-logo">🍪</div>
+    <h1 class="register-title">Crear cuenta</h1>
+    <p class="register-subtitle">
+      Únete a RecetasApp para compartir y descubrir nuevas recetas.
+    </p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <label>Nickname</label>
+      <input formControlName="nickname" type="text">
+
+      <label>Nombre</label>
+      <input formControlName="nombre" type="text">
+
+      <label>Apellido</label>
+      <input formControlName="apellido" type="text">
+
+      <label>Email</label>
+      <input formControlName="email" type="email">
+
+      <label>Contraseña</label>
+      <input formControlName="password" type="password">
+
+      <label>Fecha de nacimiento</label>
+      <input formControlName="fecha_nacimiento" type="date">
+
+      <button type="submit">Registrarse</button>
+    </form>
+  </div>
+</div>

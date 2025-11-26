@@ -17,6 +17,8 @@ export class Instruccion {
     // URL opcional de una imagen ilustrativa del paso
     imagen_url?: string
 
+    imagenFile?: File
+
     // Constructor que inicializa los valores de la instrucción
     constructor(orden: number, descripcion: string, imagen_url?: string) {
         this.orden = orden          // Asigna el número de paso
@@ -67,6 +69,10 @@ export class Receta {
 
     // URL de la imagen de la receta
     imagen_url: string | undefined
+
+    imagen_preview: string | undefined
+
+    imagen_file?: File
 
     // ID del usuario autor de la receta
     usuario: Usuario | undefined
