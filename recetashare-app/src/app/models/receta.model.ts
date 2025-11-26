@@ -9,7 +9,7 @@ import { Usuario } from "./usuario.model"
 export class Instruccion {
 
     // Número de paso dentro de la preparación
-    paso: number
+    orden: number
 
     // Texto que describe lo que hay que hacer en ese paso
     descripcion: string
@@ -18,8 +18,8 @@ export class Instruccion {
     imagen_url?: string
 
     // Constructor que inicializa los valores de la instrucción
-    constructor(paso: number, descripcion: string, imagen_url?: string) {
-        this.paso = paso          // Asigna el número de paso
+    constructor(orden: number, descripcion: string, imagen_url?: string) {
+        this.orden = orden          // Asigna el número de paso
         this.descripcion = descripcion  // Asigna el texto descriptivo
         this.imagen_url = imagen_url    // Asigna la imagen (si existe)
     }
@@ -105,7 +105,7 @@ export class Receta {
         this.dificultad = dificultad                   // Asigna la dificultad
         this.categoria = categoria                     // Asigna la categoría
         this.imagen_url = imagen_url                   // Asigna la imagen
-        this.usuario = usuario                   // Asigna el autor
+        this.usuario = usuario                         // Asigna el autor
         this.destacada = destacada                     // Marca si es destacada
         this.votos_positivos = votos_positivos         // Asigna votos positivos
         this.votos_negativos = votos_negativos         // Asigna votos negativos
