@@ -22,14 +22,14 @@
 
   <!-- TIEMPO DE PREPARACIÓN -->
   <div class="form-group">
-    <label for="tiempoPreparacion">Tiempo de preparación (minutos)</label>
+    <label for="tiempo_preparacion">Tiempo de preparación (minutos)</label>
     <input
-      id="tiempoPreparacion"
+      id="tiempo_preparacion"
       type="number"
       min="1"
       max="999"
-      formControlName="tiempoPreparacion"
-      name="tiempoPreparacion"
+      formControlName="tiempo_preparacion"
+      name="tiempo_preparacion"
       placeholder="Ej: 45"
     />
   </div>
@@ -91,8 +91,8 @@
     <input id="imagen" type="file" accept="image/*" (change)="onImagenSeleccionada($event)" />
 
     <!-- Vista previa -->
-    @if (imagenPreview) {
-    <img [src]="imagenPreview" alt="Vista previa" class="preview-img" />
+    @if (receta && receta.imagen_preview) {
+    <img [src]="receta.imagen_preview" alt="Vista previa" class="preview-img" />
     }
   </div>
 
@@ -187,9 +187,9 @@
               (change)="onInstruccionImagenSeleccionada($event, $index)"
             />
             <!-- Vista previa -->
-            <!-- @if (instruccion.imagenPreview) {
-            <img [src]="instruccion.imagenPreview" alt="Vista previa" class="preview-img" />
-            } -->
+            @if (instruccion.imagen_url) {
+            <img [src]="instruccion.imagen_url" alt="Vista previa" class="preview-img" />
+            }
           </td>
           <td>
             <button type="button" (click)="eliminarInstruccion($index)">Eliminar</button>

@@ -72,6 +72,7 @@ export class RecetaPage {
           (receta: Receta) => receta.categoria === parseInt(categoria.value, 10)
         );
         this.estado = EstadoAccion.Listando;
+        console.log(this.recetas);
       });
     } else {
       // Si se selecciona “todas”, carga todas de nuevo
@@ -79,8 +80,10 @@ export class RecetaPage {
         this.selectedCategoria = 'all';
         this.recetas = response; // Guarda las recetas recibidas
         this.estado = EstadoAccion.Listando; // Vuelve al estado de listado
+        console.log(this.recetas);
       });
     }
+
   }
 
   agregarReceta() {
@@ -89,6 +92,9 @@ export class RecetaPage {
   }
 
   onGuardar(receta: Receta) {
+
+    console.log('Receta recibida para guardar:', receta);
+
     switch (this.estado) {
       case EstadoAccion.Agregando:
         this.estado = EstadoAccion.Procesando; // Procesando creación

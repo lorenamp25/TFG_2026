@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Receta } from '../../models/receta.model';
 import { CommonModule } from '@angular/common';
+import { getImageUrl } from '../../modules/common';
 
 @Component({
   standalone: true,
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Cardreceta {
   @Input() receta!: Receta
+  getImageUrl = getImageUrl
 
   constructor() {}
 }
