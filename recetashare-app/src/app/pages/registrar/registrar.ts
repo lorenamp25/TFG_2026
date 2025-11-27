@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrl: './registrar.css'
 })
 export class Registrar {
+irinciosesion() {
+ this.router.navigate(['/LoginPage']);
+}
  registerForm = new FormGroup({
     nickname: new FormControl("", [Validators.required]),
     nombre: new FormControl(""),
