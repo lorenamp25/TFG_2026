@@ -10,35 +10,29 @@ import { Categoria } from '../../models/categoria.model';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorageService } from '../../services/localstorage.service';
+import { RecetaView } from '../../components/receta-view/receta-view';
 
 @Component({
   standalone: true, // Componente independiente
   selector: 'app-receta', // Selector para usar este componente
-  imports: [CommonModule, RecetaTabla, RecetaForm, FormsModule], // Importa módulos y componentes necesarios
+  imports: [CommonModule, RecetaTabla, RecetaForm, FormsModule, RecetaView], // Importa módulos y componentes necesarios
   templateUrl: './receta.html', // Archivo HTML asociado
   styleUrls: ['./receta.css'], // Archivo CSS asociado
 })
 export class RecetaPage {
-  seleccionarCategoria(arg0: string) {
-    throw new Error('Method not implemented.');
-  }
-  dropdownAbierto: any;
-  toggleDropdown() {
-    throw new Error('Method not implemented.');
-  }
-  recetas: Receta[] = []; // Lista de recetas obtenidas del backend
-  receta: Receta | null = null; // Receta seleccionada para editar/eliminar
-  estado: EstadoAccion = EstadoAccion.Listando; // Estado actual de la interfaz (listando/agregando/etc.)
-  categorias: Categoria[] = []; // Lista de categorías para filtrar
-  idCategoriaSeleccionada: String | null = null; // ID de la categoría seleccionada para filtrar
-  selectedCategoria: any = 'all'; // valor por defecto -> "Todas las Categorías"
+  recetas: Receta[] = [] // Lista de recetas obtenidas del backend
+  receta: Receta | null = null // Receta seleccionada para editar/eliminar
+  estado: EstadoAccion = EstadoAccion.Listando // Estado actual de la interfaz (listando/agregando/etc.)
+  categorias: Categoria[] = [] // Lista de categorías para filtrar
+  idCategoriaSeleccionada: String | null = null // ID de la categoría seleccionada para filtrar
+  selectedCategoria: any = 'all' // valor por defecto -> "Todas las Categorías"
 
   constructor(
     private recetaService: RecetaService, // Servicio para hacer peticiones relacionadas a recetas
     private categoriaService: CategoriaService, // Servicio de categorías
     private route: ActivatedRoute,
     public storageService: StorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.idCategoriaSeleccionada = this.route.snapshot.paramMap.get('categoria');
@@ -83,7 +77,6 @@ export class RecetaPage {
         console.log(this.recetas);
       });
     }
-
   }
 
   agregarReceta() {
@@ -92,9 +85,6 @@ export class RecetaPage {
   }
 
   onGuardar(receta: Receta) {
-
-    console.log('Receta recibida para guardar:', receta);
-
     switch (this.estado) {
       case EstadoAccion.Agregando:
         this.estado = EstadoAccion.Procesando; // Procesando creación
@@ -136,4 +126,10 @@ export class RecetaPage {
     this.receta = receta; // Carga la receta a eliminar
     this.estado = EstadoAccion.Borrando; // Cambia a estado de borrado
   }
+
+  onVisualizarReceta(receta: any) {
+    this.receta = receta
+    this.estado = EstadoAccion.Visualizando // Cambia a estado de visualización
+  }
+
 }

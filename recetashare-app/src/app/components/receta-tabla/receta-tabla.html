@@ -3,7 +3,7 @@
     <ul id="recetaList">
       @for (receta of recetas; track $index) {
       <li>
-        <span class="receta-titulo">{{ receta.titulo }}</span>
+        <span class="receta-titulo" (click)="onClickReceta(receta)">{{ receta.titulo }}</span>
         @if (receta.usuario && receta.usuario.id === storageService.getUserId()) {
         <div class="actions">
           <button class="edit" (click)="onEditar(receta)">✏️</button>

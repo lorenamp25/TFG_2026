@@ -1,93 +1,79 @@
 <div>
-  Listado de recetas
-
-  @if (estado === 4) {
-    <p>Procesando datos...</p>
+  Listado de recetas @if (estado === 4) {
+  <p>Procesando datos...</p>
   }
 
   <div>
-    <!--<select (change)="cargarRecetas($event.target)" [(ngModel)]="selectedCategoria">
-      <option value="all">Todas las categorias</option>
-      @for (categoria of categorias; track $index) {
-        <option [value]="categoria.id">{{ categoria.nombre }}</option>
-      }
-    </select><-->
     <div class="select-wrapper">
-  <select class="select-recetas"
-          (change)="cargarRecetas($event.target)"
-          [(ngModel)]="selectedCategoria">
-    <option value="all">Todas las categorías</option>
-    @for (categoria of categorias; track $index) {
-      <option [value]="categoria.id">{{ categoria.nombre }}</option>
-    }
-  </select>
-
-
-
-
-</div>
-
-
+      <select
+        class="select-recetas"
+        (change)="cargarRecetas($event.target)"
+        [(ngModel)]="selectedCategoria"
+      >
+        <option value="all">Todas las categorías</option>
+        @for (categoria of categorias; track $index) {
+        <option [value]="categoria.id">{{ categoria.nombre }}</option>
+        }
+      </select>
+    </div>
   </div>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
   @if (storageService.isLoggedIn()) {
   <div>
     <button class="agregar-receta" (click)="agregarReceta()">Agregar Receta</button>
   </div>
-  }
-
-
-@switch (estado) {
-  @case (0) {
-    <div class="container">
-      <div>Recetas </div>
-      @if (recetas.length > 0) {
-        <app-receta-tabla
-          [recetas]="recetas"
-          (editarRecetaEvent)="onEditarReceta($event)"
-          (eliminarRecetaEvent)="onEliminarReceta($event)"
-        ></app-receta-tabla>
-      } @else {
-        <p>No hay recetas cargadas</p>
-      }
-    </div>
-  }
-  @case (1) {
-    <div class="container">
-      <div>Agregando</div>
-      <app-receta-form
-          (guardarReceta)="onGuardar($event)"
-          (cancelarAccion)="onCancelar()"
-          [receta]="receta"
-      ></app-receta-form>
-    </div>
-  }
-  @case (2) {
-    <div class="container">
-      <div>Editando</div>
-      <app-receta-form
-          (guardarReceta)="onGuardar($event)"
-          (cancelarAccion)="onCancelar()"
-          [receta]="receta"
-      ></app-receta-form>
-    </div>
-  }
-  @case (3) {
-    <div class="container">
-      <div>Confirmar Eliminacion</div>
-      <app-receta-form
-          (guardarReceta)="onGuardar($event)"
-          (cancelarAccion)="onCancelar()"
-          [receta]="receta"
-      ></app-receta-form>
-    </div>
-  }
-}
-
-
-
+  } @switch (estado) { @case (0) {
+  <div class="container">
+    <div>Recetas</div>
+    @if (recetas.length > 0) {
+    <app-receta-tabla
+      [recetas]="recetas"
+      (editarRecetaEvent)="onEditarReceta($event)"
+      (eliminarRecetaEvent)="onEliminarReceta($event)"
+      (clickOnRecetaEvent)="onVisualizarReceta($event)"
+    ></app-receta-tabla>
+    } @else {
+    <p>No hay recetas cargadas</p>
+    }
+  </div>
+  } @case (1) {
+  <div class="container">
+    <div>Agregando</div>
+    <app-receta-form
+      (guardarReceta)="onGuardar($event)"
+      (cancelarAccion)="onCancelar()"
+      [receta]="receta"
+    ></app-receta-form>
+  </div>
+  } @case (2) {
+  <div class="container">
+    <div>Editando</div>
+    <app-receta-form
+      (guardarReceta)="onGuardar($event)"
+      (cancelarAccion)="onCancelar()"
+      [receta]="receta"
+    ></app-receta-form>
+  </div>
+  } @case (3) {
+  <div class="container">
+    <div>Confirmar Eliminacion</div>
+    <app-receta-form
+      (guardarReceta)="onGuardar($event)"
+      (cancelarAccion)="onCancelar()"
+      [receta]="receta"
+    ></app-receta-form>
+  </div>
+  } @case (5) {
+  <div class="container">
+    <div>Visualizando</div>
+    <app-receta-view
+      (cerrarVista)="onCancelar()"
+      [receta]="receta"
+    ></app-receta-view>
+  </div>
+  } }
 </div>

@@ -16,6 +16,7 @@ class Usuario {
     public $password;
     public $fecha_nacimiento;
     public $puntuacion;
+    public $es_admin;
 
     // Constructor: recibe la conexión a la BD y la guarda
     public function __construct($db) {

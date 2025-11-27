@@ -6,16 +6,16 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar',
-   standalone: true,
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registrar.html',
   styleUrl: './registrar.css'
 })
 export class Registrar {
-irinciosesion() {
- this.router.navigate(['/LoginPage']);
-}
- registerForm = new FormGroup({
+  irinciosesion() {
+    this.router.navigate(['/LoginPage']);
+  }
+  registerForm = new FormGroup({
     nickname: new FormControl("", [Validators.required]),
     nombre: new FormControl(""),
     apellido: new FormControl(""),
@@ -24,7 +24,7 @@ irinciosesion() {
     fecha_nacimiento: new FormControl("")
   });
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
   onRegister() {
     if (this.registerForm.invalid) {

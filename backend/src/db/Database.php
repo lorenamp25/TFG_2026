@@ -1,7 +1,8 @@
 <?php
 
 // Clase encargada de manejar la conexión a la base de datos y la creación de tablas/datos de ejemplo
-class Database {
+class Database
+{
     // Propiedades privadas para los datos de conexión
     private $host;
     private $port;
@@ -13,7 +14,8 @@ class Database {
     public $conn;
 
     // Constructor: se ejecuta al crear un objeto Database
-    public function __construct() {
+    public function __construct()
+    {
         // Leer variables de entorno que define docker-compose (con valores por defecto)
         // Si existe la variable de entorno DB_HOST la usa, si no, usa 'db'
         $this->host = getenv('DB_HOST') ?: 'db';
@@ -28,7 +30,8 @@ class Database {
     }
 
     // Método para obtener la conexión a la base de datos
-    public function getConnection() {
+    public function getConnection()
+    {
         // Inicializa la conexión como null
         $this->conn = null;
 
@@ -47,7 +50,7 @@ class Database {
 
             // Establece el juego de caracteres a UTF-8
             $this->conn->exec("SET NAMES 'utf8'");
-        } catch(PDOException $exception) {
+        } catch (PDOException $exception) {
             // Si hay algún error de conexión, lo muestra en formato JSON
             echo json_encode(["error" => "Connection error: " . $exception->getMessage()]);
         }
@@ -57,7 +60,8 @@ class Database {
     }
 
     // Crear las tablas necesarias (si no existen)
-    public function createTables() {
+    public function createTables()
+    {
         // Bloque de SQL (heredoc) con la definición de todas las tablas
         $sql = <<<SQL
 -- Categorías
@@ -169,8 +173,692 @@ SQL;
     }
 
     // Crear datos de ejemplo (dummy) en la base de datos
-    public function crearDatosDummy() {
-        
+    public function crearDatosDummy()
+    {
+        try {
+            // Inicia una transacción para que todos los inserts sean atómicos
+            $this->conn->beginTransaction();
+
+            // --- Categorías coherentes ---
+            $categories = [
+                ['nombre' => 'Entrantes', 'descripcion' => 'Aperitivos y entrantes ligeros', 'icono' => '🥗'],
+                ['nombre' => 'Ensaladas', 'descripcion' => 'Ensaladas frescas y saludables', 'icono' => '🥬'],
+                ['nombre' => 'Sopas', 'descripcion' => 'Sopas y cremas calientes', 'icono' => '🍲'],
+                ['nombre' => 'Carnes', 'descripcion' => 'Platos principales de carne', 'icono' => '🥩'],
+                ['nombre' => 'Pescados', 'descripcion' => 'Platos de pescado y marisco', 'icono' => '🐟'],
+                ['nombre' => 'Vegetariano', 'descripcion' => 'Platos sin productos animales', 'icono' => '🌱'],
+                ['nombre' => 'Postres', 'descripcion' => 'Dulces y postres deliciosos', 'icono' => '🍰']
+            ];
+
+            $catIds = [];
+            $selectCat = $this->conn->prepare("SELECT id FROM categorias WHERE nombre = :nombre LIMIT 1");
+            $insertCat = $this->conn->prepare("INSERT INTO categorias (nombre, descripcion, icono) VALUES (:nombre, :descripcion, :icono) RETURNING id");
+
+            foreach ($categories as $c) {
+                $selectCat->execute([':nombre' => $c['nombre']]);
+                $id = $selectCat->fetchColumn();
+                if (!$id) {
+                    $insertCat->execute([':nombre' => $c['nombre'], ':descripcion' => $c['descripcion'], ':icono' => $c['icono']]);
+                    $id = $insertCat->fetchColumn();
+                }
+                $catIds[$c['nombre']] = $id; // Guardamos con clave nombre para acceso fácil
+            }
+
+            // --- Usuarios ---
+            $users = [
+                ['nickname' => 'chef_lorena', 'nombre' => 'Lorena', 'apellido' => 'Gómez', 'email' => 'lorena@example.com', 'password' => password_hash('password1', PASSWORD_DEFAULT), 'es_admin' => true],
+                ['nickname' => 'carlos_cocina', 'nombre' => 'Carlos', 'apellido' => 'Perez', 'email' => 'carlos@example.com', 'password' => password_hash('password2', PASSWORD_DEFAULT)],
+                ['nickname' => 'ana_dulces', 'nombre' => 'Ana', 'apellido' => 'Diaz', 'email' => 'ana@example.com', 'password' => password_hash('password3', PASSWORD_DEFAULT)],
+                ['nickname' => 'maria_healthy', 'nombre' => 'María', 'apellido' => 'Lopez', 'email' => 'maria@example.com', 'password' => password_hash('password4', PASSWORD_DEFAULT)]
+            ];
+
+            $userIds = [];
+            $selectUser = $this->conn->prepare("SELECT id FROM usuarios WHERE email = :email LIMIT 1");
+            $insertUser = $this->conn->prepare("INSERT INTO usuarios (nickname, nombre, apellido, email, password, es_admin, puntuacion) VALUES (:nickname, :nombre, :apellido, :email, :password, :es_admin, :puntuacion) RETURNING id");
+
+            foreach ($users as $u) {
+                $selectUser->execute([':email' => $u['email']]);
+                $id = $selectUser->fetchColumn();
+                if (!$id) {
+                    $insertUser->execute([':nickname' => $u['nickname'], ':nombre' => $u['nombre'], ':apellido' => $u['apellido'], ':email' => $u['email'], ':password' => $u['password'], ':es_admin' => $u['es_admin'], ':puntuacion' => rand(50, 200)]);
+                    $id = $insertUser->fetchColumn();
+                }
+                $userIds[] = $id;
+            }
+
+            // --- Ingredientes organizados por tipo ---
+            $ingredientes = [
+                // Harinas y granos
+                'Harina de trigo',
+                'Harina integral',
+                'Arroz blanco',
+                'Arroz integral',
+                'Pasta',
+                'Pan rallado',
+                'Avena',
+                // Lácteos
+                'Leche',
+                'Queso parmesano',
+                'Queso mozzarella',
+                'Queso cheddar',
+                'Yogur natural',
+                'Mantequilla',
+                'Nata líquida',
+                // Proteínas
+                'Pechuga de pollo',
+                'Filete de ternera',
+                'Salmón',
+                'Merluza',
+                'Gambas',
+                'Huevos',
+                'Tofu',
+                'Lentejas',
+                // Verduras
+                'Cebolla',
+                'Ajo',
+                'Tomate',
+                'Zanahoria',
+                'Pimiento rojo',
+                'Pimiento verde',
+                'Calabacín',
+                'Berenjena',
+                'Espinacas',
+                'Lechuga',
+                // Frutas
+                'Limón',
+                'Manzana',
+                'Plátano',
+                'Fresas',
+                'Chocolate negro',
+                'Azúcar',
+                'Miel',
+                'Canela',
+                'Vainilla',
+                // Condimentos y aceites
+                'Aceite de oliva',
+                'Vinagre',
+                'Sal',
+                'Pimienta',
+                'Orégano',
+                'Albahaca',
+                'Perejil',
+                'Romero'
+            ];
+
+            $ingredienteIds = [];
+            $selectIng = $this->conn->prepare("SELECT id FROM ingredientes WHERE nombre = :nombre LIMIT 1");
+            $insertIng = $this->conn->prepare("INSERT INTO ingredientes (nombre) VALUES (:nombre) RETURNING id");
+
+            foreach ($ingredientes as $nombre) {
+                $selectIng->execute([':nombre' => $nombre]);
+                $id = $selectIng->fetchColumn();
+                if (!$id) {
+                    $insertIng->execute([':nombre' => $nombre]);
+                    $id = $insertIng->fetchColumn();
+                }
+                $ingredienteIds[$nombre] = $id; // Guardamos con clave nombre
+            }
+
+            // --- Recetas coherentes (20 recetas) ---
+            $recetas = [
+                // Entrantes
+                [
+                    'titulo' => 'Bruschetta de tomate y albahaca',
+                    'descripcion' => 'Deliciosa bruschetta italiana con tomate fresco y albahaca',
+                    'tiempo' => 15,
+                    'dificultad' => 'fácil',
+                    'categoria' => 'Entrantes',
+                    'ingredientes' => [
+                        ['Pan de chapata', 8, 'rebanadas'],
+                        ['Tomate', 4, 'unidades'],
+                        ['Ajo', 2, 'dientes'],
+                        ['Albahaca', 10, 'hojas'],
+                        ['Aceite de oliva', 4, 'cucharadas'],
+                        ['Sal', 1, 'pizca']
+                    ],
+                    'instrucciones' => [
+                        'Cortar el pan en rebanadas y tostarlas ligeramente.',
+                        'Picar el tomate y el ajo finamente.',
+                        'Mezclar el tomate, ajo y albahaca con aceite de oliva y sal.',
+                        'Colocar la mezcla sobre las rebanadas de pan y servir.'
+                    ]
+                ],
+                [
+                    'titulo' => 'Hummus de garbanzos',
+                    'descripcion' => 'Crema de garbanzos al estilo mediterráneo',
+                    'tiempo' => 20,
+                    'dificultad' => 'fácil',
+                    'categoria' => 'Entrantes',
+                    'ingredientes' => [
+                        ['Garbanzos cocidos', 400, 'g'],
+                        ['Aceite de oliva', 4, 'cucharadas'],
+                        ['Limón', 1, 'unidad'],
+                        ['Ajo', 2, 'dientes'],
+                        ['Comino', 1, 'cucharadita'],
+                        ['Sal', 1, 'pizca']
+                    ],
+                    'instrucciones' => [
+                        'Escurrir los garbanzos y reservar el líquido.',
+                        'Mezclar todos los ingredientes en la batidora.',
+                        'Triturar hasta obtener una crema suave.',
+                        'Añadir el líquido de los garbanzos si está muy espeso.',
+                        'Servir con un chorrito de aceite de oliva por encima.'
+                    ]
+                ],
+
+                // Ensaladas
+                [
+                    'titulo' => 'Ensalada César',
+                    'descripcion' => 'Clásica ensalada César con pollo y aderezo cremoso',
+                    'tiempo' => 25,
+                    'dificultad' => 'media',
+                    'categoria' => 'Ensaladas',
+                    'ingredientes' => [
+                        ['Lechuga', 1, 'unidad'],
+                        ['Pechuga de pollo', 2, 'unidades'],
+                        ['Pan de chapata', 4, 'rebanadas'],
+                        ['Queso parmesano', 50, 'g'],
+                        ['Aceite de oliva', 3, 'cucharadas'],
+                        ['Limón', 1, 'unidad'],
+                        ['Ajo', 1, 'diente']
+                    ],
+                    'instrucciones' => [
+                        'Cocinar el pollo a la plancha y cortar en tiras.',
+                        'Cortar el pan en cubos y tostar en el horno.',
+                        'Lavar y cortar la lechuga.',
+                        'Preparar el aderezo con aceite, limón y ajo.',
+                        'Mezclar todos los ingredientes y añadir el queso rallado.'
+                    ]
+                ],
+
+                // Sopas
+                [
+                    'titulo' => 'Crema de calabacín',
+                    'descripcion' => 'Sopa cremosa de calabacín ligera y saludable',
+                    'tiempo' => 30,
+                    'dificultad' => 'fácil',
+                    'categoria' => 'Sopas',
+                    'ingredientes' => [
+                        ['Calabacín', 3, 'unidades'],
+                        ['Cebolla', 1, 'unidad'],
+                        ['Ajo', 2, 'dientes'],
+                        ['Caldo de verduras', 500, 'ml'],
+                        ['Nata líquida', 100, 'ml'],
+                        ['Aceite de oliva', 2, 'cucharadas'],
+                        ['Sal', 1, 'pizca']
+                    ],
+                    'instrucciones' => [
+                        'Picar la cebolla y el ajo y sofreír en aceite.',
+                        'Añadir el calabacín cortado y cocinar 5 minutos.',
+                        'Añadir el caldo y cocinar 15 minutos.',
+                        'Triturar hasta obtener una crema suave.',
+                        'Añadir la nata y rectificar de sal.'
+                    ]
+                ],
+
+                // Carnes
+                [
+                    'titulo' => 'Pollo al horno con patatas',
+                    'descripcion' => 'Pollo asado con patatas y hierbas aromáticas',
+                    'tiempo' => 80,
+                    'dificultad' => 'media',
+                    'categoria' => 'Carnes',
+                    'ingredientes' => [
+                        ['Pollo entero', 1, 'unidad'],
+                        ['Patata', 6, 'unidades'],
+                        ['Cebolla', 2, 'unidades'],
+                        ['Ajo', 4, 'dientes'],
+                        ['Romero', 2, 'ramas'],
+                        ['Aceite de oliva', 4, 'cucharadas'],
+                        ['Sal', 2, 'cucharaditas']
+                    ],
+                    'instrucciones' => [
+                        'Precalentar el horno a 180°C.',
+                        'Limpiar y salpimentar el pollo por dentro y por fuera.',
+                        'Pelar y cortar las patatas en gajos.',
+                        'Colocar el pollo y las patatas en una bandeja.',
+                        'Añadir las hierbas y hornear durante 1 hora.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Lasaña de carne',
+                    'descripcion' => 'Lasaña tradicional con carne y bechamel',
+                    'tiempo' => 90,
+                    'dificultad' => 'alta',
+                    'categoria' => 'Carnes',
+                    'ingredientes' => [
+                        ['Carne picada', 500, 'g'],
+                        ['Láminas de lasaña', 12, 'unidades'],
+                        ['Tomate', 4, 'unidades'],
+                        ['Cebolla', 1, 'unidad'],
+                        ['Queso mozzarella', 200, 'g'],
+                        ['Queso parmesano', 100, 'g'],
+                        ['Leche', 500, 'ml'],
+                        ['Harina de trigo', 50, 'g'],
+                        ['Mantequilla', 50, 'g']
+                    ],
+                    'instrucciones' => [
+                        'Preparar la salsa de tomate con la carne.',
+                        'Hacer la bechamel con mantequilla, harina y leche.',
+                        'Montar capas: salsa, láminas, bechamel.',
+                        'Repetir las capas y terminar con queso.',
+                        'Hornear a 180°C durante 40 minutos.'
+                    ]
+                ],
+
+                // Pescados
+                [
+                    'titulo' => 'Salmón a la plancha',
+                    'descripcion' => 'Salmón fresco cocinado a la plancha con limón',
+                    'tiempo' => 20,
+                    'dificultad' => 'fácil',
+                    'categoria' => 'Pescados',
+                    'ingredientes' => [
+                        ['Salmón', 4, 'filetes'],
+                        ['Limón', 2, 'unidades'],
+                        ['Aceite de oliva', 2, 'cucharadas'],
+                        ['Eneldo', 1, 'cucharadita'],
+                        ['Sal', 1, 'pizca']
+                    ],
+                    'instrucciones' => [
+                        'Sazonar el salmón con sal y eneldo.',
+                        'Calentar la plancha con aceite.',
+                        'Cocinar el salmón 4 minutos por cada lado.',
+                        'Exprimir limón por encima antes de servir.'
+                    ]
+                ],
+
+                // Vegetariano
+                [
+                    'titulo' => 'Risotto de champiñones',
+                    'descripcion' => 'Risotto cremoso con champiñones y parmesano',
+                    'tiempo' => 40,
+                    'dificultad' => 'media',
+                    'categoria' => 'Vegetariano',
+                    'ingredientes' => [
+                        ['Arroz blanco', 300, 'g'],
+                        ['Champiñones', 400, 'g'],
+                        ['Cebolla', 1, 'unidad'],
+                        ['Vino blanco', 100, 'ml'],
+                        ['Caldo de verduras', 1, 'litro'],
+                        ['Queso parmesano', 80, 'g'],
+                        ['Mantequilla', 30, 'g']
+                    ],
+                    'instrucciones' => [
+                        'Sofreír la cebolla y los champiñones.',
+                        'Añadir el arroz y cocinar 2 minutos.',
+                        'Incorporar el vino y dejar evaporar.',
+                        'Añadir el caldo poco a poco removiendo.',
+                        'Terminar con mantequilla y queso.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Hamburguesas de lentejas',
+                    'descripcion' => 'Hamburguesas vegetales de lentejas y especias',
+                    'tiempo' => 35,
+                    'dificultad' => 'media',
+                    'categoria' => 'Vegetariano',
+                    'ingredientes' => [
+                        ['Lentejas cocidas', 400, 'g'],
+                        ['Cebolla', 1, 'unidad'],
+                        ['Ajo', 2, 'dientes'],
+                        ['Pan rallado', 100, 'g'],
+                        ['Huevos', 2, 'unidades'],
+                        ['Comino', 1, 'cucharadita'],
+                        ['Aceite de oliva', 3, 'cucharadas']
+                    ],
+                    'instrucciones' => [
+                        'Triturar las lentejas con cebolla y ajo.',
+                        'Mezclar con huevo, pan rallado y especias.',
+                        'Formar hamburguesas y refrigerar 15 minutos.',
+                        'Cocinar a la plancha 5 minutos por cada lado.'
+                    ]
+                ],
+
+                // Postres
+                [
+                    'titulo' => 'Brownie de chocolate',
+                    'descripcion' => 'Brownie intenso de chocolate con nueces',
+                    'tiempo' => 45,
+                    'dificultad' => 'media',
+                    'categoria' => 'Postres',
+                    'ingredientes' => [
+                        ['Chocolate negro', 200, 'g'],
+                        ['Mantequilla', 150, 'g'],
+                        ['Azúcar', 200, 'g'],
+                        ['Huevos', 3, 'unidades'],
+                        ['Harina de trigo', 100, 'g'],
+                        ['Nueces', 100, 'g']
+                    ],
+                    'instrucciones' => [
+                        'Derretir chocolate y mantequilla al baño maría.',
+                        'Batir huevos con azúcar hasta espumar.',
+                        'Incorporar chocolate y harina.',
+                        'Añadir nueces y hornear 25 minutos.',
+                        'Dejar enfriar antes de cortar.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Tarta de queso',
+                    'descripcion' => 'Tarta de queso cremosa al estilo New York',
+                    'tiempo' => 60,
+                    'dificultad' => 'media',
+                    'categoria' => 'Postres',
+                    'ingredientes' => [
+                        ['Galletas digestive', 200, 'g'],
+                        ['Mantequilla', 100, 'g'],
+                        ['Queso crema', 500, 'g'],
+                        ['Azúcar', 150, 'g'],
+                        ['Huevos', 3, 'unidades'],
+                        ['Nata líquida', 200, 'ml'],
+                        ['Vainilla', 1, 'cucharadita']
+                    ],
+                    'instrucciones' => [
+                        'Triturar galletas y mezclar con mantequilla.',
+                        'Forrar el molde con la base de galleta.',
+                        'Batir queso con azúcar y huevos.',
+                        'Añadir nata y vainilla, verter sobre la base.',
+                        'Hornear a 160°C durante 45 minutos.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Flan de huevo',
+                    'descripcion' => 'Flan tradicional de huevo con caramelo',
+                    'tiempo' => 50,
+                    'dificultad' => 'fácil',
+                    'categoria' => 'Postres',
+                    'ingredientes' => [
+                        ['Huevos', 6, 'unidades'],
+                        ['Leche', 500, 'ml'],
+                        ['Azúcar', 150, 'g'],
+                        ['Vainilla', 1, 'cucharadita']
+                    ],
+                    'instrucciones' => [
+                        'Preparar caramelo y cubrir los moldes.',
+                        'Batir huevos con azúcar y vainilla.',
+                        'Añadir leche poco a poco sin batir en exceso.',
+                        'Verter en moldes y cocinar al baño maría.',
+                        'Refrigerar 4 horas antes de desmoldar.'
+                    ]
+                ],
+
+                // Más recetas para completar las 20
+                [
+                    'titulo' => 'Gazpacho andaluz',
+                    'descripcion' => 'Sopa fría de tomate y verduras',
+                    'tiempo' => 20,
+                    'dificultad' => 'fácil',
+                    'categoria' => 'Sopas',
+                    'ingredientes' => [
+                        ['Tomate', 1, 'kg'],
+                        ['Pimiento verde', 1, 'unidad'],
+                        ['Pepino', 1, 'unidad'],
+                        ['Ajo', 1, 'diente'],
+                        ['Aceite de oliva', 4, 'cucharadas'],
+                        ['Vinagre', 2, 'cucharadas'],
+                        ['Sal', 1, 'pizca']
+                    ],
+                    'instrucciones' => [
+                        'Lavar y cortar todas las verduras.',
+                        'Triturar todos los ingredientes.',
+                        'Pasar por el colador para eliminar pieles.',
+                        'Refrigerar 2 horas antes de servir.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Tortilla de patatas',
+                    'descripcion' => 'Tortilla española clásica con cebolla',
+                    'tiempo' => 40,
+                    'dificultad' => 'media',
+                    'categoria' => 'Vegetariano',
+                    'ingredientes' => [
+                        ['Patata', 6, 'unidades'],
+                        ['Huevos', 8, 'unidades'],
+                        ['Cebolla', 1, 'unidad'],
+                        ['Aceite de oliva', 1, 'vaso'],
+                        ['Sal', 1, 'cucharadita']
+                    ],
+                    'instrucciones' => [
+                        'Pelar y cortar patatas en rodajas finas.',
+                        'Freír patatas y cebolla a fuego lento.',
+                        'Batir los huevos y mezclar con las patatas.',
+                        'Cuajar la tortilla por ambos lados.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Pasta carbonara',
+                    'descripcion' => 'Pasta con salsa cremosa de huevo y panceta',
+                    'tiempo' => 25,
+                    'dificultad' => 'media',
+                    'categoria' => 'Carnes',
+                    'ingredientes' => [
+                        ['Pasta', 400, 'g'],
+                        ['Panceta', 200, 'g'],
+                        ['Huevos', 3, 'unidades'],
+                        ['Queso parmesano', 100, 'g'],
+                        ['Pimienta negra', 1, 'cucharadita']
+                    ],
+                    'instrucciones' => [
+                        'Cocinar la pasta al dente.',
+                        'Dorar la panceta en una sartén.',
+                        'Batir huevos con queso y pimienta.',
+                        'Mezclar todo fuera del fuego.',
+                        'Servir inmediatamente.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Guacamole',
+                    'descripcion' => 'Dip mexicano de aguacate y limón',
+                    'tiempo' => 15,
+                    'dificultad' => 'fácil',
+                    'categoria' => 'Entrantes',
+                    'ingredientes' => [
+                        ['Aguacate', 3, 'unidades'],
+                        ['Limón', 1, 'unidad'],
+                        ['Cebolla', 0.5, 'unidad'],
+                        ['Tomate', 1, 'unidad'],
+                        ['Cilantro', 2, 'cucharadas'],
+                        ['Sal', 1, 'pizca']
+                    ],
+                    'instrucciones' => [
+                        'Triturar los aguacates con un tenedor.',
+                        'Picar finamente cebolla, tomate y cilantro.',
+                        'Mezclar todo y añadir limón y sal.',
+                        'Refrigerar 30 minutos antes de servir.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Paella de marisco',
+                    'descripcion' => 'Paella valenciana con marisco fresco',
+                    'tiempo' => 60,
+                    'dificultad' => 'alta',
+                    'categoria' => 'Pescados',
+                    'ingredientes' => [
+                        ['Arroz blanco', 400, 'g'],
+                        ['Gambas', 200, 'g'],
+                        ['Mejillones', 500, 'g'],
+                        ['Calamares', 300, 'g'],
+                        ['Pimiento rojo', 1, 'unidad'],
+                        ['Azafrán', 1, 'pizca'],
+                        ['Caldo de pescado', 1, 'litro']
+                    ],
+                    'instrucciones' => [
+                        'Sofreír las verduras en la paellera.',
+                        'Añadir el marisco y cocinar 5 minutos.',
+                        'Incorporar el arroz y el azafrán.',
+                        'Añadir el caldo caliente y cocinar 18 minutos.',
+                        'Dejar reposar 5 minutos antes de servir.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Mousse de chocolate',
+                    'descripcion' => 'Mousse ligera de chocolate negro',
+                    'tiempo' => 30,
+                    'dificultad' => 'media',
+                    'categoria' => 'Postres',
+                    'ingredientes' => [
+                        ['Chocolate negro', 200, 'g'],
+                        ['Huevos', 4, 'unidades'],
+                        ['Azúcar', 50, 'g'],
+                        ['Mantequilla', 50, 'g']
+                    ],
+                    'instrucciones' => [
+                        'Derretir chocolate con mantequilla.',
+                        'Separar yemas de claras.',
+                        'Batir claras a punto de nieve con azúcar.',
+                        'Mezclar yemas con chocolate templado.',
+                        'Incorporar claras con movimientos suaves.',
+                        'Refrigerar 4 horas antes de servir.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Pollo curry',
+                    'descripcion' => 'Pollo en salsa de curry y coco',
+                    'tiempo' => 40,
+                    'dificultad' => 'media',
+                    'categoria' => 'Carnes',
+                    'ingredientes' => [
+                        ['Pechuga de pollo', 500, 'g'],
+                        ['Cebolla', 1, 'unidad'],
+                        ['Leche de coco', 400, 'ml'],
+                        ['Curry en polvo', 2, 'cucharadas'],
+                        ['Jengibre', 1, 'cucharadita'],
+                        ['Aceite de oliva', 2, 'cucharadas']
+                    ],
+                    'instrucciones' => [
+                        'Dorar el pollo cortado en dados.',
+                        'Añadir cebolla y especias.',
+                        'Incorporar leche de coco.',
+                        'Cocinar 20 minutos a fuego lento.',
+                        'Servir con arroz basmati.'
+                    ]
+                ],
+
+                [
+                    'titulo' => 'Ensalada de quinoa',
+                    'descripcion' => 'Ensalada saludable de quinoa y verduras',
+                    'tiempo' => 25,
+                    'dificultad' => 'fácil',
+                    'categoria' => 'Ensaladas',
+                    'ingredientes' => [
+                        ['Quinoa', 200, 'g'],
+                        ['Pepino', 1, 'unidad'],
+                        ['Tomate', 2, 'unidades'],
+                        ['Aguacate', 1, 'unidad'],
+                        ['Limón', 1, 'unidad'],
+                        ['Aceite de oliva', 3, 'cucharadas']
+                    ],
+                    'instrucciones' => [
+                        'Cocinar quinoa según instrucciones.',
+                        'Cortar todas las verduras en cubos.',
+                        'Mezclar quinoa con verduras.',
+                        'Aliñar con limón y aceite.',
+                        'Servir fría o a temperatura ambiente.'
+                    ]
+                ]
+            ];
+
+            // Preparar statements para insertar
+            $insertReceta = $this->conn->prepare("INSERT INTO recetas (titulo, descripcion, tiempo_preparacion, dificultad, categoria, imagen_url, usuario_id, votos_positivos, votos_negativos, destacada) VALUES (:titulo, :descripcion, :tiempo_preparacion, :dificultad, :categoria, :imagen_url, :usuario_id, :votos_positivos, :votos_negativos, :destacada) RETURNING id");
+            $insertRecIng = $this->conn->prepare("INSERT INTO receta_ingredientes (receta_id, ingrediente_id, cantidad, unidad) VALUES (:receta_id, :ingrediente_id, :cantidad, :unidad)");
+            $insertInstr = $this->conn->prepare("INSERT INTO receta_instrucciones (receta_id, orden, descripcion, imagen_url) VALUES (:receta_id, :orden, :descripcion, :imagen_url)");
+
+            // Insertar cada receta
+            foreach ($recetas as $receta) {
+                $imagen = null;
+                $usuario_id = $userIds[array_rand($userIds)];
+                $destacada = (rand(0, 4) === 0); // 20% de probabilidad de ser destacada
+
+                // Insertar receta
+                $insertReceta->execute([
+                    ':titulo' => $receta['titulo'],
+                    ':descripcion' => $receta['descripcion'],
+                    ':tiempo_preparacion' => $receta['tiempo'],
+                    ':dificultad' => $receta['dificultad'],
+                    ':categoria' => $catIds[$receta['categoria']],
+                    ':imagen_url' => $imagen,
+                    ':usuario_id' => $usuario_id,
+                    ':votos_positivos' => rand(5, 100),
+                    ':votos_negativos' => rand(0, 15),
+                    ':destacada' => 'false' // Destacada se maneja aparte
+                ]);
+
+                $recetaId = $insertReceta->fetchColumn();
+
+                // Insertar ingredientes
+                foreach ($receta['ingredientes'] as $ing) {
+                    $ingredienteNombre = $ing[0];
+                    if (isset($ingredienteIds[$ingredienteNombre])) {
+                        $insertRecIng->execute([
+                            ':receta_id' => $recetaId,
+                            ':ingrediente_id' => $ingredienteIds[$ingredienteNombre],
+                            ':cantidad' => $ing[1],
+                            ':unidad' => $ing[2]
+                        ]);
+                    }
+                }
+
+                // Insertar instrucciones
+                foreach ($receta['instrucciones'] as $orden => $descripcion) {
+                    $insertInstr->execute([
+                        ':receta_id' => $recetaId,
+                        ':orden' => $orden + 1,
+                        ':descripcion' => $descripcion,
+                        ':imagen_url' => null
+                    ]);
+                }
+            }
+
+            // --- Comentarios realistas ---
+            $insertComentario = $this->conn->prepare("INSERT INTO comentarios (receta_id, usuario_id, contenido, puntuacion) VALUES (:receta_id, :usuario_id, :contenido, :puntuacion)");
+
+            // Obtener IDs de recetas
+            $rstmt = $this->conn->query("SELECT id FROM recetas ORDER BY id");
+            $rids = $rstmt->fetchAll(PDO::FETCH_COLUMN);
+
+            // Comentarios organizados por tipo de receta
+            $comentariosPostres = ["¡Increíblemente delicioso!", "Perfecto nivel de dulzor", "A mi familia le encantó", "Fácil de hacer y espectacular"];
+            $comentariosSalados = ["Muy sabroso y bien equilibrado", "Perfecto para una cena especial", "Los ingredientes combinan genial", "Volveré a hacerlo seguro"];
+            $comentariosFaciles = ["Sencillo y rápido de preparar", "Ideal para principiantes", "Resultado profesional con poco esfuerzo"];
+
+            foreach ($rids as $rid) {
+                $numComentarios = rand(1, 5);
+                for ($c = 0; $c < $numComentarios; $c++) {
+                    // Seleccionar comentario apropiado según el tipo de receta
+                    $comentariosArray = $comentariosSalados;
+                    $insertComentario->execute([
+                        ':receta_id' => $rid,
+                        ':usuario_id' => $userIds[array_rand($userIds)],
+                        ':contenido' => $comentariosArray[array_rand($comentariosArray)],
+                        ':puntuacion' => rand(4, 5) // Mayor probabilidad de puntuaciones altas
+                    ]);
+                }
+            }
+
+            // Confirmar transacción
+            $this->conn->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->conn->rollBack();
+            echo json_encode(["error" => "Error inserting dummy data: " . $e->getMessage()]);
+            return false;
+        }
+    }
+
+
+    public function crearDatosDummy_old()
+    {
+
         try {
             // Inicia una transacción para que todos los inserts sean atómicos
             $this->conn->beginTransaction();
@@ -232,8 +920,26 @@ SQL;
             // --- Ingredientes (20) ---
             // Lista de nombres de ingredientes de ejemplo
             $ingredientes = [
-                'Harina','Azúcar','Sal','Pimienta','Aceite de oliva','Huevos','Leche','Mantequilla','Ajo','Cebolla',
-                'Tomate','Queso','Pollo','Carne de vaca','Perejil','Albahaca','Arroz','Pasta','Patata','Zanahoria'
+                'Harina',
+                'Azúcar',
+                'Sal',
+                'Pimienta',
+                'Aceite de oliva',
+                'Huevos',
+                'Leche',
+                'Mantequilla',
+                'Ajo',
+                'Cebolla',
+                'Tomate',
+                'Queso',
+                'Pollo',
+                'Carne de vaca',
+                'Perejil',
+                'Albahaca',
+                'Arroz',
+                'Pasta',
+                'Patata',
+                'Zanahoria'
             ];
             // Array con IDs de ingredientes
             $ingredienteIds = [];
@@ -257,8 +963,16 @@ SQL;
             // --- Recetas (10) with ingredientes and instrucciones ---
             // Lista de títulos de recetas de ejemplo
             $titulos = [
-                'Tarta de manzana','Pollo al horno','Pasta con salsa de tomate','Arroz con verduras','Ensalada mediterránea',
-                'Sopa de pollo','Patatas al horno','Tortilla española','Galletas de mantequilla','Pasta al pesto'
+                'Tarta de manzana',
+                'Pollo al horno',
+                'Pasta con salsa de tomate',
+                'Arroz con verduras',
+                'Ensalada mediterránea',
+                'Sopa de pollo',
+                'Patatas al horno',
+                'Tortilla española',
+                'Galletas de mantequilla',
+                'Pasta al pesto'
             ];
 
             // Prepare para insertar recetas
@@ -275,7 +989,7 @@ SQL;
                 // Tiempo de preparación aleatorio entre 10 y 120 minutos
                 $tiempo = rand(10, 120);
                 // Posibles niveles de dificultad
-                $diffOptions = ['fácil','media','alta'];
+                $diffOptions = ['fácil', 'media', 'alta'];
                 // Escoge dificultad aleatoria
                 $dificultad = $diffOptions[array_rand($diffOptions)];
                 // Categoría aleatoria de las creadas arriba
@@ -285,7 +999,7 @@ SQL;
                 // Usuario autor aleatorio
                 $usuario_id = $userIds[array_rand($userIds)];
                 // Marca algunas como destacadas aleatoriamente
-                $destacada = (rand(0,9) === 0) ? true : false;
+                $destacada = (rand(0, 9) === 0) ? true : false;
 
                 // Inserta la receta
                 $insertReceta->execute([
@@ -296,40 +1010,40 @@ SQL;
                     ':categoria' => $categoria,
                     ':imagen_url' => $imagen,
                     ':usuario_id' => $usuario_id,
-                    ':votos_positivos' => rand(0,50),
-                    ':votos_negativos' => rand(0,20)
+                    ':votos_positivos' => rand(0, 50),
+                    ':votos_negativos' => rand(0, 20)
                 ]);
                 // Obtiene el ID de la receta recién insertada
                 $recetaId = $insertReceta->fetchColumn();
 
                 // add 3-6 ingredientes
                 // Genera entre 3 y 6 ingredientes asociados a esta receta
-                $numIng = rand(3,6);
+                $numIng = rand(3, 6);
                 // Array para evitar repetir el mismo ingrediente
                 $used = [];
-                for ($k=0;$k<$numIng;$k++) {
+                for ($k = 0; $k < $numIng; $k++) {
                     // Escoge un ingrediente aleatorio
                     $idx = $ingredienteIds[array_rand($ingredienteIds)];
                     // Si ya se usó ese ingrediente en esta receta, lo salta
-                    if (in_array($idx,$used)) continue;
+                    if (in_array($idx, $used)) continue;
                     // Lo marca como usado
                     $used[] = $idx;
                     // Cantidad aleatoria
-                    $cantidad = rand(1,500);
+                    $cantidad = rand(1, 500);
                     // Unidad aleatoria entre gramos o mililitros
-                    $unidad = (rand(0,1)===0)?'g':'ml';
+                    $unidad = (rand(0, 1) === 0) ? 'g' : 'ml';
                     // Inserta la relación receta-ingrediente
-                    $insertRecIng->execute([':receta_id'=>$recetaId,':ingrediente_id'=>$idx,':cantidad'=>$cantidad,':unidad'=>$unidad]);
+                    $insertRecIng->execute([':receta_id' => $recetaId, ':ingrediente_id' => $idx, ':cantidad' => $cantidad, ':unidad' => $unidad]);
                 }
 
                 // add 2-5 instrucciones
                 // Define entre 2 y 5 pasos para la receta
-                $numInstr = rand(2,5);
-                for ($s=1;$s<=$numInstr;$s++) {
+                $numInstr = rand(2, 5);
+                for ($s = 1; $s <= $numInstr; $s++) {
                     // Descripción del paso actual
                     $desc = "Paso $s para preparar $titulo.";
                     // Inserta la instrucción
-                    $insertInstr->execute([':receta_id'=>$recetaId,':orden'=>$s,':descripcion'=>$desc,':imagen_url'=>null]);
+                    $insertInstr->execute([':receta_id' => $recetaId, ':orden' => $s, ':descripcion' => $desc, ':imagen_url' => null]);
                 }
             }
 
@@ -346,10 +1060,10 @@ SQL;
             // Recorre las recetas
             foreach ($rids as $rid) {
                 // Número aleatorio de comentarios para esta receta
-                $num = rand(0,3);
-                for ($c=0;$c<$num;$c++) {
+                $num = rand(0, 3);
+                for ($c = 0; $c < $num; $c++) {
                     // Inserta comentario con usuario aleatorio, comentario aleatorio y puntuación aleatoria
-                    $insertComentario->execute([':receta_id'=>$rid, ':usuario_id'=>$userIds[array_rand($userIds)], ':contenido'=>$sampleComments[array_rand($sampleComments)], ':puntuacion'=>rand(1,5)]);
+                    $insertComentario->execute([':receta_id' => $rid, ':usuario_id' => $userIds[array_rand($userIds)], ':contenido' => $sampleComments[array_rand($sampleComments)], ':puntuacion' => rand(1, 5)]);
                 }
             }
 
@@ -364,6 +1078,5 @@ SQL;
             // Revienta devolviendo false
             return false;
         }
-
     }
 }

@@ -26,7 +26,7 @@ class ImageController
         }
 
         // Ruta completa al archivo
-        $fullPath = __DIR__ . '/../uploads/' . $imagePath;
+        $fullPath = __DIR__ . '/../' . $imagePath;
 
         // Verificar que el archivo existe
         if (!file_exists($fullPath)) {
