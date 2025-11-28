@@ -33,6 +33,7 @@ Desde la terminal en el Docker-desktop:
 Herramienta para generar el diagrama:
    https://dbdiagram.io/d
 
+pg_dump --schema-only  receta -U receta
 
 
 # Progreso temas puntuales
