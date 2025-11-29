@@ -1,23 +1,22 @@
 # pull official base image
 FROM node:22.12.0-alpine
 
-# set working directory
 WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# set host
-ENV HOST 0.0.0.0
-ENV PORT 5173
-
-# install app dependencies
 COPY package.json ./
 RUN npm install --silent
-
-# add app
 COPY . ./
+RUN npm run build --configuration=production
 
-# start app
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "5173"]
+# Production stage
+FROM nginx:alpine
 
+RUN rm -rf /etc/nginx/conf.d/* /etc/nginx/nginx.conf /usr/share/nginx/html/*
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy the built Angular files
+COPY --from=build /app/dist/recetashare-app/browser/ /usr/share/nginx/html/
+
+# Ensure permissions are set correctly
+RUN chmod -R 755 /usr/share/nginx/html
+
+EXPOSE 80
