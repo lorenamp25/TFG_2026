@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <header class="encabezado">
   <div class="contenido-encabezado contenedor">
     <div class="logo">
@@ -41,10 +42,65 @@
     <!-- 🔹 Zona de login/logout SOLO escritorio -->
     <div class="acciones-encabezado">
       <button class="cambiar-tema" id="boton-tema" (click)="toggleTheme()">
+=======
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Receta Share App</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <header class="encabezado navbar">
+  <div class="contenido-encabezado contenedor navbar__container">
+
+    <!-- Logo -->
+    <a href="" class="logo navbar__logo">
+      <span class="navbar__logo-icon">🍳</span>
+      <span class="navbar__logo-text">
+        Recetas<span>App</span>
+      </span>
+    </a>
+
+    <!-- Toggle móvil (checkbox hack, sin JS) -->
+    <input type="checkbox" id="nav-toggle" class="navbar__checkbox">
+    <label for="nav-toggle" class="navbar__toggle" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <!-- Navegación principal -->
+    <nav class="navegacion navbar__nav">
+      <a href="" class="navbar__link">Inicio</a>
+      <a href="categoria" class="navbar__link">Categorías</a>
+      <a href="ingrediente" class="navbar__link">Ingredientes</a>
+      <a href="receta" class="navbar__link">Recetas</a>
+
+      @if (isAdmin) {
+        <ul class="submenu navbar__dropdown">
+          <li>
+            <a href="#" class="navbar__link navbar__link--dropdown">Admin</a>
+            <ul class="submenu-desplegable">
+              <li><a href="sobre-nosotros">Categorías</a></li>
+              <li><a href="contacto">Ingredientes</a></li>
+            </ul>
+          </li>
+        </ul>
+      }
+    </nav>
+
+    <!-- Acciones de la derecha -->
+    <div class="acciones-encabezado navbar__actions">
+      <button class="cambiar-tema navbar__theme-toggle" id="boton-tema" (click)="toggleTheme()">
+>>>>>>> 617558c (css)
         <span class="icono-sol">☀️</span>
         <span class="icono-luna">🌙</span>
       </button>
 
+<<<<<<< HEAD
       @if (storageService.isLoggedIn()) {
       <span class="bienvenida"> Bienvenido/a {{ storageService.nombreUsuario() }} </span>
 
@@ -81,6 +137,48 @@
         <a href="https://www.youtube.com/user/lasrecetasdemj/videos">📸</a>
         <a href="https://www.youtube.com/watch?v=g7gQqvMIn3s">🎵</a>
         <a href="https://elpais.com/gastronomia/recetas">🐦</a>
+=======
+      <a href="subireceta" class="boton-principal navbar__btn navbar__btn--primary">
+        ➕ Subir receta
+      </a>
+
+      <a href="login" class="boton-secundario navbar__btn navbar__btn--ghost">
+        👤 Iniciar sesión
+      </a>
+    </div>
+
+  </div>
+</header>
+
+  <router-outlet></router-outlet>
+
+
+
+  <footer class="pie">
+    <div class="contenido-pie contenedor">
+      <div class="logo-pie">🍳 RecetasApp</div>
+      <div class="seccion-pie">
+        <h4>Sobre nosotros</h4>
+        <p>RecetasApp es tu comunidad culinaria para compartir y descubrir nuevas ideas de cocina.</p>
+      </div>
+      <div class="seccion-pie">
+        <h4>Enlaces útiles</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="categorias.html">Categorías</a></li>
+          <li><a href="recetas.html">Recetas</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="seccion-pie">
+        <h4>Síguenos</h4>
+        <div class="redes-sociales">
+          <a href="#">📘</a>
+          <a href="#">📸</a>
+          <a href="#">🎵</a>
+          <a href="#">🐦</a>
+        </div>
+>>>>>>> 617558c (css)
       </div>
     </div>
   </div>
