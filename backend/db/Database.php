@@ -312,7 +312,7 @@ SQL;
                 [
                     'titulo' => 'Bruschetta de tomate y albahaca',
                     'descripcion' => 'Deliciosa bruschetta italiana con tomate fresco y albahaca',
-                    'tiempo' => 15,
+                    'tiempo' => 16,
                     'dificultad' => 'fácil',
                     'categoria' => 'Entrantes',
                     'imagen_url'=>'uploads/recetas/Bruschetta de tomate y albahaca.jpg',
@@ -565,6 +565,7 @@ SQL;
                     'dificultad' => 'media',
                     'categoria' => 'Postres',
                     'imagen_url'=>'uploads/recetas/Tarta de queso.jpg',
+                     'imagen_url'=>'uploads/recetas/Tarta de queso.jpg',
                     'ingredientes' => [
                         ['Galletas digestive', 200, 'g'],
                         ['Mantequilla', 100, 'g'],
