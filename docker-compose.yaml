@@ -15,7 +15,9 @@ services:
       - 5432:5432
 
   web:
-    build: ./recetashare-app
+    build: 
+      context: ./recetashare-app
+      dockerfile: Dockerfile_dev
     container_name: recetashare-frontend
     ports:
       - 5173:5173

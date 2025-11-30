@@ -176,6 +176,13 @@ SQL;
     public function crearDatosDummy()
     {
         try {
+            // Verificar si ya existen datos en la tabla 'categorias'
+            $checkCategorias = $this->conn->query("SELECT COUNT(*) FROM categorias");
+            if ($checkCategorias->fetchColumn() > 0) {
+                // La tabla 'categorias' ya contiene datos."
+                return false;
+            }
+
             // Inicia una transacción para que todos los inserts sean atómicos
             $this->conn->beginTransaction();
 

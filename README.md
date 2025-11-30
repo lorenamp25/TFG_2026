@@ -52,3 +52,14 @@ pg_dump --schema-only  receta -U receta
 5. Admin Categorias: Falta diseño, falta no acceso si no admin
 6. Admin Ingredientes: Falta todo
 7. Login
+
+
+
+# Deploy
+
+Enviroment variables backend:
+DB_HOST=dpg-d4l0ifje5dus73fgmte0-a
+DB_NAME=receta_ap16
+DB_USER=receta
+DB_PASS=yc9bZgwJE8z0P6H2qY9ceSoSe9nmU81z
+DB_INIT=1
