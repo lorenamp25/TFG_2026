@@ -1,300 +1,358 @@
 <<<<<<< HEAD
 /* ============ Header & Navbar ============ */
-.encabezado{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:linear-gradient(
+.encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background: linear-gradient(
     120deg,
     rgba(5, 10, 25, 0.96),
     rgba(5, 45, 75, 0.98)
   );
-  border-bottom:1px solid rgba(0, 255, 255, 0.18);
-  backdrop-filter:blur(12px);
-  box-shadow:0 10px 30px rgba(0,0,0,0.65);
-  transition:var(--transicion);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+  transition: var(--transicion);
 }
 
-.contenido-encabezado{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:var(--espaciado-md);
-  padding:var(--espaciado-md) 0;
-  max-width:var(--ancho-contenedor);
-  margin:0 auto;
-  padding-inline:var(--espaciado-md);
-  flex-wrap:nowrap;
+.contenido-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaciado-md);
+  padding: var(--espaciado-md) 0;
+  max-width: var(--ancho-contenedor);
+  margin: 0 auto;
+  padding-inline: var(--espaciado-md);
+  flex-wrap: nowrap;
 }
 
 /* ============ LOGO ============ */
-.logo{
-  display:flex;
-  align-items:center;
-  gap:.6rem;
-  font-weight:800;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  color:#e9f5ff;
+/* ============ LOGO ============ */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #e9f5ff;
+  position: relative;
 }
 
-.logo::before{
-  content:"RS";
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:40px;
-  height:40px;
-  border-radius:999px;
-  font-size:.95rem;
-  font-weight:800;
-  letter-spacing:.08em;
-  background:radial-gradient(circle at 30% 20%, #ffffff, #00ffd5 70%);
-  color:#021318;
-  box-shadow:0 0 14px rgba(0,255,213,0.75);
+/* ICONO DE GORRO DE COCINA */
+.logo::before {
+  content: "";
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px 12px 18px 18px;
+  background: linear-gradient(135deg, #ffffff, #d7f7ff, #8cf9ff);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  position: relative;
 }
 
-.logo span{
-  font-size:1.15rem;
-  background:linear-gradient(120deg,#00fff2,#4ecdc4,#00aaff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+/* Forma superior del gorro */
+.logo::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -6px;
+  width: 46px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffffff, #eaffff);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
 }
+
+/* TEXTO */
+.logo span {
+  font-size: 1.25rem;
+  background: linear-gradient(120deg, #00fff2, #4ecdc4, #00aaff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 
 /* ============ NAV ============ */
-.navegacion{
-  display:flex;
-  align-items:center;
-  gap:var(--espaciado-md);
-  flex-wrap:wrap;
-  flex:1;
-  justify-content:center;
+.navegacion {
+  display: flex;
+  align-items: center;
+  gap: var(--espaciado-md);
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: center;
 }
 
-.navegacion a{
-  color:#cfd8e3;
-  text-decoration:none;
-  font-weight:500;
-  position:relative;
-  padding:.4rem .9rem;
-  border-radius:999px;
-  transition:var(--transicion);
+.navegacion a {
+  color: #cfd8e3;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  transition: var(--transicion);
 }
 
-.navegacion a::after{
-  content:"";
-  position:absolute;
-  left:14px;
-  right:14px;
-  bottom:6px;
-  height:2px;
-  border-radius:999px;
-  background:linear-gradient(90deg,#00fff2,#00ff5e,#008cff);
-  opacity:0;
-  transform:scaleX(0.4);
-  transition:opacity .2s ease,transform .2s ease;
+.navegacion a::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #00fff2, #00ff5e, #008cff);
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.navegacion a:hover{
-  color:#ffffff;
-  background:rgba(255,255,255,0.05);
+.navegacion a:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.navegacion a:hover::after{
-  opacity:1;
-  transform:scaleX(1);
+.navegacion a:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 /* ============ BOTÓN MENÚ (HAMBURGUESA) ============ */
-.boton-menu{
-  display:none;
-  background:transparent;
-  border:none;
-  font-size:2rem;
-  color:#e9f5ff;
-  cursor:pointer;
+.boton-menu {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #e9f5ff;
+  cursor: pointer;
 }
 
 /* ============ ACCIONES (escritorio) ============ */
-.acciones-encabezado{
-  display:flex;
-  align-items:center;
-  gap:var(--espaciado-sm);
+.acciones-encabezado {
+  display: flex;
+  align-items: center;
+  gap: var(--espaciado-sm);
 }
 
-.bienvenida{
-  color:#cfd8e3;
-  font-weight:500;
+.bienvenida {
+  color: #cfd8e3;
+  font-weight: 500;
 }
 
-.boton-logout{
-  margin-left:.5rem;
-  white-space:nowrap;
+.boton-logout {
+  margin-left: 0.5rem;
+  white-space: nowrap;
 }
 
 /* Botón cambio de tema */
-.cambiar-tema{
-  width:40px;
-  height:40px;
-  border-radius:999px;
-  border:1px solid rgba(0,255,255,0.35);
-  background:rgba(0,0,0,0.35);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.cambiar-tema {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.icono-sol{display:block;}
-.icono-luna{display:none;}
-[data-tema="oscuro"] .icono-sol{display:none;}
-[data-tema="oscuro"] .icono-luna{display:block;}
+.icono-sol {
+  display: block;
+}
+.icono-luna {
+  display: none;
+}
+[data-tema="oscuro"] .icono-sol {
+  display: none;
+}
+[data-tema="oscuro"] .icono-luna {
+  display: block;
+}
 
 /* ============ SUBMENÚ ADMIN ============ */
-.submenu{
-  list-style:none;
-  margin:0;
-  padding:0;
-  position:relative;
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.submenu > li > a{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:.4rem .9rem;
-  border-radius:999px;
-  color:#cfd8e3;
-  cursor:pointer;
+.submenu > li {
+  position: relative;
 }
 
-.submenu-desplegable{
-  list-style:none;
-  margin:0;
-  padding:.4rem 0;
-  position:absolute;
-  top:calc(100% + 8px);
-  left:0;
-  min-width:190px;
-  background:rgba(3,16,30,0.98);
-  border:1px solid rgba(0,255,255,0.25);
-  border-radius:16px;
-  box-shadow:0 18px 40px rgba(0,0,0,0.85);
-  opacity:0;
-  pointer-events:none;
-  transform:translateY(-6px);
-  transition:opacity .18s ease, transform .18s ease;
-  z-index:50;
+.submenu > li > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  color: #cfd8e3;
+  cursor: pointer;
+}
+
+/* dropdown escritorio */
+.submenu-desplegable {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 190px;
+  background: rgba(3, 16, 30, 0.98);
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 110; /* por encima del resto del header */
 }
 
 .submenu > li:hover .submenu-desplegable,
-.submenu > li:focus-within .submenu-desplegable{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateY(0);
+.submenu > li:focus-within .submenu-desplegable {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
-.submenu-desplegable li a{
-  display:block;
-  padding:.45rem 1rem;
-  text-decoration:none;
-  color:#e2ebf5;
-  font-size:.9rem;
+.submenu-desplegable li a {
+  display: block;
+  padding: 0.45rem 1rem;
+  text-decoration: none;
+  color: #e2ebf5;
+  font-size: 0.9rem;
+  border-radius: 10px;
+}
+
+.submenu-desplegable li a:hover {
+  background: rgba(0, 255, 255, 0.08);
 }
 
 /* ============ Login dentro del menú en móvil ============ */
-.nav-auth-movil{
-  display:none;
-  width:100%;
-  margin-top:.5rem;
+.nav-auth-movil {
+  display: none;
+  width: 100%;
+  margin-top: 0.75rem;
+  border-top: 1px solid rgba(0, 255, 255, 0.25);
+  padding-top: 0.5rem;
 }
 
-.nav-auth-link{
-  display:block;
-  width:100%;
-  padding:.45rem .9rem;
-  border-radius:999px;
-  border:1px solid transparent;
-  background:transparent;
-  color:#cfd8e3;
-  text-align:left;
-  text-decoration:none;
-  font:inherit;
-  cursor:pointer;
-  transition:var(--transicion);
+.nav-auth-link {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.02);
+  color: #cfd8e3;
+  text-align: center;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+  transition: var(--transicion);
 }
 
-.nav-auth-link:hover{
-  background:rgba(255,255,255,0.06);
-  border-color:rgba(0,255,255,0.25);
-  color:#ffffff;
+.nav-auth-link:hover {
+  background: rgba(0, 255, 255, 0.08);
+  color: #ffffff;
 }
 
 /* ============ RESPONSIVE TABLET ============ */
-@media (max-width: 968px){
+@media (max-width: 968px) {
 
-  .boton-menu{
-    display:block;
-    margin-left:auto;
+  .contenido-encabezado {
+    gap: var(--espaciado-sm);
   }
 
-  .navegacion{
-    position:absolute;
-    top:100%;
-    left:0;
-    right:0;
-    background:rgba(3,16,30,0.98);
-    padding:1rem var(--espaciado-md);
-    flex-direction:column;
-    align-items:flex-start;
-    gap:1rem;
-    border-bottom:1px solid rgba(0,255,255,0.25);
-    display:none;
-    z-index:200;
+  .boton-menu {
+    display: block;
+    margin-left: auto;
   }
 
-  .navegacion.navegacion--abierta{
-    display:flex;
+  /* el nav se convierte en menú desplegable */
+  .navegacion {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(3, 16, 30, 0.98);
+    padding: 1rem var(--espaciado-md);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.25);
+    display: none; /* cerrado por defecto */
   }
 
-  .submenu-desplegable{
-    position:static;
-    background:transparent;
-    border:none;
-    box-shadow:none;
-    padding:.25rem 0 0 1rem;
-    opacity:1;
-    pointer-events:auto;
-    transform:none;
-    min-width:0;
+  .navegacion.navegacion--abierta {
+    display: flex; /* abierto con menuAbierto=true */
   }
 
-  .submenu-desplegable li a{
-    padding:.3rem 0;
+  .navegacion a {
+    width: 100%;
   }
 
-  .nav-auth-movil{
-    display:block;
+  /* submenu en móvil: lista indentada, no flotante */
+  .submenu {
+    width: 100%;
   }
 
+  .submenu > li > a {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .submenu-desplegable {
+    position: static;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0.3rem 0 0 1rem;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    min-width: 0;
+    z-index: auto;
+  }
+
+  .submenu-desplegable li a {
+    padding: 0.3rem 0;
+    border-radius: 0;
+  }
+
+  /* mostramos bloque de login dentro del menú */
+  .nav-auth-movil {
+    display: block;
+  }
 }
 
 /* ============ RESPONSIVE MÓVIL ============ */
-@media (max-width: 640px){
+@media (max-width: 640px) {
 
-  .navegacion{
-    width:100%;
+  .contenido-encabezado {
+    gap: 0.5rem;
   }
 
-  .navegacion a{
-    width:100%;
+  .navegacion {
+    width: 100%;
   }
 
-  /* Desktop actions ocultas en móvil */
-  .acciones-encabezado{
-    display:none;
+  .navegacion a {
+    width: 100%;
   }
 
+  /* Ocultar acciones de escritorio */
+  .acciones-encabezado {
+    display: none;
+  }
 }
 =======
 /* --------- BASE NAVBAR --------- */

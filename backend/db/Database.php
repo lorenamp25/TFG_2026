@@ -213,10 +213,10 @@ SQL;
 
             // --- Usuarios ---
             $users = [
-                ['nickname' => 'chef_lorena', 'nombre' => 'Lorena', 'apellido' => 'Gómez', 'email' => 'lorena@example.com', 'password' => password_hash('password1', PASSWORD_DEFAULT), 'es_admin' => true],
-                ['nickname' => 'carlos_cocina', 'nombre' => 'Carlos', 'apellido' => 'Perez', 'email' => 'carlos@example.com', 'password' => password_hash('password2', PASSWORD_DEFAULT)],
-                ['nickname' => 'ana_dulces', 'nombre' => 'Ana', 'apellido' => 'Diaz', 'email' => 'ana@example.com', 'password' => password_hash('password3', PASSWORD_DEFAULT)],
-                ['nickname' => 'maria_healthy', 'nombre' => 'María', 'apellido' => 'Lopez', 'email' => 'maria@example.com', 'password' => password_hash('password4', PASSWORD_DEFAULT)]
+                ['nickname' => 'chef_lorena', 'nombre' => 'Lorena', 'apellido' => 'Gómez', 'email' => 'lorena@example.com', 'password' => password_hash('password', PASSWORD_DEFAULT), 'es_admin' => true],
+                ['nickname' => 'carlos_cocina', 'nombre' => 'Carlos', 'apellido' => 'Perez', 'email' => 'carlos@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT)],
+                ['nickname' => 'ana_dulces', 'nombre' => 'Ana', 'apellido' => 'Diaz', 'email' => 'ana@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT)],
+                ['nickname' => 'maria_healthy', 'nombre' => 'María', 'apellido' => 'Lopez', 'email' => 'maria@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT)]
             ];
 
             $userIds = [];
@@ -315,6 +315,7 @@ SQL;
                     'tiempo' => 15,
                     'dificultad' => 'fácil',
                     'categoria' => 'Entrantes',
+                    'imagen_url'=>'uploads/recetas/Bruschetta de tomate y albahaca.jpg',
                     'ingredientes' => [
                         ['Pan de chapata', 8, 'rebanadas'],
                         ['Tomate', 4, 'unidades'],
@@ -336,6 +337,7 @@ SQL;
                     'tiempo' => 20,
                     'dificultad' => 'fácil',
                     'categoria' => 'Entrantes',
+                    'imagen_url'=>'uploads/recetas/Hummus de garbanzos.jpeg',
                     'ingredientes' => [
                         ['Garbanzos cocidos', 400, 'g'],
                         ['Aceite de oliva', 4, 'cucharadas'],
@@ -360,6 +362,7 @@ SQL;
                     'tiempo' => 25,
                     'dificultad' => 'media',
                     'categoria' => 'Ensaladas',
+                    'imagen_url'=>'uploads/recetas/ensaladadequinoa.jpg',
                     'ingredientes' => [
                         ['Lechuga', 1, 'unidad'],
                         ['Pechuga de pollo', 2, 'unidades'],
@@ -385,6 +388,7 @@ SQL;
                     'tiempo' => 30,
                     'dificultad' => 'fácil',
                     'categoria' => 'Sopas',
+                    'imagen_url'=>'uploads/recetas/crema-de-calabacin.jpg',
                     'ingredientes' => [
                         ['Calabacín', 3, 'unidades'],
                         ['Cebolla', 1, 'unidad'],
@@ -410,6 +414,7 @@ SQL;
                     'tiempo' => 80,
                     'dificultad' => 'media',
                     'categoria' => 'Carnes',
+                    'imagen_url'=>'uploads/recetas/Pollo-al-horno-con-patatas-2.jpg',
                     'ingredientes' => [
                         ['Pollo entero', 1, 'unidad'],
                         ['Patata', 6, 'unidades'],
@@ -434,6 +439,7 @@ SQL;
                     'tiempo' => 90,
                     'dificultad' => 'alta',
                     'categoria' => 'Carnes',
+                    'imagen_url'=>'uploads/recetas/lasaña.jpg',
                     'ingredientes' => [
                         ['Carne picada', 500, 'g'],
                         ['Láminas de lasaña', 12, 'unidades'],
@@ -461,6 +467,7 @@ SQL;
                     'tiempo' => 20,
                     'dificultad' => 'fácil',
                     'categoria' => 'Pescados',
+                    'imagen_url'=>'uploads/recetas/salmon.jpg',
                     'ingredientes' => [
                         ['Salmón', 4, 'filetes'],
                         ['Limón', 2, 'unidades'],
@@ -483,6 +490,7 @@ SQL;
                     'tiempo' => 40,
                     'dificultad' => 'media',
                     'categoria' => 'Vegetariano',
+                    'imagen_url'=>'uploads/recetas/Risotto.jpg',
                     'ingredientes' => [
                         ['Arroz blanco', 300, 'g'],
                         ['Champiñones', 400, 'g'],
@@ -507,6 +515,7 @@ SQL;
                     'tiempo' => 35,
                     'dificultad' => 'media',
                     'categoria' => 'Vegetariano',
+                    'imagen_url'=>'uploads/recetas/hamburguesadelentejas.jpeg',
                     'ingredientes' => [
                         ['Lentejas cocidas', 400, 'g'],
                         ['Cebolla', 1, 'unidad'],
@@ -531,6 +540,7 @@ SQL;
                     'tiempo' => 45,
                     'dificultad' => 'media',
                     'categoria' => 'Postres',
+                    'imagen_url'=>'uploads/recetas/Brownie de chocolate.jpg',
                     'ingredientes' => [
                         ['Chocolate negro', 200, 'g'],
                         ['Mantequilla', 150, 'g'],
@@ -554,6 +564,7 @@ SQL;
                     'tiempo' => 60,
                     'dificultad' => 'media',
                     'categoria' => 'Postres',
+                    'imagen_url'=>'uploads/recetas/Tarta de queso.jpg',
                     'ingredientes' => [
                         ['Galletas digestive', 200, 'g'],
                         ['Mantequilla', 100, 'g'],
@@ -578,6 +589,7 @@ SQL;
                     'tiempo' => 50,
                     'dificultad' => 'fácil',
                     'categoria' => 'Postres',
+                    'imagen_url'=>'uploads/recetas/flandehuevo.jpg',
                     'ingredientes' => [
                         ['Huevos', 6, 'unidades'],
                         ['Leche', 500, 'ml'],
@@ -600,6 +612,7 @@ SQL;
                     'tiempo' => 20,
                     'dificultad' => 'fácil',
                     'categoria' => 'Sopas',
+                    'imagen_url'=>'uploads/recetas/Gazpacho andaluz.jpeg',
                     'ingredientes' => [
                         ['Tomate', 1, 'kg'],
                         ['Pimiento verde', 1, 'unidad'],
@@ -623,6 +636,7 @@ SQL;
                     'tiempo' => 40,
                     'dificultad' => 'media',
                     'categoria' => 'Vegetariano',
+                    'imagen_url'=>'uploads/recetas/tortilla.jpg',
                     'ingredientes' => [
                         ['Patata', 6, 'unidades'],
                         ['Huevos', 8, 'unidades'],
@@ -644,6 +658,7 @@ SQL;
                     'tiempo' => 25,
                     'dificultad' => 'media',
                     'categoria' => 'Carnes',
+                    'imagen_url'=>'uploads/recetas/pastacarbonara.jpg',
                     'ingredientes' => [
                         ['Pasta', 400, 'g'],
                         ['Panceta', 200, 'g'],
@@ -666,6 +681,7 @@ SQL;
                     'tiempo' => 15,
                     'dificultad' => 'fácil',
                     'categoria' => 'Entrantes',
+                    'imagen_url'=>'uploads/recetas/Guacamole.jpg',
                     'ingredientes' => [
                         ['Aguacate', 3, 'unidades'],
                         ['Limón', 1, 'unidad'],
@@ -713,6 +729,7 @@ SQL;
                     'tiempo' => 30,
                     'dificultad' => 'media',
                     'categoria' => 'Postres',
+                    'imagen_url'=>'uploads/recetas/Mousse de chocolate.jpg',
                     'ingredientes' => [
                         ['Chocolate negro', 200, 'g'],
                         ['Huevos', 4, 'unidades'],
@@ -735,6 +752,7 @@ SQL;
                     'tiempo' => 40,
                     'dificultad' => 'media',
                     'categoria' => 'Carnes',
+                    'imagen_url'=>'uploads/recetas/Pollocurry.jpg',
                     'ingredientes' => [
                         ['Pechuga de pollo', 500, 'g'],
                         ['Cebolla', 1, 'unidad'],
@@ -758,6 +776,7 @@ SQL;
                     'tiempo' => 25,
                     'dificultad' => 'fácil',
                     'categoria' => 'Ensaladas',
+                    'imagen_url'=>'uploads/recetas/ensaladadequinoa.jpg',
                     'ingredientes' => [
                         ['Quinoa', 200, 'g'],
                         ['Pepino', 1, 'unidad'],
