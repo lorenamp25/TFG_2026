@@ -57,6 +57,9 @@ pg_dump --schema-only  receta -U receta
 
 # Deploy
 
+Revisar en `environment.ts` la url correcta
+
+
 Enviroment variables backend:
 DB_HOST=dpg-d4l0ifje5dus73fgmte0-a
 DB_NAME=receta_ap16

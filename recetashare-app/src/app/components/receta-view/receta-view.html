@@ -1,1 +1,63 @@
-<p>receta-view works!</p>
+<div class="receta-view">
+	@if (receta) {
+		<h2 class="titulo">{{ receta.titulo }}</h2>
+
+			@if (receta.imagen_url) {
+				<div class="imagen-wrapper">
+					<img src="{{ getImageUrl(receta.imagen_url!) }}" alt="Imagen receta" class="receta-img" />
+				</div>
+			}
+
+		<p class="descripcion">{{ receta.descripcion }}</p>
+
+		<ul class="meta">
+			<li><strong>Tiempo:</strong> {{ receta.tiempo_preparacion }} min</li>
+			<li><strong>Dificultad:</strong> {{ receta.dificultad }}</li>
+			<li><strong>Categoría:</strong> {{ receta.categoria }}</li>
+			<li><strong>Autor:</strong> {{ receta.usuario?.nombre }}</li>
+		</ul>
+
+		<section class="ingredientes">
+			<h3>Ingredientes</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Ingrediente</th>
+						<th>Cantidad</th>
+						<th>Unidad</th>
+					</tr>
+				</thead>
+				<tbody>
+					@for (ing of receta!.ingredientes; track $index) {
+					<tr>
+						<td>{{ ing.ingrediente!.nombre || ing.ingrediente!.id }}</td>
+						<td>{{ ing.cantidad }}</td>
+						<td>{{ ing.unidad }}</td>
+					</tr>
+					}
+				</tbody>
+			</table>
+		</section>
+
+		<section class="instrucciones">
+			<h3>Instrucciones</h3>
+			<ol>
+				@for (instr of receta!.instrucciones; track $index) {
+				<li>
+					<p>{{ instr.descripcion }}</p>
+					@if (instr.imagen_url) {
+						<div class="instr-imagen">
+							<img src="{{ getImageUrl(instr.imagen_url) }}" alt="Imagen instrucción" class="instr-img" />
+						</div>
+					}
+				</li>
+				}
+			</ol>
+		</section>
+	} @else {
+		<p>No hay receta seleccionada.</p>
+	}
+
+  <button (click)="onCerrar()" class="btn-volver">← Volver</button>
+</div>
+

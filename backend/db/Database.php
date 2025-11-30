@@ -688,6 +688,7 @@ SQL;
                     'tiempo' => 60,
                     'dificultad' => 'alta',
                     'categoria' => 'Pescados',
+                    'imagen_url' => 'uploads/recetas/paella.jpg',
                     'ingredientes' => [
                         ['Arroz blanco', 400, 'g'],
                         ['Gambas', 200, 'g'],
