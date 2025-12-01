@@ -274,6 +274,10 @@ body{
     flex-direction:column;
     text-align:center;
   }
+
+  .imagen-portada {
+    display: none !important;
+  }
 }
 
 /* Login centrado global */
