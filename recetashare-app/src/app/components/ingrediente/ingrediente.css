@@ -2,162 +2,138 @@
    🧅 CONTENEDOR GENERAL
 ================================ */
 .ingredientes-pagina {
-  padding: 1.5rem 0;
+  padding: 2.5rem 0;
   text-align: center;
   animation: fadeIn .6s ease;
 }
 
 .titulo-seccion {
-  font-size: 2.3rem;
+  font-size: 2.4rem;
   font-weight: 900;
-  margin-bottom: .3rem;
+  margin-bottom: .4rem;
+  letter-spacing: -0.03em;
   background: var(--degradado-secundario);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .descripcion-seccion {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   opacity: .8;
-  margin-bottom: 2rem;
+  margin-bottom: 2.3rem;
+  color: var(--texto-secundario);
 }
 
 /* ================================
-   🧪 LISTA DE INGREDIENTES
+   🌾 REJILLA DE INGREDIENTES
 ================================ */
 .lista-ingredientes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1.4rem;
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
 }
 
 /* ================================
-   🔥 ITEM DE INGREDIENTE (como receta)
+   🧺 TARJETA DE INGREDIENTE
 ================================ */
 .ingrediente-item {
-  position: relative;
-  overflow: hidden;
-
-  padding: 1rem 1.2rem;
-  border-radius: 20px;
-
-  background: radial-gradient(circle at top left, rgba(0, 255, 255, 0.12), transparent 55%),
-              radial-gradient(circle at bottom right, rgba(0, 255, 120, 0.18), transparent 55%),
-              rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(0, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 247, 234, 0.95)
+    );
+  border-radius: 18px;
+  padding: 1rem 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: .8rem;
+  gap: 0.45rem;
 
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: default;
 }
 
-/* Glow de borde */
-.ingrediente-item::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid transparent;
-  background: linear-gradient(120deg, #00fff2, #00ff5e, #008cff) border-box;
-  opacity: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  transition: opacity .25s ease;
-}
-
-/* Hover */
 .ingrediente-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
-  border-color: rgba(0, 255, 255, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+  border-color: rgba(255, 152, 0, 0.35);
 }
 
-.ingrediente-item:hover::before {
-  opacity: 0.5;
+/* Contenido: icono + nombre */
+.ingrediente-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
 }
 
-/* ================================
-   🧂 TEXTO DEL INGREDIENTE
-================================ */
+/* Icono del ingrediente */
+.icono-ingrediente {
+  font-size: 1.9rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+  transition: transform 0.2s ease;
+}
+
+.ingrediente-item:hover .icono-ingrediente {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Nombre del ingrediente */
 .nombre-ingrediente {
-  flex: 1;
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   font-weight: 600;
-  color: #fff;
-  letter-spacing: .03em;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+  color: #4e342e;
+  letter-spacing: .02em;
+  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ================================
-   🎛 ACCIONES
-================================ */
-.acciones-ingrediente {
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-}
-
-.acciones-ingrediente button {
-  border: none;
-  border-radius: 999px;
-  width: 34px;
-  height: 34px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
-}
-
-/* Editar */
-.acciones-ingrediente .edit {
-  background: #06ff6ed7;
-  color: #003b1b;
-  box-shadow: 0 0 12px rgba(6, 255, 110, 0.8);
-}
-
-/* Eliminar */
-.acciones-ingrediente .delete {
-  background: #ff0436d5;
-  color: #42000c;
-  box-shadow: 0 0 12px rgba(255, 4, 54, 0.8);
-}
-
-.acciones-ingrediente button:hover {
-  transform: translateY(-2px) scale(1.05);
-  filter: brightness(1.1);
+  max-width: 100%;
 }
 
 /* ================================
    📱 RESPONSIVE
 ================================ */
-@media (max-width: 700px) {
+
+/* Tablets: un poco más compacto */
+@media (max-width: 900px) {
   .lista-ingredientes {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1.1rem;
   }
 
   .ingrediente-item {
-    padding: .9rem 1rem;
+    padding: 0.9rem 0.7rem;
+  }
+}
+
+/* MÓVIL: SIEMPRE 2 COLUMNAS */
+@media (max-width: 700px) {
+  .lista-ingredientes {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.9rem;
+  }
+
+  .ingrediente-item {
+    padding: 0.8rem 0.6rem;
+  }
+
+  .icono-ingrediente {
+    font-size: 1.7rem;
+  }
+
+  .nombre-ingrediente {
+    font-size: 0.9rem;
   }
 }
 
 /* ================================
-   Animación entrada
+   🎬 ANIMACIÓN ENTRADA
 ================================ */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }

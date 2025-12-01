@@ -13,9 +13,17 @@
       @for (ingrediente of ingredientes; track $index) {
 
         <div class="ingrediente-item">
-          <span class="nombre-ingrediente">{{ ingrediente.nombre }}</span>
 
-          
+          <!-- Contenido: icono + nombre -->
+          <div class="ingrediente-contenido">
+            <div class="icono-ingrediente">
+              {{ getIconoIngrediente(ingrediente) }}
+            </div>
+            <span class="nombre-ingrediente">{{ ingrediente.nombre }}</span>
+          </div>
+
+        
+
         </div>
 
       }
