@@ -280,6 +280,25 @@ body{
   }
 }
 
+/* Asegurar que el nav móvil quede por encima de cualquier página (ej. login) */
+@media (max-width: 768px) {
+  .navegacion {
+    z-index: 99999 !important;
+    position: fixed !important;
+
+  }
+  .navegacion.navegacion--abierta {
+    /* Forzar overlay por encima de todo el contenido */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    background: rgba(3,16,30,0.98) !important;
+    padding: 1rem var(--espaciado-md) !important;
+  }
+}
+
 /* Login centrado global */
 app-login {
   display: flex;
@@ -305,5 +324,32 @@ app-login {
   .container {
     max-width: var(--max-width);
     margin: 0 auto;
+  }
+}
+
+.cambiar-tema {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1rem;
+}
+
+/* Botón dentro del nav: oculto en escritorio (evita duplicado), visible en móvil */
+.cambiar-tema--inside-nav {
+  display: none;
+}
+
+/* Si en móvil ocultas todo el bloque de acciones, compensa mostrando el botón dentro del nav */
+@media (max-width: 767px) {
+  /* si ocultas las acciones de escritorio, el botón dentro del nav será visible */
+  .acciones-encabezado { display: none; }
+
+  .cambiar-tema--inside-nav {
+    display: inline-flex;
+    margin-left: auto; /* empuja al final del nav si quieres */
   }
 }

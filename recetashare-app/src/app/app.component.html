@@ -26,6 +26,13 @@
       </ul>
       }
 
+      <!-- Botón de tema dentro del nav (para móvil) -->
+      <button class="cambiar-tema cambiar-tema--inside-nav" type="button" (click)="toggleTheme()"
+        aria-label="Cambiar tema">
+        <span class="icono-sol">☀️</span>
+        <span class="icono-luna">🌙</span>
+      </button>
+
       <!-- 🔹 Zona de login/logout SOLO para móvil -->
       <div class="nav-auth-movil">
         @if (storageService.isLoggedIn()) {
@@ -33,18 +40,13 @@
           🚪 Cerrar sesión
         </button>
         } @else {
-        <a href="login" class="nav-auth-link" (click)="menuAbierto = false"> 👤 Iniciar sesión </a>
+        <a href="login" class="nav-auth-link" (click)="ir('/login')"> 👤 Iniciar sesión </a>
         }
       </div>
     </nav>
 
     <!-- 🔹 Zona de login/logout SOLO escritorio -->
     <div class="acciones-encabezado">
-      <button class="cambiar-tema" id="boton-tema" (click)="toggleTheme()">
-        <span class="icono-sol">☀️</span>
-        <span class="icono-luna">🌙</span>
-      </button>
-
       @if (storageService.isLoggedIn()) {
       <span class="bienvenida"> Bienvenido/a {{ storageService.nombreUsuario() }} </span>
 
