@@ -361,7 +361,7 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
                     'tiempo' => 25,
                     'dificultad' => 'media',
                     'categoria' => 'Ensaladas',
-                    'imagen_url'=>'uploads/recetas/ensaladadequinoa.jpg',
+                    'imagen_url'=>'uploads/recetas/ensaladacesar.jpg',
                     'ingredientes' => [
                         ['Lechuga', 1, 'unidad'],
                         ['Pechuga de pollo', 2, 'unidades'],

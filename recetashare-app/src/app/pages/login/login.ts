@@ -23,6 +23,9 @@ export class LoginPage {
 
   constructor(private router: Router, private authService: AuthService) { }
 
+  // Nuevo: mensaje de error para mostrar en la UI en lugar de alert()
+  errorMessage: string | null = null;
+
   // Método que se ejecuta al enviar el formulario (ngSubmit)
   onLogin() {
     if (this.loginForm.valid) {
@@ -36,7 +39,10 @@ export class LoginPage {
         },
         error: (error) => {
           console.error("Error de login:", error);
-          alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+          // Reemplazo del alert por un mensaje controlado
+          this.errorMessage = "Credenciales incorrectas. Por favor, inténtalo de nuevo.";
+          // Limpiar el mensaje automáticamente tras 4s
+          setTimeout(() => (this.errorMessage = null), 4000);
         }
       })
     }

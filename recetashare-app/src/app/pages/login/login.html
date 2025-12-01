@@ -6,33 +6,41 @@
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <input type="email" formControlName="email" placeholder="Correo electrónico" required>
     @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
-      <div class="error-mensaje">
-        <small *ngIf="loginForm.get('email')?.errors?.['required']">El correo electrónico es obligatorio.</small>
-        <small *ngIf="loginForm.get('email')?.errors?.['email']">Introduce un correo electrónico válido.</small>
-      </div>
+    <div class="error-mensaje">
+      <small *ngIf="loginForm.get('email')?.errors?.['required']">El correo electrónico es obligatorio.</small>
+      <small *ngIf="loginForm.get('email')?.errors?.['email']">Introduce un correo electrónico válido.</small>
+    </div>
     }
 
     <input type="password" formControlName="password" placeholder="Contraseña" required>
     @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
-      <div class="error-mensaje">
-        <small *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
-        <small *ngIf="loginForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</small>
-      </div>
+    <div class="error-mensaje">
+      <small *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
+      <small *ngIf="loginForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6
+        caracteres.</small>
+    </div>
     }
 
     <!-- Botón de LOGIN (envía el formulario) -->
-       <!-- Botón de LOGIN (envía el formulario) -->
+    <!-- Botón de LOGIN (envía el formulario) -->
     <button type="submit" class="boton-formulario">Iniciar sesión</button>
   </form>
 
   <!-- Enlace para ir al componente Registrar -->
   <div style="margin-top: 16px; text-align: center;">
     ¿No tienes cuenta?
-    <button
-      type="button"
-      class="boton-formulario"
-      (click)="irARegistro()">
+    <button type="button" class="boton-formulario" (click)="irARegistro()">
       Registrarse
     </button>
   </div>
+
+  @if (errorMessage) {
+  <div class="login-alert">
+    <span class="texto-error">{{ errorMessage }}</span>
+    <a href="#" (click)="irARegistro()">
+      Si no tienes cuenta puedes registrarte aqui
+    </a>
+    <button type="button" class="cerrar-alert" (click)="errorMessage = null">✕</button>
+  </div>
+  }
 </div>

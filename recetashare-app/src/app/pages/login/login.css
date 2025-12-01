@@ -111,3 +111,30 @@ input:focus {
   font-size: 14px;
 }
 
+/* Estilos para la alerta de login */
+.login-alert {
+  display: flex;
+  flex-direction: column; /* apila los elementos verticalmente */
+  gap: 0.5rem;
+  align-items: flex-start;
+  background: #ffe6e6;
+  color: #8b0000;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+}
+
+.login-alert .texto-error,
+.login-alert a,
+.login-alert .cerrar-alert {
+  display: block; /* fuerza salto de línea */
+  width: 100%;
+}
+
+.cerrar-alert {
+  margin-top: 0.25rem;
+  background: transparent;
+  border: none;
+  text-align: right;
+  cursor: pointer;
+}
+
