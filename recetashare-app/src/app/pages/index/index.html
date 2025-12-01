@@ -4,11 +4,6 @@
     
     <!-- Texto principal de la portada -->
     <div class="texto-portada">
-<<<<<<< HEAD
-      <h1 class="titulo-portada">
-        <span class="texto-degradado">Cocina fácil</span> con los mejores sabores
-      </h1>
-=======
       <span class="etiqueta etiqueta--destacada">🔥 Recetas destacadas</span>
 
       <h1 class="titulo-portada">
@@ -31,7 +26,6 @@
           Buscar
         </button>
       </div>
->>>>>>> 617558c (css)
 
       <p class="descripcion-portada">
         Descubre miles de recetas deliciosas, saludables y rápidas para cada ocasión.
@@ -40,25 +34,13 @@
 
       <!-- Botones principales de navegación -->
       <div class="botones-portada">
-<<<<<<< HEAD
         <a href="receta" class="boton-principal boton-grande">🍲 Explorar recetas</a>
         <a href="categoria" class="boton-secundario boton-grande">📖 Ver categorías</a>
-=======
-        <button class="boton-principal boton-grande">🍲 Explorar recetas</button>
-        <button class="boton-secundario boton-grande boton-outlined">📖 Ver categorías</button>
-      </div>
-
-      <div class="badges-portada">
-        <span class="badge-pill">⏱️ Listas en menos de 30 min</span>
-        <span class="badge-pill">🥗 Opciones saludables</span>
-        <span class="badge-pill">⭐ Valoradas por la comunidad</span>
->>>>>>> 617558c (css)
       </div>
     </div>
 
     <!-- Tarjetas pequeñas de recetas (animación decorativa) -->
     <div class="imagen-portada">
-<<<<<<< HEAD
       @if (cargandoRecetas === false) {         <!-- Si no está cargando las recetas -->
         @for (receta of recetasInicio; track $index) {   <!-- Recorre lista inicial de recetas -->
           <app-minicardreceta 
@@ -67,47 +49,6 @@
           </app-minicardreceta>
         }
       }
-=======
-      <div class="burbuja burbuja-1"></div>
-      <div class="burbuja burbuja-2"></div>
-      <div class="burbuja burbuja-3"></div>
-
-      <div class="tarjeta-flotante tarjeta-1">
-        <img src="/images/ensalada-cesar.jpg" alt="Ensalada fresca">
-        <div class="contenido-tarjeta">
-          <div class="chip-receta">Fit 🌱</div>
-          <h3>Ensalada César</h3>
-          <div class="valoracion">
-            <span class="estrellas">⭐️⭐️⭐️⭐️⭐️</span>
-            <span>4.9 · 120 votos</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tarjeta-flotante tarjeta-2">
-        <img src="/images/Espaguetis-Carbonara-1.jpg" alt="Pasta cremosa">
-        <div class="contenido-tarjeta">
-          <div class="chip-receta chip-receta--caliente">Pasta 🍝</div>
-          <h3>Espaguetis carbonara</h3>
-          <div class="valoracion">
-            <span class="estrellas">⭐️⭐️⭐️⭐️</span>
-            <span>4.6 · 89 votos</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tarjeta-flotante tarjeta-3">
-        <img src="/images/susi.jpg" alt="Sushi variado">
-        <div class="contenido-tarjeta">
-          <div class="chip-receta chip-receta--exotica">Exótico 🍣</div>
-          <h3>Tabla de sushi</h3>
-          <div class="valoracion">
-            <span class="estrellas">⭐️⭐️⭐️⭐️⭐️</span>
-            <span>5.0 · 54 votos</span>
-          </div>
-        </div>
-      </div>
->>>>>>> 617558c (css)
     </div>
 
   </div>
@@ -138,12 +79,7 @@
       }
 
     } @placeholder {
-<<<<<<< HEAD
-      <!-- Mientras espera la carga -->
-      <p>Cargando categorías...</p>
-=======
       <p class="texto-cargando">Cargando categorías...</p>
->>>>>>> 617558c (css)
     }
 
   </div>
@@ -158,7 +94,6 @@
   </div>
 
   <div class="rejilla-recetas contenedor">
-<<<<<<< HEAD
 
     @defer (when cargandoRecetas === false) {        <!-- Carga diferida -->
 
@@ -177,76 +112,6 @@
       <p>Cargando recetas destacadas...</p>
     }
 
-=======
-    <!-- Tarjeta 1 -->
-    <div class="tarjeta-receta">
-      <div class="imagen-receta">
-        <img src="/tacos.jpg" alt="Tacos de pollo">
-        <div class="etiqueta-receta">Nuevo</div>
-      </div>
-      <div class="contenido-receta">
-        <div class="meta-receta">
-          <span class="tiempo-receta">⏱️ 25 min</span>
-          <span class="dificultad-receta">Fácil</span>
-        </div>
-        <h3>Tacos de pollo</h3>
-        <p>Jugosos tacos de pollo con verduras frescas y guacamole. 🌮</p>
-        <div class="pie-receta">
-          <div class="autor-receta">
-            <img src="/tacos.jpg" alt="Autor">
-            <span>Por Ana López</span>
-          </div>
-          <div class="valoracion-receta">⭐️ 4.8</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tarjeta 2 -->
-    <div class="tarjeta-receta">
-      <div class="imagen-receta">
-        <img src="/susi.jpg" alt="Ensalada mediterránea">
-        <div class="etiqueta-receta etiqueta-receta--verde">Saludable</div>
-      </div>
-      <div class="contenido-receta">
-        <div class="meta-receta">
-          <span class="tiempo-receta">⏱️ 15 min</span>
-          <span class="dificultad-receta">Muy fácil</span>
-        </div>
-        <h3>Ensalada mediterránea</h3>
-        <p>Fresca, ligera y llena de sabor, con aceite de oliva virgen extra. 🥗</p>
-        <div class="pie-receta">
-          <div class="autor-receta">
-            <img src="/images/chef1.jpg" alt="Autor">
-            <span>Por Marta Ruiz</span>
-          </div>
-          <div class="valoracion-receta">⭐️ 4.7</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tarjeta 3 -->
-    <div class="tarjeta-receta">
-      <div class="imagen-receta">
-        <img src="/susi.jpg" alt="Brownie">
-        <div class="etiqueta-receta etiqueta-receta--dulce">Dulce</div>
-      </div>
-      <div class="contenido-receta">
-        <div class="meta-receta">
-          <span class="tiempo-receta">⏱️ 40 min</span>
-          <span class="dificultad-receta">Media</span>
-        </div>
-        <h3>Brownie de chocolate</h3>
-        <p>El clásico postre americano, húmedo y lleno de sabor. 🍫</p>
-        <div class="pie-receta">
-          <div class="autor-receta">
-            <img src="/images/chef1.jpg" alt="Autor">
-            <span>Por Carlos Méndez</span>
-          </div>
-          <div class="valoracion-receta">⭐️ 4.9</div>
-        </div>
-      </div>
-    </div>
->>>>>>> 617558c (css)
   </div>
 </section>
 
