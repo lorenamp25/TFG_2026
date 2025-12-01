@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
                     'tiempo' => 20,
                     'dificultad' => 'fácil',
                     'categoria' => 'Entrantes',
-                    'imagen_url'=>'uploads/recetas/Hummus de garbanzos.jpeg',
+                    'imagen_url'=>'uploads/recetas/Hummusdegarbanzos.jpeg',
                     'ingredientes' => [
                         ['Garbanzos cocidos', 400, 'g'],
                         ['Aceite de oliva', 4, 'cucharadas'],
