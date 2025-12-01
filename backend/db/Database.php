@@ -213,10 +213,10 @@ SQL;
 
             // --- Usuarios ---
             $users = [
-                ['nickname' => 'chef_lorena', 'nombre' => 'Lorena', 'apellido' => 'Gómez', 'email' => 'lorena@example.com', 'password' => password_hash('password', PASSWORD_DEFAULT), 'es_admin' => true],
-                ['nickname' => 'carlos_cocina', 'nombre' => 'Carlos', 'apellido' => 'Perez', 'email' => 'carlos@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT)],
-                ['nickname' => 'ana_dulces', 'nombre' => 'Ana', 'apellido' => 'Diaz', 'email' => 'ana@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT)],
-                ['nickname' => 'maria_healthy', 'nombre' => 'María', 'apellido' => 'Lopez', 'email' => 'maria@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT)]
+                ['nickname' => 'chef_lorena', 'nombre' => 'Lorena', 'apellido' => 'Gómez', 'email' => 'lorena@example.com', 'password' => password_hash('password', PASSWORD_DEFAULT), 'es_admin' => 1],
+                ['nickname' => 'carlos_cocina', 'nombre' => 'Carlos', 'apellido' => 'Perez', 'email' => 'carlos@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT), 'es_admin' => 0],
+                ['nickname' => 'ana_dulces', 'nombre' => 'Ana', 'apellido' => 'Diaz', 'email' => 'ana@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT), 'es_admin' => 0],
+                ['nickname' => 'maria_healthy', 'nombre' => 'María', 'apellido' => 'Lopez', 'email' => 'maria@gmail.com', 'password' => password_hash('123456', PASSWORD_DEFAULT), 'es_admin' => 0]
             ];
 
             $userIds = [];
@@ -803,9 +803,8 @@ SQL;
 
             // Insertar cada receta
             foreach ($recetas as $receta) {
-                $imagen = null;
                 $usuario_id = $userIds[array_rand($userIds)];
-                $destacada = (rand(0, 4) === 0); // 20% de probabilidad de ser destacada
+                $destacada = (rand(0, 4) === 0) ? 1 : 0;  // 20% de probabilidad de ser destacada
 
                 // Insertar receta
                 $insertReceta->execute([
@@ -814,11 +813,11 @@ SQL;
                     ':tiempo_preparacion' => $receta['tiempo'],
                     ':dificultad' => $receta['dificultad'],
                     ':categoria' => $catIds[$receta['categoria']],
-                    ':imagen_url' => $imagen,
+                    ':imagen_url' => $receta['imagen_url'],
                     ':usuario_id' => $usuario_id,
                     ':votos_positivos' => rand(5, 100),
                     ':votos_negativos' => rand(0, 15),
-                    ':destacada' => 'false' // Destacada se maneja aparte
+                    ':destacada' => $destacada
                 ]);
 
                 $recetaId = $insertReceta->fetchColumn();
@@ -883,6 +882,7 @@ SQL;
         }
     }
 
+<<<<<<< HEAD
 
     public function crearDatosDummy_old()
     {
@@ -1108,4 +1108,6 @@ SQL;
             return false;
         }
     }
+=======
+>>>>>>> 98e2c0281800b9a4f1233be919fcb485d4557d55
 }

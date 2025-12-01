@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install --silent
 
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH=/app/node_modules/.bin:$PATH
 
 
 COPY . ./
