@@ -1,17 +1,18 @@
 /* ================================
-   📦 FORMULARIO CONTENEDOR
+   📦 FORMULARIO GENERAL
 ================================ */
 form {
   max-width: 980px;
   margin: 2rem auto;
   padding: 1.8rem 1.5rem 2.2rem;
   border-radius: 24px;
-  background: linear-gradient(135deg, #ffffff, #fff7ea);
+  background: #ffffff;
   box-shadow: 0 14px 38px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1.3rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #000;           /* 🔹 texto negro por defecto */
 }
 
 /* ================================
@@ -24,9 +25,9 @@ form {
 }
 
 .form-group label {
-  font-size: .95rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #5a3a21;
+  color: #000;           /* 🔹 etiqueta negra */
 }
 
 /* Inputs, selects y textareas */
@@ -37,12 +38,14 @@ form {
 .form-group select,
 .form-group textarea {
   border-radius: 12px;
-  border: 1px solid #e3d5c6;
+  border: 1px solid #d0d0d0;
   padding: 0.55rem 0.75rem;
-  font-size: .95rem;
+  font-size: 0.95rem;
   outline: none;
-  background: #fffdf8;
-  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  background: #fafafa;
+  color: #000;           /* 🔹 texto negro */
+  text-shadow: none;     /* por si hay estilos globales raros */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .form-group textarea {
@@ -60,44 +63,45 @@ form {
 
 /* Campo solo lectura usuario */
 .form-group input[readonly] {
-  background: #f6f3ef;
+  background: #efefef;
   cursor: default;
 }
 
 /* ================================
-   🎚️ GRUPO RADIO DIFICULTAD
+   🎚️ DIFICULTAD (RADIO)
 ================================ */
 .radio-group {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .radio-group label {
   display: inline-flex;
   align-items: center;
-  gap: .35rem;
+  gap: 0.35rem;
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
-  border: 1px solid #e3d5c6;
-  background: #fffdf9;
+  border: 1px solid #d0d0d0;
+  background: #fafafa;
   cursor: pointer;
-  font-size: .9rem;
-  transition: background .2s, border-color .2s, box-shadow .2s;
+  font-size: 0.9rem;
+  color: #000;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .radio-group input {
   accent-color: #ff9800;
 }
 
-/* Efecto resaltado al seleccionar (Angular añade checked en input) */
+/* Texto resaltado cuando el radio está seleccionado */
 .radio-group input:checked + span {
   font-weight: 700;
-  color: #5a3a21;
+  color: #000;
 }
 
 /* ================================
-   🖼️ PREVIEW IMAGEN PRINCIPAL
+   🖼️ PREVIEW IMAGEN
 ================================ */
 .preview-img {
   margin-top: 0.5rem;
@@ -110,7 +114,7 @@ form {
 }
 
 /* ================================
-   🧺 TABLA DE INGREDIENTES
+   🧺 TABLAS DINÁMICAS
 ================================ */
 #tabla-ingredientes,
 #tabla-instrucciones {
@@ -123,65 +127,68 @@ form {
   box-shadow: 0 8px 22px rgba(0,0,0,0.08);
 }
 
-/* Para que en móvil no se desborde, metemos scroll horizontal */
+/* Para que en móvil no se desborde: envolvemos el table */
 #tabla-ingredientes,
 #tabla-instrucciones {
   display: block;
   overflow-x: auto;
 }
 
-/* Ajuste de tabla interior */
 #tabla-ingredientes table,
 #tabla-instrucciones table {
   width: 100%;
 }
 
+/* Celdas y encabezados */
 #tabla-ingredientes th,
 #tabla-ingredientes td,
 #tabla-instrucciones th,
 #tabla-instrucciones td {
   padding: 0.6rem 0.75rem;
-  font-size: .9rem;
+  font-size: 0.9rem;
   text-align: left;
   min-width: 90px;
+  color: #000;           /* 🔹 negro */
+  text-shadow: none;     /* por si hereda sombras */
 }
 
 #tabla-ingredientes th,
 #tabla-instrucciones th {
   background: #ffe0b2;
-  color: #4e342e;
   font-weight: 700;
 }
 
+/* Filas pares */
 #tabla-ingredientes tbody tr:nth-child(even),
 #tabla-instrucciones tbody tr:nth-child(even) {
   background: #fff8ec;
 }
 
+/* Inputs/anidado dentro de tablas */
 #tabla-ingredientes select,
 #tabla-ingredientes input[type="number"],
 #tabla-ingredientes input[type="text"],
-#tabla-instrucciones textarea,
-#tabla-instrucciones input[type="file"] {
+#tabla-instrucciones textarea {
   width: 100%;
   border-radius: 8px;
-  border: 1px solid #e3d5c6;
+  border: 1px solid #d0d0d0;
   padding: 0.3rem 0.4rem;
-  font-size: .88rem;
-  background: #fffdf9;
+  font-size: 0.88rem;
+  background: #fafafa;
+  color: #000;
 }
 
-/* Botones en tablas */
+/* Botones dentro de tablas (Eliminar) */
 #tabla-ingredientes button,
 #tabla-instrucciones button {
   border: none;
   border-radius: 999px;
   padding: 0.35rem 0.7rem;
-  font-size: .85rem;
+  font-size: 0.85rem;
   cursor: pointer;
   background: #ff8a80;
-  color: #ffffff;
-  transition: transform .15s ease, filter .15s ease;
+  color: #ffffff;        /* aquí blanco a propósito */
+  transition: transform 0.15s ease, filter 0.15s ease;
 }
 
 #tabla-ingredientes button:hover,
@@ -190,29 +197,9 @@ form {
   filter: brightness(1.05);
 }
 
-/* Preview imagen en instrucciones */
-#tabla-instrucciones .preview-img {
-  max-width: 140px;
-  max-height: 100px;
-}
-
 /* ================================
-   ➕ BOTONES AGREGAR
+   ➕ BOTONES "AGREGAR"
 ================================ */
-button[type="button"][ng-reflect-ng-if],
-button[type="button"][ng-reflect-ng-for-of],
-button[type="button"]:not(.form-buttons button):not(#tabla-ingredientes button):not(#tabla-instrucciones button) {
-  /* fallback por si Angular no refleja attrs, mejor usar selector directo: */
-}
-
-button[type="button"][ng-reflect-ng-if],
-button[type="button"][ng-reflect-ng-for-of] {}
-
-/* Mejor: estilos a los dos botones agregar según el HTML */
-button[type="button"][ng-reflect-ng-if="agregarIngrediente"],
-button[type="button"][ng-reflect-ng-if="agregarInstruccion"] {}
-
-/* Más simple: todos los botones sueltos justo debajo de tabla */
 #tabla-ingredientes + button,
 #tabla-instrucciones + button {
   margin-top: 0.6rem;
@@ -220,9 +207,9 @@ button[type="button"][ng-reflect-ng-if="agregarInstruccion"] {}
   border-radius: 999px;
   border: none;
   background: #ffb74d;
-  color: #4e342e;
+  color: #000;           /* texto negro */
   font-weight: 600;
-  font-size: .9rem;
+  font-size: 0.9rem;
   cursor: pointer;
   align-self: flex-start;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -238,7 +225,7 @@ button[type="button"][ng-reflect-ng-if="agregarInstruccion"] {}
    ✅ BOTONES FINALES
 ================================ */
 .form-buttons {
-  margin-top: 1.2rem;
+  margin-top: 1.4rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
@@ -249,23 +236,23 @@ button[type="button"][ng-reflect-ng-if="agregarInstruccion"] {}
   border: none;
   border-radius: 999px;
   padding: 0.55rem 1.4rem;
-  font-size: .95rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
 
 /* Confirmar */
 .form-buttons button[type="submit"] {
   background: #ff9800;
-  color: #ffffff;
+  color: #ffffff;        /* texto blanco aquí */
   box-shadow: 0 6px 16px rgba(0,0,0,0.18);
 }
 
 /* Cancelar */
 .form-buttons button[type="button"] {
   background: #e0e0e0;
-  color: #424242;
+  color: #000;           /* texto negro */
 }
 
 .form-buttons button:hover {
@@ -275,7 +262,7 @@ button[type="button"][ng-reflect-ng-if="agregarInstruccion"] {}
 
 /* Desactivado */
 .form-buttons button[disabled] {
-  opacity: .6;
+  opacity: 0.6;
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
@@ -292,7 +279,7 @@ button[type="button"][ng-reflect-ng-if="agregarInstruccion"] {}
   }
 
   .form-group label {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   .form-group input[type="text"],
@@ -300,14 +287,14 @@ button[type="button"][ng-reflect-ng-if="agregarInstruccion"] {}
   .form-group input[type="file"],
   .form-group select,
   .form-group textarea {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   #tabla-ingredientes th,
   #tabla-ingredientes td,
   #tabla-instrucciones th,
   #tabla-instrucciones td {
-    font-size: .85rem;
+    font-size: 0.85rem;
   }
 
   .form-buttons {
