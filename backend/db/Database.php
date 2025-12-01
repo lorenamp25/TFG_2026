@@ -63,7 +63,7 @@ class Database
     public function createTables()
     {
         // Bloque de SQL (heredoc) con la definición de todas las tablas
-        $sql = <<<SQL
+        $sql = "
 -- Categorías
 CREATE TABLE IF NOT EXISTS categorias (
     id SERIAL PRIMARY KEY,
@@ -156,8 +156,7 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
     fecha_solicitud TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_resolucion TIMESTAMP
 );
-
-SQL;
+";
 
         try {
             // Ejecuta todo el bloque SQL (creación/alteración de tablas)
@@ -730,7 +729,7 @@ SQL;
                     'tiempo' => 30,
                     'dificultad' => 'media',
                     'categoria' => 'Postres',
-                    'imagen_url'=>'uploads/recetas/Mousse de chocolate.jpg',
+                    'imagen_url'=>'uploads/recetas/Moussedechocolate.jpg',
                     'ingredientes' => [
                         ['Chocolate negro', 200, 'g'],
                         ['Huevos', 4, 'unidades'],
@@ -881,5 +880,4 @@ SQL;
             return false;
         }
     }
-
 }
