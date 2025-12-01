@@ -1,17 +1,34 @@
-  <div class="container">
+<div class="container">
 
-    <ul id="recetaList">
-      @for (receta of recetas; track $index) {
-      <li>
-        <span class="receta-titulo" (click)="onClickReceta(receta)">{{ receta.titulo }}</span>
-        @if (receta.usuario && receta.usuario.id === storageService.getUserId()) {
-        <div class="actions">
-          <button class="edit" (click)="onEditar(receta)">✏️</button>
-          <button class="delete" (click)="onEliminar(receta)">🗑️</button>
+  <ul id="recetaList">
+    @for (receta of recetas; track $index) {
+
+      <li class="receta-item">
+
+        <div class="receta-contenido" (click)="onClickReceta(receta)">
+          <span class="receta-titulo">
+            {{ receta.titulo }}
+          </span>
+
+          <div class="receta-imagen-wrapper">
+            <img
+              [src]="getImageUrl(receta)"
+              alt="Imagen de {{ receta.titulo }}"
+              class="receta-img"
+            />
+          </div>
         </div>
-        }
-      </li>
-      }
-    </ul>
 
-  </div>
+        @if (receta.usuario && receta.usuario.id === storageService.getUserId()) {
+          <div class="actions">
+            <button class="edit" (click)="onEditar(receta)">✏️</button>
+            <button class="delete" (click)="onEliminar(receta)">🗑️</button>
+          </div>
+        }
+
+      </li>
+
+    }
+  </ul>
+
+</div>

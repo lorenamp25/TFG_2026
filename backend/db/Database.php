@@ -967,7 +967,8 @@ SQL;
                 'Arroz',
                 'Pasta',
                 'Patata',
-                'Zanahoria'
+                'Zanahoria',
+                'Azucar',
             ];
             // Array con IDs de ingredientes
             $ingredienteIds = [];

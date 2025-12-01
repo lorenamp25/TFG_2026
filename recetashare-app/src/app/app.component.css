@@ -28,7 +28,6 @@
 }
 
 /* ============ LOGO ============ */
-/* ============ LOGO ============ */
 .logo {
   display: flex;
   align-items: center;
@@ -72,7 +71,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 
 /* ============ NAV ============ */
 .navegacion {
@@ -161,12 +159,15 @@
 .icono-sol {
   display: block;
 }
+
 .icono-luna {
   display: none;
 }
+
 [data-tema="oscuro"] .icono-sol {
   display: none;
 }
+
 [data-tema="oscuro"] .icono-luna {
   display: block;
 }
@@ -266,7 +267,6 @@
 
 /* ============ RESPONSIVE TABLET ============ */
 @media (max-width: 968px) {
-
   .contenido-encabezado {
     gap: var(--espaciado-sm);
   }
@@ -289,6 +289,7 @@
     gap: 0.7rem;
     border-bottom: 1px solid rgba(0, 255, 255, 0.25);
     display: none; /* cerrado por defecto */
+    z-index: 105;  /* por encima del contenido pero solo cuando se abre */
   }
 
   .navegacion.navegacion--abierta {
@@ -335,7 +336,6 @@
 
 /* ============ RESPONSIVE MÓVIL ============ */
 @media (max-width: 640px) {
-
   .contenido-encabezado {
     gap: 0.5rem;
   }
@@ -351,5 +351,11 @@
   /* Ocultar acciones de escritorio */
   .acciones-encabezado {
     display: none;
+  }
+
+  /* 🔧 IMPORTANTE: evitar que el header tape el contenido en móvil */
+  .encabezado {
+    position: static;   /* ya no es sticky en móvil */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
   }
 }
