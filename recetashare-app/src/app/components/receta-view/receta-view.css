@@ -96,7 +96,7 @@
   margin-bottom: 0.8rem;
 }
 
-/* Tabla de ingredientes */
+/* Tabla */
 .ingredientes table {
   width: 100%;
   border-collapse: collapse;
@@ -146,7 +146,6 @@
   line-height: 1.6;
 }
 
-/* Imagen por paso */
 .instr-imagen {
   border-radius: 12px;
   overflow: hidden;
@@ -193,11 +192,17 @@
 /* ================================
    📱 RESPONSIVE
 ================================ */
+
+/* 📱 Tablets */
 @media (max-width: 768px) {
   .receta-view {
     margin: 1.2rem 0.6rem 1.8rem;
     padding: 1.4rem 1.1rem 2rem;
-    border-radius: 18px;
+    border-radius: 20px;
+  }
+
+  .imagen-wrapper {
+    aspect-ratio: 4/3; /* imagen más alta y bonita */
   }
 
   .receta-view .titulo {
@@ -205,7 +210,8 @@
   }
 
   .meta {
-    grid-template-columns: 1fr; /* una columna en móvil */
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
   }
 
   .ingredientes th,
@@ -215,20 +221,33 @@
   }
 }
 
+/* 📱 MÓVIL PEQUEÑO */
 @media (max-width: 480px) {
   .receta-view {
     padding: 1.1rem 0.9rem 1.6rem;
+    border-radius: 16px;
+  }
+
+  .imagen-wrapper {
+    aspect-ratio: 1/1; /* estilo cuadrado tipo Instagram */
   }
 
   .receta-view .titulo {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+    line-height: 1.3;
   }
 
   .descripcion {
     font-size: 0.95rem;
+    line-height: 1.55;
   }
 
   .instrucciones li {
     font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .ingredientes table {
+    font-size: 0.85rem;
   }
 }
