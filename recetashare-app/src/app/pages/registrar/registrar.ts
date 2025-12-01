@@ -43,7 +43,6 @@ export class Registrar {
       fecha_nacimiento: data.fecha_nacimiento
     }).subscribe({
       next: (response: any) => {
-        console.log("Registro correcto:", response);
         alert("Usuario registrado correctamente");
         // Si quieres, guardas el usuario en localStorage y logueas directamente:
         // localStorage.setItem("usuario", JSON.stringify(response.usuario));

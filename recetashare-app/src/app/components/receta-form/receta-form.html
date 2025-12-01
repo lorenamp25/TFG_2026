@@ -182,17 +182,6 @@
             ></textarea>
           </td>
           <td>
-            <input
-              type="file"
-              accept="image/*"
-              (change)="onInstruccionImagenSeleccionada($event, $index)"
-            />
-            <!-- Vista previa -->
-            @if (instruccion.imagen_url) {
-            <img [src]="instruccion.imagen_url" alt="Vista previa" class="preview-img" />
-            }
-          </td>
-          <td>
             <button type="button" (click)="eliminarInstruccion($index)">Eliminar</button>
           </td>
         </tr>

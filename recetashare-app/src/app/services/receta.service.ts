@@ -21,7 +21,7 @@ export class RecetaService {
   private base = environment.apiUrl;
   // Guarda la URL base del backend para no repetirla en cada llamada
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   // Inyecta HttpClient mediante el constructor
 
   leerReceta(id: number): Observable<any> {
@@ -63,13 +63,6 @@ export class RecetaService {
     if (receta.imagen_file) {
       formData.append('imagen_principal', receta.imagen_file);
     }
-
-    // receta.instrucciones.forEach((inst, index) => {
-    //   if (inst.imagen_file) {
-    //     formData.append(`instruccion_imagen_${index}`, inst.imagen_file);
-    //   }
-    // });
-    console.log('FormData creada para la receta:', formData);
 
     return formData;
   }

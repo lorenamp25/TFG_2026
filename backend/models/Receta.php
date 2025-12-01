@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/Usuario.php';
+require_once __DIR__ . '/Ingrediente.php';
 
 // Modelo que representa la tabla "recetas" y sus relaciones (ingredientes e instrucciones)
 class Receta
@@ -214,7 +215,7 @@ class Receta
             $this->conn->beginTransaction();
 
             // Consulta de actualización de la tabla recetas
-            $query = "UPDATE " . $this->table_name . " SET titulo = :titulo, descripcion = :descripcion, tiempo_preparacion = :tiempo_preparacion, dificultad = :dificultad, categoria = :categoria, imagen_url = :imagen_url, usuario_id = :usuario_id, destacada = :destacada, votos_positivos = :votos_positivos, votos_negativos = :votos_negativos WHERE id = :id";
+            $query = "UPDATE " . $this->table_name . " SET titulo = :titulo, descripcion = :descripcion, tiempo_preparacion = :tiempo_preparacion, dificultad = :dificultad, categoria = :categoria, imagen_url = :imagen_url, destacada = :destacada, votos_positivos = :votos_positivos, votos_negativos = :votos_negativos WHERE id = :id";
             $stmt = $this->conn->prepare($query);
 
             // Limpia y normaliza campos
@@ -224,7 +225,6 @@ class Receta
             $this->dificultad = $this->dificultad ?? null;
             $this->categoria = $this->categoria ?? null;
             $this->imagen_url = $this->imagen_url ?? null;
-            $this->usuario_id = $this->usuario_id ?? null;
             $this->destacada = $this->destacada ?? null;
             $this->id = htmlspecialchars(strip_tags($this->id));
 
@@ -235,7 +235,6 @@ class Receta
             $stmt->bindParam(":dificultad", $this->dificultad);
             $stmt->bindParam(":categoria", $this->categoria);
             $stmt->bindParam(":imagen_url", $this->imagen_url);
-            $stmt->bindParam(":usuario_id", $this->usuario_id);
             $stmt->bindParam(":destacada", $this->destacada);
 
             // Conversión de votos a entero solo si están definidos
@@ -341,8 +340,23 @@ class Receta
         $s = $this->conn->prepare($q);
         $s->bindParam(':receta_id', $recetaId);
         $s->execute();
-        // Devuelve todos los ingredientes de esa receta
-        return $s->fetchAll(PDO::FETCH_ASSOC);
+
+        // Obtenemos filas simples y para cada una adjuntamos el objeto ingrediente
+        $rows = $s->fetchAll(PDO::FETCH_ASSOC);
+        if (!$rows) return [];
+
+        $ingredienteModel = new Ingrediente($this->conn);
+        $results = [];
+        foreach ($rows as $r) {
+            $ingredienteId = $r['ingrediente_id'];
+            // intentamos obtener el objeto ingrediente por id
+            $ingredienteObj = $ingredienteModel->getById($ingredienteId);
+            // adjuntamos la representación del ingrediente (o null si no existe)
+            $r['ingrediente'] = $ingredienteObj ? $ingredienteObj : null;
+            $results[] = $r;
+        }
+
+        return $results;
     }
 
     // Obtener instrucciones de una receta por su id

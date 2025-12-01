@@ -21,7 +21,6 @@ export class IngredientesComponent implements OnInit {
   cargarIngredientes() {
     this.ingredienteService.listarIngredientes().subscribe({
       next: (resp: any) => {
-        console.log("Ingredientes recibidos:", resp);
         // Si la API devuelve un array directo:
         this.ingredientes = resp;
 

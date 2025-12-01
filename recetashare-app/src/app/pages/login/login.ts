@@ -21,21 +21,17 @@ export class LoginPage {
     password: new FormControl("", [Validators.required, Validators.minLength(6)])
   })
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
   // Método que se ejecuta al enviar el formulario (ngSubmit)
   onLogin() {
-    console.log(this.loginForm.value);
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
 
       this.authService.login(email!, password!).subscribe({
         next: (response) => {
-          console.log("Login exitoso:", response);
-
           localStorage.setItem("usuario", JSON.stringify(response.usuario));
-
           this.router.navigate(['/']); // Redirige a la página principal
         },
         error: (error) => {
@@ -45,7 +41,7 @@ export class LoginPage {
       })
     }
   }
-    irARegistro() {
+  irARegistro() {
     this.router.navigate(['/registrar']);
   }
 }

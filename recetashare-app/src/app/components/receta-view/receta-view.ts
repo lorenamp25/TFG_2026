@@ -16,7 +16,8 @@ export class RecetaView {
   getImageUrl = getImageUrl
 
   onCerrar() {
-    this.cerrarVista.emit();
+    console.log(this.receta)
+    this.cerrarVista.emit()
   }
 
 }

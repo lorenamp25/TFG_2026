@@ -314,7 +314,7 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
                     'tiempo' => 16,
                     'dificultad' => 'fácil',
                     'categoria' => 'Entrantes',
-                    'imagen_url'=>'uploads/recetas/Bruschetta de tomate y albahaca.jpg',
+                    'imagen_url'=>'uploads/recetas/Bruschettadetomateyalbahaca.jpg',
                     'ingredientes' => [
                         ['Pan de chapata', 8, 'rebanadas'],
                         ['Tomate', 4, 'unidades'],
@@ -387,7 +387,7 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
                     'tiempo' => 30,
                     'dificultad' => 'fácil',
                     'categoria' => 'Sopas',
-                    'imagen_url'=>'uploads/recetas/crema-de-calabacin.jpg',
+                    'imagen_url'=>'uploads/recetas/cremadecalabacin.jpg',
                     'ingredientes' => [
                         ['Calabacín', 3, 'unidades'],
                         ['Cebolla', 1, 'unidad'],
@@ -413,7 +413,7 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
                     'tiempo' => 80,
                     'dificultad' => 'media',
                     'categoria' => 'Carnes',
-                    'imagen_url'=>'uploads/recetas/Pollo-al-horno-con-patatas-2.jpg',
+                    'imagen_url'=>'uploads/recetas/Polloalhornoconpatatas.jpg',
                     'ingredientes' => [
                         ['Pollo entero', 1, 'unidad'],
                         ['Patata', 6, 'unidades'],
@@ -539,7 +539,7 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
                     'tiempo' => 45,
                     'dificultad' => 'media',
                     'categoria' => 'Postres',
-                    'imagen_url'=>'uploads/recetas/Brownie de chocolate.jpg',
+                    'imagen_url'=>'uploads/recetas/Browniedechocolate.jpg',
                     'ingredientes' => [
                         ['Chocolate negro', 200, 'g'],
                         ['Mantequilla', 150, 'g'],

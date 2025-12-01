@@ -57,7 +57,7 @@ export class RecetaForm {
     private categoriaService: CategoriaService,
     private ingredienteService: IngredienteService,
     private storageService: StorageService
-  ) {}
+  ) { }
 
   // Ciclo de vida: se ejecuta cuando inicia el componente
   ngOnInit() {
