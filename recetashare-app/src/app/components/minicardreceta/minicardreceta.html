@@ -1,10 +1,27 @@
+<!-- Tarjeta de receta usada en el carrusel o sección destacada -->
+<!-- 'tarjeta-{{ orden + 1 }}' permite aplicar estilos diferentes según la posición -->
 <div class="tarjeta-flotante tarjeta-{{ orden + 1 }}">
+
+  <!-- Imagen principal de la receta -->
+  <!-- getImageUrl() genera la ruta correcta según el backend -->
   <img src="{{ getImageUrl(receta.imagen_url!) }}" alt="Receta 1">
+
+  <!-- Contenido textual de la tarjeta -->
   <div class="contenido-tarjeta">
+
+    <!-- Título de la receta -->
     <h3>{{ receta.titulo }}</h3>
+
+    <!-- Zona de valoración (estrellas + puntuación numérica) -->
     <div class="valoracion">
+
+      <!-- Estrellas generadas dinámicamente (⭐⭐⭐⭐⭐ por ejemplo) -->
       <span class="estrellas">{{ estrellas() }}</span>
+
+      <!-- Valor numérico de la puntuación -->
       <span>{{ puntuacion() }}</span>
+
     </div>
   </div>
+
 </div>

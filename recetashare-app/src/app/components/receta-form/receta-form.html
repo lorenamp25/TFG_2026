@@ -1,17 +1,33 @@
+<!-- Formulario reactivo, enlazado al FormGroup "form" -->
 <form [formGroup]="form" (ngSubmit)="onGrabar()">
-  <!-- ID oculto -->
+
+  <!-- Campo oculto para el ID de la receta -->
   <input type="hidden" formControlName="id" />
 
-  <!-- TÍTULO -->
+
+  <!-- =====================================================
+       TÍTULO DE LA RECETA
+       ===================================================== -->
   <div class="form-group">
     <label for="titulo">Título</label>
-    <input id="titulo" type="text" formControlName="titulo" placeholder="Ej: Tarta de queso" />
+
+    <!-- Input enlazado al control 'titulo' -->
+    <input
+      id="titulo"
+      type="text"
+      formControlName="titulo"
+      placeholder="Ej: Tarta de queso"
+    />
   </div>
 
 
-  <!-- DESCRIPCIÓN -->
+  <!-- =====================================================
+       DESCRIPCIÓN
+       ===================================================== -->
   <div class="form-group">
     <label for="descripcion">Descripción</label>
+
+    <!-- Textarea enlazada al formControl 'descripcion' -->
     <textarea
       id="descripcion"
       formControlName="descripcion"
@@ -21,9 +37,13 @@
     ></textarea>
   </div>
 
-  <!-- TIEMPO DE PREPARACIÓN -->
+
+  <!-- =====================================================
+       TIEMPO DE PREPARACIÓN
+       ===================================================== -->
   <div class="form-group">
     <label for="tiempo_preparacion">Tiempo de preparación (minutos)</label>
+
     <input
       id="tiempo_preparacion"
       type="number"
@@ -35,10 +55,14 @@
     />
   </div>
 
-  <!-- DIFICULTAD: radio -->
+
+  <!-- =====================================================
+       DIFICULTAD (RADIO BUTTONS)
+       ===================================================== -->
   <div class="form-group">
     <label>Dificultad</label>
 
+    <!-- Grupo de radios que comparten el mismo formControlName -->
     <div class="radio-group">
       <label>
         <input
@@ -75,35 +99,70 @@
     </div>
   </div>
 
-  <!-- CATEGORÍA: SELECT -->
+
+  <!-- =====================================================
+       CATEGORÍA (SELECT)
+       ===================================================== -->
   <div class="form-group">
     <label for="categoria">Categoría</label>
+
+    <!-- Desplegable con categorías cargadas desde la BD -->
     <select id="categoria" formControlName="categoria">
       <option value="" disabled selected>Selecciona categoría</option>
+
+      <!-- Bucle que genera las categorías -->
       @for (categoria of categorias; track categoria.id) {
       <option [value]="categoria.id">{{ categoria.nombre }}</option>
       }
     </select>
   </div>
 
-  <!-- IMAGEN TYPE="FILE" -->
+
+  <!-- =====================================================
+       IMAGEN DE LA RECETA (FILE + PREVIEW)
+       ===================================================== -->
   <div class="form-group">
     <label for="imagen">Imagen de la receta</label>
-    <input id="imagen" type="file" accept="image/*" (change)="onImagenSeleccionada($event)" />
 
-    <!-- Vista previa -->
+    <!-- Input para subir archivos -->
+    <input
+      id="imagen"
+      type="file"
+      accept="image/*"
+      (change)="onImagenSeleccionada($event)"
+    />
+
+    <!-- Vista previa solo si existe una imagen cargada -->
     @if (receta && receta.imagen_preview) {
-    <img [src]="receta.imagen_preview" alt="Vista previa" class="preview-img" />
+    <img
+      [src]="receta.imagen_preview"
+      alt="Vista previa"
+      class="preview-img"
+    />
     }
   </div>
 
-  <!-- USUARIO -->
+
+  <!-- =====================================================
+       USUARIO (SOLO LECTURA)
+       ===================================================== -->
   <div class="form-group">
     <label for="usuario">Nombre del Usuario</label>
-    <input id="usuario" type="text" readonly [(ngModel)]="receta!.usuario!.nombre" [ngModelOptions]="{ standalone: true }"/>
+
+    <!-- ngModel independiente, porque no forma parte del formGroup -->
+    <input
+      id="usuario"
+      type="text"
+      readonly
+      [(ngModel)]="receta!.usuario!.nombre"
+      [ngModelOptions]="{ standalone: true }"
+    />
   </div>
 
-  <!-- INGREDIENTES: TABLA DINÁMICA -->
+
+  <!-- =====================================================
+       INGREDIENTES (TABLA DINÁMICA)
+       ===================================================== -->
   <div>
     <table id="tabla-ingredientes">
       <thead>
@@ -114,9 +173,12 @@
           <th>Acciones</th>
         </tr>
       </thead>
+
       <tbody>
+        <!-- Bucle para cada ingrediente -->
         @for (ingrediente of receta!.ingredientes; track $index) {
         <tr>
+          <!-- Selector de ingrediente -->
           <td>
             <select
               [(ngModel)]="ingrediente.ingrediente.id"
@@ -125,11 +187,14 @@
             >
               <option value="" disabled>Seleccione un ingrediente</option>
 
+              <!-- Opciones: ingredientes disponibles -->
               @for (ingrediente of ingredientes; track $index) {
               <option [value]="ingrediente.id">{{ ingrediente.nombre }}</option>
               }
             </select>
           </td>
+
+          <!-- Cantidad -->
           <td>
             <input
               type="number"
@@ -140,6 +205,8 @@
               [ngModelOptions]="{ standalone: true }"
             />
           </td>
+
+          <!-- Unidad -->
           <td>
             <input
               type="text"
@@ -149,29 +216,42 @@
               [ngModelOptions]="{ standalone: true }"
             />
           </td>
+
+          <!-- Botón eliminar ingrediente -->
           <td>
-            <button type="button" (click)="eliminarIngrediente($index)">Eliminar</button>
+            <button type="button" (click)="eliminarIngrediente($index)">
+              Eliminar
+            </button>
           </td>
         </tr>
         }
       </tbody>
     </table>
-    <button type="button" (click)="agregarIngrediente()">Agregar Ingrediente</button>
+
+    <!-- Añadir nueva fila -->
+    <button type="button" (click)="agregarIngrediente()">
+      Agregar Ingrediente
+    </button>
   </div>
 
-  <!-- INTRUCCIONES: TABLA DINAMICA -->
-   <div>
+
+  <!-- =====================================================
+       INSTRUCCIONES (TABLA DINÁMICA)
+       ===================================================== -->
+  <div>
     <table id="tabla-instrucciones">
       <thead>
         <tr>
           <th>Instrucción</th>
-          
           <th>Acciones</th>
         </tr>
       </thead>
+
       <tbody>
+        <!-- Bucle de instrucciones -->
         @for (instruccion of receta!.instrucciones; track $index) {
         <tr>
+          <!-- Texto de la instrucción -->
           <td>
             <textarea
               [(ngModel)]="instruccion.descripcion"
@@ -181,19 +261,33 @@
               [ngModelOptions]="{ standalone: true }"
             ></textarea>
           </td>
+
+          <!-- Botón eliminar instrucción -->
           <td>
-            <button type="button" (click)="eliminarInstruccion($index)">Eliminar</button>
+            <button type="button" (click)="eliminarInstruccion($index)">
+              Eliminar
+            </button>
           </td>
         </tr>
         }
       </tbody>
     </table>
-    <button type="button" (click)="agregarInstruccion()">Agregar Instrucción</button>
-   </div>
 
-  <!-- BOTONES -->
+    <!-- Añadir nueva instrucción -->
+    <button type="button" (click)="agregarInstruccion()">
+      Agregar Instrucción
+    </button>
+  </div>
+
+
+  <!-- =====================================================
+       BOTONES DE ACCIÓN
+       ===================================================== -->
   <div class="form-buttons">
+    <!-- Submit deshabilitado si el formulario es inválido -->
     <button type="submit" [disabled]="form.invalid">Confirmar</button>
+
+    <!-- Cancelar vuelve atrás o resetea -->
     <button type="button" (click)="onCancelar()">Cancelar</button>
   </div>
 </form>

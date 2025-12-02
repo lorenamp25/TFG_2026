@@ -1,46 +1,107 @@
+<!-- Contenedor principal del formulario de login -->
 <div class="contenedor-login">
+
+  <!-- Icono / logo superior -->
   <div class="logo">🍪</div>
+
+  <!-- Nombre de la aplicación -->
   <h1>RecetasApp</h1>
-  <p id="texto-form">Inicia sesión para descubrir nuevas recetas cada día.</p>
 
+  <!-- Texto descriptivo bajo el título -->
+  <p id="texto-form">
+    Inicia sesión para descubrir nuevas recetas cada día.
+  </p>
+
+  <!-- =====================================================
+       FORMULARIO DE LOGIN
+       Usa un FormGroup (loginForm) y un submit con onLogin()
+       ===================================================== -->
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-    <input type="email" formControlName="email" placeholder="Correo electrónico" required>
+
+    <!-- Campo EMAIL -->
+    <input 
+      type="email" 
+      formControlName="email" 
+      placeholder="Correo electrónico" 
+      required
+    />
+
+    <!-- Validaciones visuales del email -->
     @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
-    <div class="error-mensaje">
-      <small *ngIf="loginForm.get('email')?.errors?.['required']">El correo electrónico es obligatorio.</small>
-      <small *ngIf="loginForm.get('email')?.errors?.['email']">Introduce un correo electrónico válido.</small>
-    </div>
+      <div class="error-mensaje">
+        <small *ngIf="loginForm.get('email')?.errors?.['required']">
+          El correo electrónico es obligatorio.
+        </small>
+        <small *ngIf="loginForm.get('email')?.errors?.['email']">
+          Introduce un correo electrónico válido.
+        </small>
+      </div>
     }
 
-    <input type="password" formControlName="password" placeholder="Contraseña" required>
+    <!-- Campo PASSWORD -->
+    <input 
+      type="password" 
+      formControlName="password" 
+      placeholder="Contraseña" 
+      required
+    />
+
+    <!-- Validaciones visuales del password -->
     @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
-    <div class="error-mensaje">
-      <small *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
-      <small *ngIf="loginForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6
-        caracteres.</small>
-    </div>
+      <div class="error-mensaje">
+        <small *ngIf="loginForm.get('password')?.errors?.['required']">
+          La contraseña es obligatoria.
+        </small>
+        <small *ngIf="loginForm.get('password')?.errors?.['minlength']">
+          La contraseña debe tener al menos 6 caracteres.
+        </small>
+      </div>
     }
 
-    <!-- Botón de LOGIN (envía el formulario) -->
-    <!-- Botón de LOGIN (envía el formulario) -->
-    <button type="submit" class="boton-formulario">Iniciar sesión</button>
+    <!-- Botón principal de envío del formulario (login) -->
+    <button type="submit" class="boton-formulario">
+      Iniciar sesión
+    </button>
   </form>
 
-  <!-- Enlace para ir al componente Registrar -->
+  <!-- =====================================================
+       ENLACE A REGISTRO
+       Lleva al usuario a la pantalla de registrarse
+       ===================================================== -->
   <div style="margin-top: 16px; text-align: center;">
     ¿No tienes cuenta?
-    <button type="button" class="boton-formulario" (click)="irARegistro()">
+    <button 
+      type="button" 
+      class="boton-formulario" 
+      (click)="irARegistro()"
+    >
       Registrarse
     </button>
   </div>
 
+  <!-- =====================================================
+       ALERTA DE ERROR DE LOGIN
+       Solo aparece si errorMessage contiene texto
+       ===================================================== -->
   @if (errorMessage) {
-  <div class="login-alert">
-    <span class="texto-error">{{ errorMessage }}</span>
-    <a href="#" (click)="irARegistro()">
-      Si no tienes cuenta puedes registrarte aqui
-    </a>
-    <button type="button" class="cerrar-alert" (click)="errorMessage = null">✕</button>
-  </div>
+    <div class="login-alert">
+
+      <!-- Texto del error -->
+      <span class="texto-error">{{ errorMessage }}</span>
+
+      <!-- Enlace directo al registro -->
+      <a href="#" (click)="irARegistro()">
+        Si no tienes cuenta puedes registrarte aqui
+      </a>
+
+      <!-- Botón de cerrar el mensaje -->
+      <button 
+        type="button" 
+        class="cerrar-alert" 
+        (click)="errorMessage = null"
+      >
+        ✕
+      </button>
+    </div>
   }
 </div>

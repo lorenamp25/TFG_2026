@@ -1,15 +1,34 @@
-  <div class="container">
+<!-- Contenedor principal de la lista de categorías -->
+<div class="container">
 
-    <ul id="categoryList">
-      @for (categoria of categorias; track $index) {
+  <!-- Lista donde se mostrarán todas las categorías -->
+  <ul id="categoryList">
+
+    <!-- Bucle de Angular (@for): recorre todas las categorías -->
+    <!-- track $index ayuda a Angular a optimizar el renderizado -->
+    @for (categoria of categorias; track $index) {
+
+      <!-- Cada categoría se muestra como un elemento <li> -->
       <li>
+
+        <!-- Nombre visible de la categoría -->
         <span class="category-name">{{ categoria.nombre }}</span>
+
+        <!-- Botones de acción: editar y eliminar -->
         <div class="actions">
+
+          <!-- Botón para editar la categoría -->
+          <!-- Llama al método onEditar(categoria) del componente -->
           <button class="edit" (click)="onEditar(categoria)">✏️</button>
+
+          <!-- Botón para borrar la categoría -->
+          <!-- Llama al método onEliminar(categoria) del componente -->
           <button class="delete" (click)="onEliminar(categoria)">🗑️</button>
         </div>
-      </li>
-      }
-    </ul>
 
-  </div>
+      </li>
+    }
+
+  </ul>
+
+</div>

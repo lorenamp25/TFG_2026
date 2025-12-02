@@ -1,42 +1,56 @@
 <div class="register-page">
 
+  <!-- Tarjeta centrada donde va el formulario de registro -->
   <div class="register-card">
 
+    <!-- Icono de la app -->
     <div class="register-logo">🍪</div>
+
+    <!-- Título de la página -->
     <h1 class="register-title">Crear cuenta</h1>
+
+    <!-- Texto descriptivo de la acción -->
     <p class="register-subtitle">
       Únete a RecetasApp para compartir y descubrir nuevas recetas.
     </p>
 
+    <!-- Formulario reactivo: se conecta al FormGroup "registerForm" -->
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
 
+      <!-- Grid con los campos del formulario -->
       <div class="register-grid">
 
+        <!-- Campo: Nickname del usuario -->
         <div>
           <label>Nickname</label>
           <input formControlName="nickname" type="text">
         </div>
 
+        <!-- Campo: Nombre -->
         <div>
           <label>Nombre</label>
           <input formControlName="nombre" type="text">
         </div>
 
+        <!-- Campo: Apellido -->
         <div>
           <label>Apellido</label>
           <input formControlName="apellido" type="text">
         </div>
 
+        <!-- Campo: Email del usuario -->
         <div>
           <label>Email</label>
           <input formControlName="email" type="email">
         </div>
 
+        <!-- Campo: Contraseña -->
         <div>
           <label>Contraseña</label>
           <input formControlName="password" type="password">
         </div>
 
+        <!-- Campo: Fecha de nacimiento -->
         <div>
           <label>Fecha de nacimiento</label>
           <input formControlName="fecha_nacimiento" type="date">
@@ -44,8 +58,10 @@
 
       </div>
 
+      <!-- BOTÓN: Enviar formulario de registro -->
       <button type="submit">Registrarse</button>
 
+      <!-- Enlace para ir a la página de inicio de sesión -->
       <button type="button" class="boton-formulario" (click)="irinciosesion()">
         ¿Ya tienes cuenta? Inicia sesión
       </button>

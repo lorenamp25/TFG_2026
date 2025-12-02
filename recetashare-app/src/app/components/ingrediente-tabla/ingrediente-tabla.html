@@ -1,15 +1,35 @@
-  <div class="container">
+<!-- Contenedor principal de la lista de ingredientes -->
+<div class="container">
 
-    <ul id="ingredienteList">
-      @for (ingrediente of ingredientes; track $index) {
+  <!-- Lista donde se mostrarán todos los ingredientes -->
+  <ul id="ingredienteList">
+
+    <!-- Bucle de Angular (@for): recorre el array 'ingredientes' -->
+    <!-- track $index mejora el rendimiento identificando cada elemento por su índice -->
+    @for (ingrediente of ingredientes; track $index) {
+
+      <!-- Cada ingrediente se representa como un elemento de lista -->
       <li>
+
+        <!-- Nombre visible del ingrediente -->
         <span class="category-name">{{ ingrediente.nombre }}</span>
+
+        <!-- Botones de acciones para cada ingrediente -->
         <div class="actions">
+
+          <!-- Botón para editar el ingrediente actual -->
+          <!-- Llama al método onEditar(ingrediente) del componente -->
           <button class="edit" (click)="onEditar(ingrediente)">✏️</button>
+
+          <!-- Botón para eliminar el ingrediente -->
+          <!-- Llama al método onEliminar(ingrediente) -->
           <button class="delete" (click)="onEliminar(ingrediente)">🗑️</button>
         </div>
-      </li>
-      }
-    </ul>
 
-  </div>
+      </li>
+
+    }
+
+  </ul>
+
+</div>

@@ -1,22 +1,46 @@
+<!-- Tarjeta completa de la receta -->
 <div class="tarjeta-receta">
+
+  <!-- Contenedor de la imagen principal de la receta -->
   <div class="imagen-receta">
+
+    <!-- Imagen de la receta -->
+    <!-- getImageUrl() asegura que la URL sea válida (por ejemplo, añade el prefijo del backend) -->
     <img src="{{ getImageUrl(receta.imagen_url!) }}" alt="Tacos de pollo" />
+
+    <!-- Etiqueta flotante sobre la imagen (por ejemplo "Nuevo", "Top", etc.) -->
     <div class="etiqueta-receta">Nuevo</div>
   </div>
+
+  <!-- Contenedor del contenido textual de la tarjeta -->
   <div class="contenido-receta">
+
+    <!-- Línea superior con meta-información: tiempo y dificultad -->
     <div class="meta-receta">
+      <!-- Tiempo de preparación con icono -->
       <span class="tiempo-receta">⏱️ {{ receta.tiempo_preparacion }} min</span>
+
+      <!-- Nivel de dificultad (fácil, media, difícil...) -->
       <span class="dificultad-receta">{{ receta.dificultad }}</span>
     </div>
-    <!-- Título de la receta -->
+
+    <!-- Título visible de la receta -->
     <h3>{{ receta.titulo }}</h3>
-    <!-- Descripción corta de la receta -->
+
+    <!-- Pequeña descripción o resumen de la receta -->
     <p>{{ receta.descripcion }}</p>
+
+    <!-- Pie de la tarjeta con autor y valoración -->
     <div class="pie-receta">
+
+      <!-- Nombre del usuario que creó la receta -->
       <div class="autor-receta">
         <span>Por {{ receta.usuario!.nombre }}</span>
       </div>
+
+      <!-- Valoración de la receta (puede venir de la BD o ser temporal) -->
       <div class="valoracion-receta">⭐️ 4.8</div>
     </div>
+
   </div>
 </div>

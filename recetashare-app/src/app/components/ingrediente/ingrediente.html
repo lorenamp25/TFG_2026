@@ -1,37 +1,46 @@
+<!-- Sección principal de la página de ingredientes -->
 <section class="ingredientes-pagina contenedor">
 
+  <!-- Título de la sección -->
   <h1 class="titulo-seccion">🧅 Ingredientes</h1>
 
+  <!-- Pequeña descripción de la página -->
   <p class="descripcion-seccion">
     Lista de ingredientes disponibles en el sistema.
   </p>
 
+  <!-- Contenedor donde se mostrará la lista completa de ingredientes -->
   <div class="lista-ingredientes">
 
+    <!-- @defer: Angular retrasa la carga hasta que se cumpla la condición -->
+    <!-- En este caso: cuando ingredientes.length > 0 -->
     @defer (when ingredientes.length > 0) {
 
+      <!-- Recorremos todos los ingredientes -->
       @for (ingrediente of ingredientes; track $index) {
 
+        <!-- Cada ingrediente individual -->
         <div class="ingrediente-item">
 
-          <!-- Contenido: icono + nombre -->
+          <!-- Contenido principal: icono + nombre -->
           <div class="ingrediente-contenido">
+
+            <!-- Icono asignado según el tipo de ingrediente -->
             <div class="icono-ingrediente">
               {{ getIconoIngrediente(ingrediente) }}
             </div>
+
+            <!-- Nombre del ingrediente tal cual viene de la BD -->
             <span class="nombre-ingrediente">{{ ingrediente.nombre }}</span>
           </div>
-
-        
 
         </div>
 
       }
 
     } @placeholder {
-
+      <!-- Contenido que se muestra mientras los ingredientes se están cargando -->
       <p>Cargando ingredientes...</p>
-
     }
 
   </div>

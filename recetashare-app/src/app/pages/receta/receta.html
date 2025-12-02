@@ -1,79 +1,139 @@
 <div>
-  Listado de recetas @if (estado === 4) {
-  <p>Procesando datos...</p>
+  <!-- TÍTULO DE LA SECCIÓN -->
+  Listado de recetas
+
+  <!-- Mensaje temporal cuando estado = 4 (procesando, cargando…) -->
+  @if (estado === 4) {
+    <p>Procesando datos...</p>
   }
 
+  <!-- ============================
+       SELECT PARA FILTRAR POR CATEGORÍA
+       ============================ -->
   <div>
     <div class="select-wrapper">
       <select
         class="select-recetas"
-        (change)="cargarRecetas($event.target)"
-        [(ngModel)]="selectedCategoria"
+        (change)="cargarRecetas($event.target)"   
+        [(ngModel)]="selectedCategoria"          
       >
+        <!-- Opción inicial: todas las categorías -->
         <option value="all">Todas las categorías</option>
+
+        <!-- Renderiza dinámicamente cada categoría -->
         @for (categoria of categorias; track $index) {
-        <option [value]="categoria.id">{{ categoria.nombre }}</option>
+          <option [value]="categoria.id">{{ categoria.nombre }}</option>
         }
       </select>
     </div>
   </div>
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
+
+  <!-- Espaciado (podrías reemplazar por CSS si quieres) -->
+  <br /><br /><br /><br /><br />
+
+  <!-- ============================
+       BOTÓN: AGREGAR RECETA (solo si el usuario está logueado)
+       ============================ -->
   @if (storageService.isLoggedIn()) {
-  <div>
-    <button class="agregar-receta" (click)="agregarReceta()">Agregar Receta</button>
-  </div>
-  } @switch (estado) { @case (0) {
-  <div class="container">
-    <div>Recetas</div>
-    @if (recetas.length > 0) {
-    <app-receta-tabla
-      [recetas]="recetas"
-      (editarRecetaEvent)="onEditarReceta($event)"
-      (eliminarRecetaEvent)="onEliminarReceta($event)"
-      (clickOnRecetaEvent)="onVisualizarReceta($event)"
-    ></app-receta-tabla>
-    } @else {
-    <p>No hay recetas cargadas</p>
+    <div>
+      <button class="agregar-receta" (click)="agregarReceta()">
+        Agregar Receta
+      </button>
+    </div>
+  }
+
+  <!-- ============================
+       SWITCH PRINCIPAL DE ESTADOS
+       Maneja las vistas: listado, agregar, editar, eliminar, ver…
+       ============================ -->
+  @switch (estado) {
+
+    <!-- ============================
+         ESTADO 0 → LISTADO DE RECETAS
+         ============================ -->
+    @case (0) {
+      <div class="container">
+        <div>Recetas</div>
+
+        <!-- Si hay recetas, muestra la tabla -->
+        @if (recetas.length > 0) {
+
+          <!-- Componente tabla de recetas -->
+          <app-receta-tabla
+            [recetas]="recetas"
+            (editarRecetaEvent)="onEditarReceta($event)"         
+            (eliminarRecetaEvent)="onEliminarReceta($event)"     
+            (clickOnRecetaEvent)="onVisualizarReceta($event)"    
+          ></app-receta-tabla>
+
+        } @else {
+          <!-- Mensaje si no hay recetas -->
+          <p>No hay recetas cargadas</p>
+        }
+      </div>
     }
-  </div>
-  } @case (1) {
-  <div class="container">
-    <div>Agregando</div>
-    <app-receta-form
-      (guardarReceta)="onGuardar($event)"
-      (cancelarAccion)="onCancelar()"
-      [receta]="receta"
-    ></app-receta-form>
-  </div>
-  } @case (2) {
-  <div class="container">
-    <div>Editando</div>
-    <app-receta-form
-      (guardarReceta)="onGuardar($event)"
-      (cancelarAccion)="onCancelar()"
-      [receta]="receta"
-    ></app-receta-form>
-  </div>
-  } @case (3) {
-  <div class="container">
-    <div>Confirmar Eliminacion</div>
-    <app-receta-form
-      (guardarReceta)="onGuardar($event)"
-      (cancelarAccion)="onCancelar()"
-      [receta]="receta"
-    ></app-receta-form>
-  </div>
-  } @case (5) {
-  <div class="container">
-    <div>Visualizando</div>
-    <app-receta-view
-      (cerrarVista)="onCancelar()"
-      [receta]="receta"
-    ></app-receta-view>
-  </div>
-  } }
+
+    <!-- ============================
+         ESTADO 1 → AGREGAR NUEVA RECETA
+         ============================ -->
+    @case (1) {
+      <div class="container">
+        <div>Agregando</div>
+
+        <!-- Formulario para crear receta -->
+        <app-receta-form
+          (guardarReceta)="onGuardar($event)"
+          (cancelarAccion)="onCancelar()"
+          [receta]="receta"
+        ></app-receta-form>
+      </div>
+    }
+
+    <!-- ============================
+         ESTADO 2 → EDITAR RECETA EXISTENTE
+         ============================ -->
+    @case (2) {
+      <div class="container">
+        <div>Editando</div>
+
+        <!-- Formulario con datos cargados -->
+        <app-receta-form
+          (guardarReceta)="onGuardar($event)"
+          (cancelarAccion)="onCancelar()"
+          [receta]="receta"
+        ></app-receta-form>
+      </div>
+    }
+
+    <!-- ============================
+         ESTADO 3 → CONFIRMAR ELIMINACIÓN
+         (usa el mismo formulario, luego lo puedes personalizar)
+         ============================ -->
+    @case (3) {
+      <div class="container">
+        <div>Confirmar Eliminacion</div>
+
+        <app-receta-form
+          (guardarReceta)="onGuardar($event)"
+          (cancelarAccion)="onCancelar()"
+          [receta]="receta"
+        ></app-receta-form>
+      </div>
+    }
+
+    <!-- ============================
+         ESTADO 5 → VISTA DE DETALLE DE RECETA
+         ============================ -->
+    @case (5) {
+      <div class="container">
+        <div>Visualizando</div>
+
+        <!-- Componente de vista detallada -->
+        <app-receta-view
+          (cerrarVista)="onCancelar()"
+          [receta]="receta"
+        ></app-receta-view>
+      </div>
+    }
+  }
 </div>

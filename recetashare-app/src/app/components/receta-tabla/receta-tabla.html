@@ -1,30 +1,52 @@
+<!-- Contenedor principal de la lista de recetas -->
 <div class="container">
+
+  <!-- Lista de recetas cargadas desde el backend -->
   <ul id="recetaList">
+
+    <!-- Bucle Angular @for: recorre todas las recetas -->
+    <!-- track $index optimiza el renderizado -->
     @for (receta of recetas; track $index) {
 
-    <li class="receta-item">
-      <div class="receta-contenido" (click)="onClickReceta(receta)">
-        <span class="receta-titulo">
-          {{ receta.titulo }}
-        </span>
+      <!-- Cada receta se representa como un elemento de lista -->
+      <li class="receta-item">
 
-        <div class="receta-imagen-wrapper">
-          <img
-            src="{{ getImageUrl(receta.imagen_url!) }}"
-            alt="Imagen de {{ receta.titulo }}"
-            class="receta-img"
-          />
+        <!-- Contenido clicable de la receta (abre detalle o editor) -->
+        <div class="receta-contenido" (click)="onClickReceta(receta)">
+
+          <!-- Título de la receta -->
+          <span class="receta-titulo">
+            {{ receta.titulo }}
+          </span>
+
+          <!-- Contenedor de la imagen con estilo propio -->
+          <div class="receta-imagen-wrapper">
+            <img
+              src="{{ getImageUrl(receta.imagen_url!) }}"  
+              alt="Imagen de {{ receta.titulo }}"
+              class="receta-img"
+            />
+          </div>
+
         </div>
-      </div>
 
-      @if (receta.usuario && receta.usuario.id === storageService.getUserId()) {
-      <div class="actions">
-        <button class="edit" (click)="onEditar(receta)">✏️</button>
-        <button class="delete" (click)="onEliminar(receta)">🗑️</button>
-      </div>
-      }
-    </li>
+        <!-- ACCIONES (Editar y Eliminar)
+             Solo aparecen si la receta pertenece al usuario logueado -->
+        @if (receta.usuario && receta.usuario.id === storageService.getUserId()) {
+          <div class="actions">
+
+            <!-- Botón de edición -->
+            <!-- Detiene el clic para no activar onClickReceta -->
+            <button class="edit" (click)="onEditar(receta)">✏️</button>
+
+            <!-- Botón de eliminación -->
+            <button class="delete" (click)="onEliminar(receta)">🗑️</button>
+
+          </div>
+        }
+      </li>
 
     }
   </ul>
+
 </div>

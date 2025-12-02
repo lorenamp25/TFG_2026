@@ -19,8 +19,8 @@
 
 
 # Preguntas
-1. Debo crear la opcion para registrar nuevos usuarios?
-2. 
+
+
 
 
 # Acceso a la base de datos

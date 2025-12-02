@@ -31,8 +31,4 @@ Se define como es cada endpoint para cada entidad, y cual/como controlador va a 
 Utiliza el `models` para responder a los requests.
 Tiene un metodo por cada tipo de request
 
-
-
-
-
-hola
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
