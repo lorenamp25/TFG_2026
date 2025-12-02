@@ -2,7 +2,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --fondo-principal:#f0edf0;--fondo-secundario:#56def6;--fondo-terciario:#f1f3f5;
-  --texto-principal:#1a1a1a;--texto-secundario:#459eec;--texto-terciario:#adb5bd;
+  --texto-principal:#1a1a1a;--texto-secundario:#000000;--texto-terciario:#000000;
   --color-borde:#e9ecef;--sombra:rgba(0,0,0,0.1);--sombra-grande:rgba(0,0,0,0.15);
   --color-principal:#ff6b6b;--color-principal-hover:#ff5252;--color-secundario:#4ecdc4;--color-acento:#ffd93d;
   --degradado-principal:linear-gradient(135deg,#66f2eb 0%,#160d46 100%);
@@ -284,13 +284,12 @@ body{
 @media (max-width: 768px) {
   .navegacion {
     z-index: 99999 !important;
-    position: fixed !important;
+    
 
   }
   .navegacion.navegacion--abierta {
     /* Forzar overlay por encima de todo el contenido */
-    position: fixed !important;
-    top: 0 !important;
+    
     left: 0 !important;
     right: 0 !important;
     display: flex !important;

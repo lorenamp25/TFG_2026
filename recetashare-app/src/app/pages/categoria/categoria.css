@@ -18,7 +18,7 @@
   letter-spacing: -1px;
   background: var(--degradado-secundario);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+ 
 }
 
 /* Descripción */
@@ -28,7 +28,7 @@
   max-width: 700px;
   margin: 0 auto var(--espaciado-xl);
   line-height: 1.65;
-  opacity: .85;
+
 }
 
 /* =============================

@@ -73,7 +73,7 @@
 /* Descripción */
 .descripcion-portada{
   font-size:1.1rem;
-  color:var(--texto-secundario);
+  color:black;
   margin-bottom:var(--espaciado-lg);
   max-width:36rem;
 }

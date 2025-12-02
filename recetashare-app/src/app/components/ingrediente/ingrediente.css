@@ -14,12 +14,12 @@
   letter-spacing: -0.03em;
   background: var(--degradado-secundario);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  
 }
 
 .descripcion-seccion {
   font-size: 1.05rem;
-  opacity: .8;
+
   margin-bottom: 2.3rem;
   color: var(--texto-secundario);
 }
@@ -76,7 +76,7 @@
 /* Icono del ingrediente */
 .icono-ingrediente {
   font-size: 1.9rem;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+  
   transition: transform 0.2s ease;
 }
 

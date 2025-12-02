@@ -18,8 +18,8 @@ div:first-child {
   letter-spacing: .08em;
   margin-bottom: 1rem;
 
-  color: #e0f7ff;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  color:d1d12ef;
+  
 }
 
 /* "Procesando datos" */
@@ -34,8 +34,7 @@ p {
 ================================ */
 
 select {
-  width: 100%;
-  max-width: 300px;
+ 
   padding: 0.8rem 1rem;
   margin: 0.8rem auto 1.2rem;
   display: block;
@@ -49,7 +48,7 @@ select {
   cursor: pointer;
 
   box-shadow: 0 0 10px rgba(0,255,255,0.25);
-  backdrop-filter: blur(8px);
+  
 
   transition: border-color .2s, box-shadow .2s, transform .2s;
 }
@@ -156,7 +155,7 @@ div:nth-child(3) button:hover {
   }
 
   div:first-child {
-    font-size: 1.25rem;
+    
   }
 
   select {
