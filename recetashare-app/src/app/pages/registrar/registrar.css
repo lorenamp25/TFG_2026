@@ -122,3 +122,59 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Estilos para la alerta de registrar */
+.registrar-alert {
+  display: flex;
+  flex-direction: column; /* apila los elementos verticalmente */
+  gap: 0.5rem;
+  align-items: flex-start;
+  background: #ffe6e6;
+  color: #8b0000;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+}
+
+.registrar-alert .texto-error,
+.registrar-alert a,
+.registrar-alert .cerrar-alert {
+  display: block; /* fuerza salto de línea */
+  width: 100%;
+}
+
+.cerrar-alert {
+  margin-top: 0.25rem;
+  background: transparent;
+  border: none;
+  text-align: right;
+  cursor: pointer;
+}
+
+
+
+/* Estilos para la info de registrar */
+.registrar-info {
+  display: flex;
+  flex-direction: column; /* apila los elementos verticalmente */
+  gap: 0.5rem;
+  align-items: flex-start;
+  background: #ffe6e6;
+  color: #263dd2;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+}
+
+.registrar-info .texto-error,
+.registrar-info a,
+.registrar-info .cerrar-info {
+  display: block; /* fuerza salto de línea */
+  width: 100%;
+}
+
+.cerrar-info {
+  margin-top: 0.25rem;
+  background: transparent;
+  border: none;
+  text-align: right;
+  cursor: pointer;
+}

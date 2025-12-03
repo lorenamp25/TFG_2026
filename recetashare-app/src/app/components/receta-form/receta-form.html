@@ -12,12 +12,7 @@
     <label for="titulo">Título</label>
 
     <!-- Input enlazado al control 'titulo' -->
-    <input
-      id="titulo"
-      type="text"
-      formControlName="titulo"
-      placeholder="Ej: Tarta de queso"
-    />
+    <input id="titulo" type="text" formControlName="titulo" placeholder="Ej: Tarta de queso" />
   </div>
 
 
@@ -28,13 +23,8 @@
     <label for="descripcion">Descripción</label>
 
     <!-- Textarea enlazada al formControl 'descripcion' -->
-    <textarea
-      id="descripcion"
-      formControlName="descripcion"
-      name="descripcion"
-      placeholder="Describe brevemente la receta"
-      rows="3"
-    ></textarea>
+    <textarea id="descripcion" formControlName="descripcion" name="descripcion"
+      placeholder="Describe brevemente la receta" rows="3"></textarea>
   </div>
 
 
@@ -44,15 +34,8 @@
   <div class="form-group">
     <label for="tiempo_preparacion">Tiempo de preparación (minutos)</label>
 
-    <input
-      id="tiempo_preparacion"
-      type="number"
-      min="1"
-      max="999"
-      formControlName="tiempo_preparacion"
-      name="tiempo_preparacion"
-      placeholder="Ej: 45"
-    />
+    <input id="tiempo_preparacion" type="number" min="1" max="999" formControlName="tiempo_preparacion"
+      name="tiempo_preparacion" placeholder="Ej: 45" />
   </div>
 
 
@@ -65,35 +48,17 @@
     <!-- Grupo de radios que comparten el mismo formControlName -->
     <div class="radio-group">
       <label>
-        <input
-          type="radio"
-          formControlName="dificultad"
-          id="dificultad"
-          name="dificultad"
-          value="baja"
-        />
+        <input type="radio" formControlName="dificultad" id="dificultad" name="dificultad" value="baja" />
         <span>Baja</span>
       </label>
 
       <label>
-        <input
-          type="radio"
-          formControlName="dificultad"
-          id="dificultad"
-          name="dificultad"
-          value="media"
-        />
+        <input type="radio" formControlName="dificultad" id="dificultad" name="dificultad" value="media" />
         <span>Media</span>
       </label>
 
       <label>
-        <input
-          type="radio"
-          formControlName="dificultad"
-          id="dificultad"
-          name="dificultad"
-          value="alta"
-        />
+        <input type="radio" formControlName="dificultad" id="dificultad" name="dificultad" value="alta" />
         <span>Alta</span>
       </label>
     </div>
@@ -125,20 +90,11 @@
     <label for="imagen">Imagen de la receta</label>
 
     <!-- Input para subir archivos -->
-    <input
-      id="imagen"
-      type="file"
-      accept="image/*"
-      (change)="onImagenSeleccionada($event)"
-    />
+    <input id="imagen" type="file" accept="image/*" (change)="onImagenSeleccionada($event)" />
 
     <!-- Vista previa solo si existe una imagen cargada -->
     @if (receta && receta.imagen_preview) {
-    <img
-      [src]="receta.imagen_preview"
-      alt="Vista previa"
-      class="preview-img"
-    />
+    <img [src]="receta.imagen_preview" alt="Vista previa" class="preview-img" />
     }
   </div>
 
@@ -150,13 +106,8 @@
     <label for="usuario">Nombre del Usuario</label>
 
     <!-- ngModel independiente, porque no forma parte del formGroup -->
-    <input
-      id="usuario"
-      type="text"
-      readonly
-      [(ngModel)]="receta!.usuario!.nombre"
-      [ngModelOptions]="{ standalone: true }"
-    />
+    <input id="usuario" type="text" readonly [(ngModel)]="receta!.usuario!.nombre"
+      [ngModelOptions]="{ standalone: true }" />
   </div>
 
 
@@ -180,11 +131,8 @@
         <tr>
           <!-- Selector de ingrediente -->
           <td>
-            <select
-              [(ngModel)]="ingrediente.ingrediente.id"
-              name="nombre-{{ $index }}"
-              [ngModelOptions]="{ standalone: true }"
-            >
+            <select [(ngModel)]="ingrediente.ingrediente.id" name="nombre-{{ $index }}"
+              [ngModelOptions]="{ standalone: true }">
               <option value="" disabled>Seleccione un ingrediente</option>
 
               <!-- Opciones: ingredientes disponibles -->
@@ -196,25 +144,14 @@
 
           <!-- Cantidad -->
           <td>
-            <input
-              type="number"
-              min="0"
-              [(ngModel)]="ingrediente.cantidad"
-              name="cantidad-{{ $index }}"
-              placeholder="Ej: 200"
-              [ngModelOptions]="{ standalone: true }"
-            />
+            <input type="number" min="0" [(ngModel)]="ingrediente.cantidad" name="cantidad-{{ $index }}"
+              placeholder="Ej: 200" [ngModelOptions]="{ standalone: true }" />
           </td>
 
           <!-- Unidad -->
           <td>
-            <input
-              type="text"
-              [(ngModel)]="ingrediente.unidad"
-              name="unidad-{{ $index }}"
-              placeholder="Ej: gramos"
-              [ngModelOptions]="{ standalone: true }"
-            />
+            <input type="text" [(ngModel)]="ingrediente.unidad" name="unidad-{{ $index }}" placeholder="Ej: gramos"
+              [ngModelOptions]="{ standalone: true }" />
           </td>
 
           <!-- Botón eliminar ingrediente -->
@@ -227,6 +164,9 @@
         }
       </tbody>
     </table>
+    @if (ingredientesError) {
+    <div class="error">{{ ingredientesError }}</div>
+    }
 
     <!-- Añadir nueva fila -->
     <button type="button" (click)="agregarIngrediente()">
@@ -253,13 +193,8 @@
         <tr>
           <!-- Texto de la instrucción -->
           <td>
-            <textarea
-              [(ngModel)]="instruccion.descripcion"
-              name="instruccion-{{ $index }}"
-              placeholder="Describe la instrucción"
-              rows="2"
-              [ngModelOptions]="{ standalone: true }"
-            ></textarea>
+            <textarea [(ngModel)]="instruccion.descripcion" name="instruccion-{{ $index }}"
+              placeholder="Describe la instrucción" rows="2" [ngModelOptions]="{ standalone: true }"></textarea>
           </td>
 
           <!-- Botón eliminar instrucción -->

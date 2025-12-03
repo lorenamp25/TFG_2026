@@ -48,6 +48,8 @@
         <div>
           <label>Contraseña</label>
           <input formControlName="password" type="password">
+          <span>Debe tener más de 6 caracteres.</span>
+          <span>Debe contener al menos 1 letra, 1 digito, y alguno de estos simbolos !@#$%^&*.-</span>
         </div>
 
         <!-- Campo: Fecha de nacimiento -->
@@ -68,6 +70,36 @@
 
     </form>
 
-  </div>
 
+
+    <!-- =====================================================
+       ALERTA DE ERROR DE LOGIN
+       Solo aparece si errorMessage contiene texto
+       ===================================================== -->
+    @if (errorMessage) {
+    <div class="registrar-alert">
+
+      <!-- Texto del error -->
+      <span class="texto-error">{{ errorMessage }}</span>
+
+      <!-- Botón de cerrar el mensaje -->
+      <button type="button" class="cerrar-alert" (click)="errorMessage = null">
+        ✕
+      </button>
+    </div>
+    }
+
+    @if (infoMessage) {
+    <div class="registrar-info">
+
+      <!-- Texto del error -->
+      <span class="texto-info">{{ infoMessage }}</span>
+
+      <!-- Botón de cerrar el mensaje -->
+      <button type="button" class="cerrar-info" (click)="infoMessage = null">
+        ✕
+      </button>
+    </div>
+    }
+  </div>
 </div>

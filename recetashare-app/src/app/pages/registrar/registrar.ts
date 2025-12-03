@@ -17,6 +17,7 @@ import { AuthService } from '../../services/auth.service';
 
 // Router para navegar entre pantallas
 import { Router } from '@angular/router';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-registrar',                 // Nombre del componente en HTML
@@ -26,6 +27,8 @@ import { Router } from '@angular/router';
   styleUrl: './registrar.css'                // Estilos del componente
 })
 export class Registrar {
+  errorMessage: string | null = null;
+  infoMessage: string | null = null;
 
   // Método para ir a la página de inicio de sesión
   irinciosesion() {
@@ -40,10 +43,10 @@ export class Registrar {
     nickname: new FormControl("", [Validators.required]),
 
     // Nombre (opcional)
-    nombre: new FormControl(""),
+    nombre: new FormControl("", [Validators.required]),
 
     // Apellido (opcional)
-    apellido: new FormControl(""),
+    apellido: new FormControl("", [Validators.required]),
 
     // Email obligatorio y válido
     email: new FormControl("", [
@@ -54,7 +57,9 @@ export class Registrar {
     // Contraseña obligatoria y mínimo 6 caracteres
     password: new FormControl("", [
       Validators.required,
-      Validators.minLength(6)
+      Validators.minLength(6),
+      // Al menos una letra y un número y un carácter especial (!@#$%^&*.-)
+      Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*.-])[A-Za-z\d!@#$%^&*.-]{6,}$/)
     ]),
 
     // Fecha de nacimiento (opcional)
@@ -74,7 +79,8 @@ export class Registrar {
 
     // Si el formulario NO es válido, avisamos y detenemos el proceso
     if (this.registerForm.invalid) {
-      alert("Rellena al menos nickname, email y contraseña");
+      this.errorMessage = "Revisa los datos del formulario.";
+      setTimeout(() => (this.errorMessage = null), 4000);
       return;
     }
 
@@ -92,21 +98,21 @@ export class Registrar {
     }).subscribe({
       // Si el registro es exitoso
       next: (response: any) => {
-        alert("Usuario registrado correctamente");
+        this.infoMessage = "Usuario registrado correctamente, redirigiendo al login...";
+        setTimeout(() => {
+          this.infoMessage = null
+          // Redirige a la página de login
+          this.router.navigate(['/login']);
+        } , 4000);
 
         // Si quisieras loguear automáticamente:
         // localStorage.setItem("usuario", JSON.stringify(response.usuario));
-
-        // Redirige a la página de login
-        this.router.navigate(['/login']);
       },
 
       // Si hubo un error desde la API
       error: (error) => {
-        console.error("Error al registrar:", error);
-
-        // Si el backend envía un mensaje específico, lo mostramos
-        alert(error.error?.error || "Error al registrar el usuario");
+        this.errorMessage = error.error?.error || "Error al registrar el usuario";
+        setTimeout(() => (this.errorMessage = null), 4000);
       }
     });
   }

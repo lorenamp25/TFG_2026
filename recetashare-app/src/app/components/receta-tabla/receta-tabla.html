@@ -22,7 +22,7 @@
           <!-- Contenedor de la imagen con estilo propio -->
           <div class="receta-imagen-wrapper">
             <img
-              src="{{ getImageUrl(receta.imagen_url!) }}"  
+              src="{{ getImageUrl(receta.imagen_url!) }}"
               alt="Imagen de {{ receta.titulo }}"
               class="receta-img"
             />
@@ -32,7 +32,7 @@
 
         <!-- ACCIONES (Editar y Eliminar)
              Solo aparecen si la receta pertenece al usuario logueado -->
-        @if (receta.usuario && receta.usuario.id === storageService.getUserId()) {
+        @if (receta.usuario && (receta.usuario.id === storageService.getUserId()) || storageService.isAdmin() ) {
           <div class="actions">
 
             <!-- Botón de edición -->

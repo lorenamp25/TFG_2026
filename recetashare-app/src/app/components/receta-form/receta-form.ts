@@ -10,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-// Importa CommonModule para usar directivas como *ngIf, *ngFor, etc.
+// Importa CommonModule para usar directivas de angular comunes
 import { CommonModule } from '@angular/common';
 
 // Importa el modelo Receta para usarlo tipado
@@ -47,6 +47,8 @@ export class RecetaForm {
 
   // Variable opcional para gestionar vista previa de imagen (si la necesitas)
   imagenPreview: any;
+  // Mensaje de error específico para ingredientes
+  ingredientesError: string | null = null;
 
   // Formulario reactivo con sus controles y validaciones
   form = new FormGroup({
@@ -72,7 +74,7 @@ export class RecetaForm {
     private categoriaService: CategoriaService,
     private ingredienteService: IngredienteService,
     private storageService: StorageService
-  ) {}
+  ) { }
 
   // Ciclo de vida: se ejecuta cuando inicia el componente
   ngOnInit() {
@@ -112,6 +114,8 @@ export class RecetaForm {
   onGrabar() {
     // Solo se procesa si el formulario pasa las validaciones
     if (this.form.valid) {
+
+
       // Convertimos el valor del formulario al tipo Receta
       let receta = this.form.value as Receta;
 
@@ -127,12 +131,48 @@ export class RecetaForm {
       // Imagen (fichero) también se arrastra desde la receta original
       receta.imagen_file = this.receta?.imagen_file;
 
+      // Validación adicional: todos los ingredientes deben tener cantidad > 0
+      if (!this.validarIngredientes()) {
+        // Marca el formulario con un error y guarda mensaje para la UI
+        this.form.setErrors({ ingredientesInvalid: true })
+        return
+      } else {
+        // Limpia posible error previo
+        this.ingredientesError = null;
+        // Si no quedan otros errores, limpia errores del form
+        if (this.form.errors && this.form.errors['ingredientesInvalid']) {
+          this.form.setErrors(null)
+        }
+      }
+
+
       // Emitimos la receta al componente padre para que la guarde (crear/editar)
       this.guardarReceta.emit(receta);
 
       // Reseteamos el formulario (limpia campos y estado)
       this.form.reset();
     }
+  }
+
+  // Comprueba que la receta tenga ingredientes válidos (cantidad > 0)
+  validarIngredientes(): boolean {
+    if (!this.receta) return true;
+
+    if (this.receta.ingredientes.length === 0) {
+      this.ingredientesError = 'La receta debe tener al menos un ingrediente.';
+      return false;
+    }
+
+    for (const ing of this.receta.ingredientes) {
+      // Si cantidad no es numérica o es menor o igual a 0 => inválido
+      const cantidad = Number(ing.cantidad);
+      if (!cantidad || cantidad <= 0) {
+        this.ingredientesError = 'Cada ingrediente debe tener una cantidad mayor que 0.';
+        return false;
+      }
+    }
+    this.ingredientesError = null;
+    return true;
   }
 
   // ============================
