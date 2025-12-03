@@ -26,10 +26,10 @@ import { Router } from '@angular/router';
   styleUrl: './registrar.css'                // Estilos del componente
 })
 export class Registrar {
-
+    hoy = new Date().toISOString().split('T')[0];
   // Método para ir a la página de inicio de sesión
-  irinciosesion() {
-    this.router.navigate(['/LoginPage']);
+  iriniciosesion() {
+    this.router.navigate(['/login']);
   }
 
   // ============================================================
@@ -56,7 +56,7 @@ export class Registrar {
       Validators.required,
       Validators.minLength(6)
     ]),
-
+    
     // Fecha de nacimiento (opcional)
     fecha_nacimiento: new FormControl("")
   });

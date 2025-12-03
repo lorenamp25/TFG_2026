@@ -44,16 +44,15 @@
   <div class="form-group">
     <label for="tiempo_preparacion">Tiempo de preparación (minutos)</label>
 
-    <input
-      id="tiempo_preparacion"
-      type="number"
-      min="1"
-      max="999"
-      formControlName="tiempo_preparacion"
-      name="tiempo_preparacion"
-      placeholder="Ej: 45"
-    />
-  </div>
+  <input
+  type="number"
+  min="1"
+  [(ngModel)]="ingrediente.cantidad"
+  name="cantidad-{{ $index }}"
+  placeholder="Ej: 200"
+  [ngModelOptions]="{ standalone: true }"
+/>
+
 
 
   <!-- =====================================================
@@ -285,7 +284,12 @@
        ===================================================== -->
   <div class="form-buttons">
     <!-- Submit deshabilitado si el formulario es inválido -->
-    <button type="submit" [disabled]="form.invalid">Confirmar</button>
+   <button type="submit" [disabled]="!esFormularioCompletamenteValido()">
+  Confirmar
+</button>
+
+
+
 
     <!-- Cancelar vuelve atrás o resetea -->
     <button type="button" (click)="onCancelar()">Cancelar</button>

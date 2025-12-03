@@ -63,6 +63,12 @@ export class AppComponent {
     this.menuAbierto = false;
     window.location.href = ruta;
   }
+  adminMenuAbierto = false;
+
+toggleAdminMenu() {
+  this.adminMenuAbierto = !this.adminMenuAbierto;
+}
+
 
 }
 

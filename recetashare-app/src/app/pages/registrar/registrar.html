@@ -53,16 +53,20 @@
         <!-- Campo: Fecha de nacimiento -->
         <div>
           <label>Fecha de nacimiento</label>
-          <input formControlName="fecha_nacimiento" type="date">
-        </div>
+       <input formControlName="fecha_nacimiento" type="date" [max]="hoy">
 
+        </div>
+        <div>
+          <label>Administrador</label>
+          <input formControlName="administrador" type="option">
+        </div>
       </div>
 
       <!-- BOTÓN: Enviar formulario de registro -->
       <button type="submit">Registrarse</button>
 
       <!-- Enlace para ir a la página de inicio de sesión -->
-      <button type="button" class="boton-formulario" (click)="irinciosesion()">
+      <button type="button" class="boton-formulario" (click)="iriniciosesion()">
         ¿Ya tienes cuenta? Inicia sesión
       </button>
 

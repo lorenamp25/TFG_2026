@@ -218,12 +218,8 @@
   z-index: 110; /* por encima del resto del header */
 }
 
-.submenu > li:hover .submenu-desplegable,
-.submenu > li:focus-within .submenu-desplegable {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
+
+
 
 .submenu-desplegable li a {
   display: block;
@@ -236,6 +232,40 @@
 
 .submenu-desplegable li a:hover {
   background: rgba(0, 255, 255, 0.08);
+}
+/* Botón Admin */
+.submenu-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  font: inherit;
+}
+
+.submenu-boton:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Flecha */
+.submenu-flecha {
+  font-size: 0.8rem;
+  transition: transform 0.15s ease;
+}
+
+/* Cuando está abierto */
+.submenu-item--abierto > .submenu-boton .submenu-flecha {
+  transform: rotate(180deg);
+}
+
+/* Mostrar el menú al abrir */
+.submenu-item--abierto > .submenu-desplegable {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 /* ============ Login dentro del menú en móvil ============ */

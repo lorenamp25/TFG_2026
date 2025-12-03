@@ -14,17 +14,27 @@
       <a href="ingrediente">Ingredientes</a>
       <a href="receta">Recetas</a>
 
-      @if (storageService.isAdmin()) {
-      <ul class="submenu">
-        <li>
-          <a href="javascript:void(0)">Admin</a>
-          <ul class="submenu-desplegable">
-            <li><a href="admin-categoria">Categorias</a></li>
-            <li><a href="admin-ingrediente">Ingredientes</a></li>
-          </ul>
-        </li>
-      </ul>
-      }
+@if (storageService.isAdmin()) {
+<ul class="submenu">
+  <li class="submenu-item" [class.submenu-item--abierto]="adminMenuAbierto">
+    <button
+      type="button"
+      class="submenu-boton"
+      style="color: rgb(191, 255, 15);"
+      (click)="toggleAdminMenu()"
+    >
+      <span>Admin</span>
+      <span class="submenu-flecha">▾</span>
+    </button>
+
+    <ul class="submenu-desplegable">
+      <li><a href="admin-categoria">Categorias</a></li>
+      <li><a href="admin-ingrediente">Ingredientes</a></li>
+    </ul>
+  </li>
+</ul>
+}
+
 
       <!-- Botón de tema dentro del nav (para móvil) -->
       <button class="cambiar-tema cambiar-tema--inside-nav" type="button" (click)="toggleTheme()"
@@ -59,6 +69,14 @@
     </div>
   </div>
 </header>
+<script>
+  document.querySelectorAll('.submenu-boton').forEach(boton => {
+    boton.addEventListener('click', () => {
+      const item = boton.closest('li');
+      item.classList.toggle('submenu-item--abierto');
+    });
+  });
+</script>
 
 <router-outlet></router-outlet>
 
