@@ -1,0 +1,12 @@
+<div class="dialog-overlay" [class.dialog-overlay--visible]="visible" (click)="close()">
+  <div class="dialog-info dialog-info--accent" (click)="$event.stopPropagation()">
+    <div class="texto-info">
+      <h3>TEST Dialog</h3>
+      {{ message }}
+    </div>
+
+    <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:.5rem">
+      <button class="boton-secundario" (click)="close()">Cerrar</button>
+    </div>
+  </div>
+</div>

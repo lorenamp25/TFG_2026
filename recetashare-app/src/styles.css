@@ -284,12 +284,12 @@ body{
 @media (max-width: 768px) {
   .navegacion {
     z-index: 99999 !important;
-    
+
 
   }
   .navegacion.navegacion--abierta {
     /* Forzar overlay por encima de todo el contenido */
-    
+
     left: 0 !important;
     right: 0 !important;
     display: flex !important;
@@ -351,4 +351,60 @@ app-login {
     display: inline-flex;
     margin-left: auto; /* empuja al final del nav si quieres */
   }
+}
+
+
+
+
+/* ===== Modal / Overlay ===== */
+/* Contenedor overlay: ocupa pantalla completa y centra el dialog */
+.dialog-overlay {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 1rem;
+  z-index: 99990;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+
+/* Mostrar overlay */
+.dialog-overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Ajustes para el dialog dentro del overlay */
+.dialog-info {
+  position: relative; /* relativo al overlay */
+  max-width: min(720px, 95%);
+  width: 100%;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  background: #fff; /* asegurar contraste sobre el overlay */
+  color: var(--texto-principal, #1a1a1a);
+  padding: 1rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.08);
+  z-index: 99991;
+}
+
+/* Variante de info (mantener visual original si se prefiere) */
+.dialog-info.dialog-info--accent {
+  background: #ffe6e6;
+  color: #263dd2;
+}
+
+/* Evitar scroll del body cuando el modal está abierto */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* Botón cerrar: alineado a la derecha pero dentro del modal */
+.dialog-info .cerrar-info {
+  margin-top: 0.5rem;
+  text-align: right;
 }

@@ -14,8 +14,8 @@
     <div class="select-wrapper">
       <select
         class="select-recetas"
-        (change)="cargarRecetas($event.target)"   
-        [(ngModel)]="selectedCategoria"          
+        (change)="cargarRecetas($event.target)"
+        [(ngModel)]="selectedCategoria"
       >
         <!-- Opción inicial: todas las categorías -->
         <option value="all">Todas las categorías</option>
@@ -61,9 +61,9 @@
           <!-- Componente tabla de recetas -->
           <app-receta-tabla
             [recetas]="recetas"
-            (editarRecetaEvent)="onEditarReceta($event)"         
-            (eliminarRecetaEvent)="onEliminarReceta($event)"     
-            (clickOnRecetaEvent)="onVisualizarReceta($event)"    
+            (editarRecetaEvent)="onEditarReceta($event)"
+            (eliminarRecetaEvent)="onEliminarReceta($event)"
+            (clickOnRecetaEvent)="onVisualizarReceta($event)"
           ></app-receta-tabla>
 
         } @else {
@@ -113,11 +113,11 @@
       <div class="container">
         <div>Confirmar Eliminacion</div>
 
-        <app-receta-form
-          (guardarReceta)="onGuardar($event)"
+        <app-receta-view
+          (confirmarReceta)="onGuardar($event)"
           (cancelarAccion)="onCancelar()"
           [receta]="receta"
-        ></app-receta-form>
+        ></app-receta-view>
       </div>
     }
 
@@ -136,4 +136,6 @@
       </div>
     }
   }
+
+  <app-dialog-info [message]="infoMessage"></app-dialog-info>
 </div>

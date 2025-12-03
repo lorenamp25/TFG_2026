@@ -78,7 +78,7 @@ DB_INIT=1
     **LISTO**
   
 -3 cuando elimino una receta que me salga 1 mensaje en admin de que se borro correctamente ya sea receta categoría o ingrediente y que pregunte si quiere ocornfirmar la eliminiacion  (creo que eso ya lo tenemos pero por si acaso)
-
+   --EN PROCESO--
 
 -4 que el admin que soy yo pueda poder borrar todas las recetas, no solo las que cree yo  (PORQUE SOY EL ADMIN)
    **LISTO**
@@ -90,15 +90,19 @@ DB_INIT=1
    **LISTO**
 
 -6.b. y en unidad poner un select parap poder elegir gr o kilos o cucharadas o unidades etc(recomendado)
+  __SI HAY TIEMPO__
 
 -7 en el apartado ingredientes tengo que decir el funcionamiento de eso el me dijo que dijera que de ahí se cargan a la base dedatos y que es visual solo 
+   **LISTO** Es para la defensa.
 
 -8 comprobar que cuando te registras como nuevo usuario te deja poner la fecha cualquiera después de hoy ( y eso esta mal no te puede dejar seleccionar un día que todavía no ha sido)
+   **LISTO**
 
 -9 si por ejemplo crea pepe que es un usuario normal una receta yo siendo admin debería poder borrar esa receta 
    **LISTO** Repetido punto 4.
 
 -10 puedo confirmar 1 receta sin rellenar todos los campos (eso esta mal)
+   **LISTO**
 
 -11 cada usuario normal puede editar y borrar sus recetas (borrar solo podrá el admin no?)
 

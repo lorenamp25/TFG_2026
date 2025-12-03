@@ -52,24 +52,33 @@ export class RecetaForm {
 
   // Formulario reactivo con sus controles y validaciones
   form = new FormGroup({
-    id: new FormControl(0), // Campo ID (normalmente oculto; 0 para nuevas recetas)
+    id: new FormControl(0),
+
     titulo: new FormControl('', [
       Validators.required,
-      Validators.minLength(3), // Título mínimo de 3 caracteres
+      Validators.minLength(3),
     ]),
-    tiempo_preparacion: new FormControl(0), // Minutos de preparación
-    dificultad: new FormControl(''),        // baja / media / alta
-    categoria: new FormControl(),           // id de categoría
+
+    tiempo_preparacion: new FormControl<number | null>(null, [
+      Validators.required,
+      Validators.min(1),
+    ]),
+
+    dificultad: new FormControl('', [
+      Validators.required,
+    ]),
+
+    categoria: new FormControl<number | null>(null, [
+      Validators.required,
+    ]),
+
     descripcion: new FormControl('', [
       Validators.required,
-      Validators.minLength(10), // Descripción con mínimo de caracteres
+      Validators.minLength(10),
     ]),
   });
 
-  // Inyección de servicios necesarios:
-  // - categoriaService: para obtener categorías desde la API
-  // - ingredienteService: para obtener ingredientes desde la API
-  // - storageService: para recuperar el usuario logueado desde el localStorage
+  // Inyección de servicios necesarios
   constructor(
     private categoriaService: CategoriaService,
     private ingredienteService: IngredienteService,
@@ -80,7 +89,6 @@ export class RecetaForm {
   ngOnInit() {
     // Si llega una receta (modo edición), carga los datos en el formulario
     if (this.receta) {
-      // Rellena los controles del formulario con los datos de la receta
       this.form.patchValue(this.receta);
 
       // Si la receta es nueva (id = 0), se asigna el usuario actual
@@ -97,61 +105,120 @@ export class RecetaForm {
   //  Carga de categorías e ingredientes
   // ============================
   cargarDatos() {
-    // Petición al servicio de categorías
     this.categoriaService.listarCategorias().subscribe((response: any) => {
-      this.categorias = response; // Guarda las categorías para el desplegable
+      this.categorias = response;
     });
 
-    // Petición al servicio de ingredientes
     this.ingredienteService.listarIngredientes().subscribe((response: any) => {
-      this.ingredientes = response; // Guarda los ingredientes para las tablas dinámicas
+      this.ingredientes = response;
     });
+  }
+
+  // ============================
+  //  Comprobación global de validez (opcional para el botón)
+  // ============================
+  esFormularioCompletamenteValido(): boolean {
+    if (this.form.invalid || !this.receta) return false;
+
+    // Imagen obligatoria (fichero o preview ya cargada)
+    if (!this.receta.imagen_file && !this.receta.imagen_preview) return false;
+
+    // Ingredientes
+    if (!this.receta.ingredientes || this.receta.ingredientes.length === 0) return false;
+
+    const ingredientesInvalidos = this.receta.ingredientes.some((ing) =>
+      !ing.ingrediente ||
+      !ing.ingrediente.id ||
+      ing.cantidad == null ||
+      ing.cantidad <= 0 ||
+      !ing.unidad ||
+      ing.unidad.trim() === ''
+    );
+
+    if (ingredientesInvalidos) return false;
+
+    // Instrucciones
+    if (!this.receta.instrucciones || this.receta.instrucciones.length === 0) return false;
+
+    const instruccionesInvalidas = this.receta.instrucciones.some((inst) =>
+      !inst.descripcion || inst.descripcion.trim() === ''
+    );
+
+    if (instruccionesInvalidas) return false;
+
+    return true;
   }
 
   // ============================
   //  Guardar receta si el formulario es válido
   // ============================
   onGrabar() {
-    // Solo se procesa si el formulario pasa las validaciones
-    if (this.form.valid) {
-
-
-      // Convertimos el valor del formulario al tipo Receta
-      let receta = this.form.value as Receta;
-
-      // Aseguramos que la receta tenga usuario:
-      // - Si viene de this.receta, se respeta
-      // - Si no, se toma el usuario logueado desde el storage
-      receta.usuario = this.receta?.usuario || this.storageService.getUsuario();
-
-      // Ingredientes e instrucciones se cogen del objeto receta original (que se usa en el HTML)
-      receta.ingredientes = this.receta?.ingredientes || [];
-      receta.instrucciones = this.receta?.instrucciones || [];
-
-      // Imagen (fichero) también se arrastra desde la receta original
-      receta.imagen_file = this.receta?.imagen_file;
-
-      // Validación adicional: todos los ingredientes deben tener cantidad > 0
-      if (!this.validarIngredientes()) {
-        // Marca el formulario con un error y guarda mensaje para la UI
-        this.form.setErrors({ ingredientesInvalid: true })
-        return
-      } else {
-        // Limpia posible error previo
-        this.ingredientesError = null;
-        // Si no quedan otros errores, limpia errores del form
-        if (this.form.errors && this.form.errors['ingredientesInvalid']) {
-          this.form.setErrors(null)
-        }
-      }
-
-
-      // Emitimos la receta al componente padre para que la guarde (crear/editar)
-      this.guardarReceta.emit(receta);
-
-      // Reseteamos el formulario (limpia campos y estado)
-      this.form.reset();
+    // 1) Validación de campos del formulario
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      alert('Rellena todos los campos obligatorios del formulario');
+      return;
     }
+
+    if (!this.receta) {
+      alert('Error interno: falta el objeto receta');
+      return;
+    }
+
+    // 2) Imagen obligatoria
+    if (!this.receta.imagen_file && !this.receta.imagen_preview) {
+      alert('Debes seleccionar una imagen para la receta');
+      return;
+    }
+
+    // 3) Validación de INGREDIENTES
+    if (!this.receta.ingredientes || this.receta.ingredientes.length === 0) {
+      this.ingredientesError = 'La receta debe tener al menos un ingrediente.';
+      return;
+    }
+
+    const ingredientesInvalidos = this.receta.ingredientes.some((ing) =>
+      !ing.ingrediente ||
+      !ing.ingrediente.id ||                // sin ingrediente seleccionado
+      ing.cantidad == null ||
+      ing.cantidad <= 0 ||                  // cantidad 0 o negativa
+      !ing.unidad ||
+      ing.unidad.trim() === ''              // unidad vacía
+    );
+
+    if (ingredientesInvalidos) {
+      this.ingredientesError = 'La receta debe tener al menos un ingrediente.';
+      return;
+    }
+
+    // 4) Validación de INSTRUCCIONES
+    if (!this.receta.instrucciones || this.receta.instrucciones.length === 0) {
+      alert('Añade al menos una instrucción');
+      return;
+    }
+
+    const instruccionesInvalidas = this.receta.instrucciones.some((inst) =>
+      !inst.descripcion || inst.descripcion.trim() === ''
+    );
+
+    if (instruccionesInvalidas) {
+      alert('Todas las instrucciones deben tener una descripción.');
+      return;
+    }
+
+    // 5) Si todo OK, montamos la receta final
+    let receta = this.form.value as Receta;
+
+    receta.usuario = this.receta.usuario || this.storageService.getUsuario();
+    receta.ingredientes = this.receta.ingredientes;
+    receta.instrucciones = this.receta.instrucciones;
+    receta.imagen_file = this.receta.imagen_file;
+
+    // Emitimos la receta al componente padre
+    this.guardarReceta.emit(receta);
+
+    // Reseteamos el formulario
+    this.form.reset();
   }
 
   // Comprueba que la receta tenga ingredientes válidos (cantidad > 0)
@@ -179,10 +246,7 @@ export class RecetaForm {
   //  Cancelar acción
   // ============================
   onCancelar() {
-    // Avisamos al componente padre de que se ha cancelado
     this.cancelarAccion.emit();
-
-    // Reseteamos el formulario
     this.form.reset();
   }
 
@@ -190,24 +254,18 @@ export class RecetaForm {
   //  Selección de imagen para la receta
   // ============================
   onImagenSeleccionada($event: Event) {
-    // Obtenemos el input que lanzó el evento
     const input = $event.target as HTMLInputElement;
 
-    // Comprobamos que haya fichero seleccionado
     if (input.files && input.files[0]) {
       const file = input.files[0];
 
-      // Si existe un objeto receta, le asignamos el fichero
       if (this.receta) {
         this.receta.imagen_file = file;
 
-        // Creamos un lector de archivos para generar la vista previa
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          // Guardamos el resultado como imagen_preview para mostrarla en el HTML
           this.receta!.imagen_preview = e.target.result;
         };
-        // Leemos el fichero como DataURL (base64)
         reader.readAsDataURL(file);
       }
     }
@@ -217,7 +275,6 @@ export class RecetaForm {
   //  Gestión dinámica de INGREDIENTES
   // ============================
   agregarIngrediente() {
-    // Añade una nueva fila de ingrediente vacío a la lista de la receta
     this.receta?.ingredientes.push({
       cantidad: 0,
       unidad: '',
@@ -226,7 +283,6 @@ export class RecetaForm {
   }
 
   eliminarIngrediente(index: number) {
-    // Elimina el ingrediente en la posición 'index'
     this.receta?.ingredientes.splice(index, 1);
   }
 
@@ -234,10 +290,8 @@ export class RecetaForm {
   //  Gestión dinámica de INSTRUCCIONES
   // ============================
   agregarInstruccion() {
-    // Calcula el siguiente número de paso según la longitud actual
     const nuevoPaso = this.receta ? this.receta.instrucciones.length + 1 : 1;
 
-    // Añade una nueva instrucción vacía
     this.receta?.instrucciones.push({
       orden: nuevoPaso,
       descripcion: '',
@@ -245,7 +299,6 @@ export class RecetaForm {
   }
 
   eliminarInstruccion(index: number) {
-    // Elimina la instrucción en la posición 'index'
     this.receta?.instrucciones.splice(index, 1);
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecetaService } from '../../services/receta.service';
 import { RecetaTabla } from '../../components/receta-tabla/receta-tabla';
@@ -11,21 +11,25 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorageService } from '../../services/localstorage.service';
 import { RecetaView } from '../../components/receta-view/receta-view';
+import { DialogInfoComponent } from '../../components/test-dialog/test-dialog.component';
 
 @Component({
   standalone: true, // Componente independiente
   selector: 'app-receta', // Selector para usar este componente
-  imports: [CommonModule, RecetaTabla, RecetaForm, FormsModule, RecetaView], // Importa módulos y componentes necesarios
+  imports: [CommonModule, RecetaTabla, RecetaForm, FormsModule, RecetaView, DialogInfoComponent], // Importa módulos y componentes necesarios
   templateUrl: './receta.html', // Archivo HTML asociado
   styleUrls: ['./receta.css'], // Archivo CSS asociado
 })
 export class RecetaPage {
+  @ViewChild('testDialog') testDialog!: DialogInfoComponent;
+
   recetas: Receta[] = [] // Lista de recetas obtenidas del backend
   receta: Receta | null = null // Receta seleccionada para editar/eliminar
   estado: EstadoAccion = EstadoAccion.Listando // Estado actual de la interfaz (listando/agregando/etc.)
   categorias: Categoria[] = [] // Lista de categorías para filtrar
   idCategoriaSeleccionada: String | null = null // ID de la categoría seleccionada para filtrar
   selectedCategoria: any = 'all' // valor por defecto -> "Todas las Categorías"
+  infoMessage: string | null = null // Mensaje informativo para el usuario
 
   constructor(
     private recetaService: RecetaService, // Servicio para hacer peticiones relacionadas a recetas
@@ -105,6 +109,13 @@ export class RecetaPage {
         this.recetaService.eliminarReceta(receta.id).subscribe(() => {
           this.receta = null;
           this.cargarRecetas(null);
+
+          this.infoMessage = 'Receta eliminada correctamente.';
+          this.testDialog.open();
+          setTimeout(() => {
+            this.infoMessage = null;
+            this.testDialog.close();
+          }, 4000);
         });
         break;
     }

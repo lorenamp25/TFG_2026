@@ -29,10 +29,11 @@ import { ThisReceiver } from '@angular/compiler';
 export class Registrar {
   errorMessage: string | null = null;
   infoMessage: string | null = null;
+  hoy = new Date().toISOString().split('T')[0];
 
   // Método para ir a la página de inicio de sesión
-  irinciosesion() {
-    this.router.navigate(['/LoginPage']);
+  iriniciosesion() {
+    this.router.navigate(['/login']);
   }
 
   // ============================================================
@@ -103,7 +104,7 @@ export class Registrar {
           this.infoMessage = null
           // Redirige a la página de login
           this.router.navigate(['/login']);
-        } , 4000);
+        }, 4000);
 
         // Si quisieras loguear automáticamente:
         // localStorage.setItem("usuario", JSON.stringify(response.usuario));

@@ -24,10 +24,13 @@ import { CategoriaService } from '../../services/categoria.service';
 export class RecetaView implements OnInit {
 
   // Recibe desde el componente padre la receta que debe visualizarse
-  @Input() receta: Receta | null = null
+  @Input() receta!: Receta | null;
 
   // Evento que se emite cuando el usuario pulsa "Cerrar" o "Volver"
   @Output() cerrarVista = new EventEmitter<void>()
+  @Output() confirmarReceta = new EventEmitter<Receta>()
+  @Output() cancelarAccion = new EventEmitter<void>()
+
 
   categoriaNombre: string = '';
 
@@ -49,5 +52,13 @@ export class RecetaView implements OnInit {
   // ==========================================================
   onCerrar() {
     this.cerrarVista.emit()   // Notifica al componente padre que debe cerrar la vista
+  }
+  onCancelar() {
+    this.cancelarAccion.emit()   // Notifica al componente padre que debe cerrar la vista
+  }
+  onConfirmar() {
+    if (this.receta) {
+      this.confirmarReceta.emit(this.receta)   // Notifica al componente padre que debe cerrar la vista
+    }
   }
 }

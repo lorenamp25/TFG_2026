@@ -4,88 +4,91 @@
   <!-- Si existe una receta seleccionada -->
   @if (receta) {
 
-    <!-- Título principal de la receta -->
-    <h2 class="titulo">{{ receta.titulo }}</h2>
+  <!-- Título principal de la receta -->
+  <h2 class="titulo">{{ receta.titulo }}</h2>
 
-    <!-- Imagen de la receta (solo si tiene imagen_url) -->
-    @if (receta.imagen_url) {
-    <div class="imagen-wrapper">
-      <img
-        src="{{ getImageUrl(receta.imagen_url!) }}"
-        alt="Imagen receta"
-        class="receta-img"
-      />
-    </div>
-    }
+  <!-- Imagen de la receta (solo si tiene imagen_url) -->
+  @if (receta.imagen_url) {
+  <div class="imagen-wrapper">
+    <img src="{{ getImageUrl(receta.imagen_url!) }}" alt="Imagen receta" class="receta-img" />
+  </div>
+  }
 
-    <!-- Descripción breve o completa de la receta -->
-    <p class="descripcion">{{ receta.descripcion }}</p>
+  <!-- Descripción breve o completa de la receta -->
+  <p class="descripcion">{{ receta.descripcion }}</p>
 
-    <!-- Datos informativos principales: tiempo, dificultad, categoría y autor -->
-    <ul class="meta">
-      <li><strong>Tiempo:</strong> {{ receta.tiempo_preparacion }} min</li>
-      <li><strong>Dificultad:</strong> {{ receta.dificultad }}</li>
-      <li><strong>Categoría:</strong> {{ categoriaNombre }}</li>
-      <li><strong>Autor:</strong> {{ receta.usuario?.nombre }}</li>
-    </ul>
+  <!-- Datos informativos principales: tiempo, dificultad, categoría y autor -->
+  <ul class="meta">
+    <li><strong>Tiempo:</strong> {{ receta.tiempo_preparacion }} min</li>
+    <li><strong>Dificultad:</strong> {{ receta.dificultad }}</li>
+    <li><strong>Categoría:</strong> {{ categoriaNombre }}</li>
+    <li><strong>Autor:</strong> {{ receta.usuario?.nombre }}</li>
+  </ul>
 
-    <!-- ================================
+  <!-- ================================
          SECCIÓN INGREDIENTES
          ================================ -->
-    <section class="ingredientes">
-      <h3 class="ingredienteclass">Ingredientes</h3>
+  <section class="ingredientes">
+    <h3 class="ingredienteclass">Ingredientes</h3>
 
-      <!-- Tabla con todos los ingredientes y cantidades -->
-      <table>
-        <thead>
-          <tr>
-            <th>Ingrediente</th>
-            <th>Cantidad</th>
-            <th>Unidad</th>
-          </tr>
-        </thead>
+    <!-- Tabla con todos los ingredientes y cantidades -->
+    <table>
+      <thead>
+        <tr>
+          <th>Ingrediente</th>
+          <th>Cantidad</th>
+          <th>Unidad</th>
+        </tr>
+      </thead>
 
-        <tbody>
-          <!-- Bucle: recorre los ingredientes de la receta -->
-          @for (ing of receta.ingredientes; track $index) {
-          <tr>
-            <!-- Nombre del ingrediente (si no existe, muestra N/A) -->
-            <td>{{ ing?.ingrediente?.nombre || 'N/A' }}</td>
+      <tbody>
+        <!-- Bucle: recorre los ingredientes de la receta -->
+        @for (ing of receta.ingredientes; track $index) {
+        <tr>
+          <!-- Nombre del ingrediente (si no existe, muestra N/A) -->
+          <td>{{ ing?.ingrediente?.nombre || 'N/A' }}</td>
 
-            <!-- Cantidad del ingrediente -->
-            <td>{{ ing?.cantidad }}</td>
+          <!-- Cantidad del ingrediente -->
+          <td>{{ ing?.cantidad }}</td>
 
-            <!-- Unidad (gramos, ml, etc.) -->
-            <td>{{ ing?.unidad }}</td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </section>
+          <!-- Unidad (gramos, ml, etc.) -->
+          <td>{{ ing?.unidad }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </section>
 
-    <!-- ================================
+  <!-- ================================
          SECCIÓN INSTRUCCIONES
          ================================ -->
-    <section class="instrucciones">
-      <h3>Instrucciones</h3>
+  <section class="instrucciones">
+    <h3>Instrucciones</h3>
 
-      <!-- Lista ordenada de pasos -->
-      <ol>
-        @for (instruccion of receta.instrucciones; track $index) {
-        <li>
-          <!-- Descripción del paso; si está vacía, muestra texto por defecto -->
-          <span class="instr-desc">{{ instruccion?.descripcion || 'Sin descripción' }}</span>
-        </li>
-        }
-      </ol>
-    </section>
+    <!-- Lista ordenada de pasos -->
+    <ol>
+      @for (instruccion of receta.instrucciones; track $index) {
+      <li>
+        <!-- Descripción del paso; si está vacía, muestra texto por defecto -->
+        <span class="instr-desc">{{ instruccion?.descripcion || 'Sin descripción' }}</span>
+      </li>
+      }
+    </ol>
+  </section>
 
   <!-- Si NO hay receta seleccionada -->
   } @else {
-    <p>No hay receta seleccionada.</p>
+  <p>No hay receta seleccionada.</p>
   }
 
-  <!-- Botón para volver al listado o cerrar vista -->
-  <button (click)="onCerrar()" class="btn-volver">← Volver</button>
-
+  <div class="form-buttons">
+    @if (confirmarReceta) {
+    <!-- Botón para volver al listado o cerrar vista -->
+    <button (click)="onConfirmar()">Confirmar</button>
+    <button (click)="onCancelar()">← Cancelar</button>
+    } @else {
+    <!-- Botón para volver al listado o cerrar vista -->
+    <button (click)="onCerrar()" class="btn-volver">← Volver</button>
+    }
+  </div>
 </div>

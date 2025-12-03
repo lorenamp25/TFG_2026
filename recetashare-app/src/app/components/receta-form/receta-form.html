@@ -220,7 +220,12 @@
        ===================================================== -->
   <div class="form-buttons">
     <!-- Submit deshabilitado si el formulario es inválido -->
-    <button type="submit" [disabled]="form.invalid">Confirmar</button>
+   <button type="submit" [disabled]="!esFormularioCompletamenteValido()">
+  Confirmar
+</button>
+
+
+
 
     <!-- Cancelar vuelve atrás o resetea -->
     <button type="button" (click)="onCancelar()">Cancelar</button>
