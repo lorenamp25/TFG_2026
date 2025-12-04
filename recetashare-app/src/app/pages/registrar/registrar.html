@@ -48,8 +48,10 @@
         <div>
           <label>Contraseña</label>
           <input formControlName="password" type="password">
-          <span>Debe tener más de 6 caracteres.</span>
-          <span>Debe contener al menos 1 letra, 1 digito, y alguno de estos simbolos !@#$%^&*.-</span>
+          <div class="password-help">
+    <span>Debe tener más de 6 caracteres.</span>
+    <span>Debe contener al menos 1 letra, 1 dígito, y alguno de estos símbolos !@#$%^&*.-</span>
+  </div>
         </div>
 
         <!-- Campo: Fecha de nacimiento -->
@@ -58,10 +60,7 @@
        <input formControlName="fecha_nacimiento" type="date" [max]="hoy">
 
         </div>
-        <div>
-          <label>Administrador</label>
-          <input formControlName="administrador" type="option">
-        </div>
+        
       </div>
 
       <!-- BOTÓN: Enviar formulario de registro -->

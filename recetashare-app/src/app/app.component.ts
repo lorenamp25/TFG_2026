@@ -39,6 +39,10 @@ export class AppComponent {
   }
 
   toggleMenu() { this.menuAbierto = !this.menuAbierto; }
+  cerrarMenu() {
+  this.menuAbierto = false;
+  this.adminMenuAbierto = false; // opcional pero recomendado
+}
 
   toggleTheme() {
     // Método para alternar entre tema claro y oscuro

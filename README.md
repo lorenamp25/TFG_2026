@@ -106,15 +106,15 @@ DB_INIT=1
 
 -11 cada usuario normal puede editar y borrar sus recetas (borrar solo podrá el admin no?)
 
--12  arreglar el botón de registrarse el que pone ya tienes cuenta inicia sesión (el me dijo que si no consigo enlazar eso que borre directamente el botón y no me lie)
-
+-12  arreglar el botón de registrarse el que pone ya tienes cuenta inicia sesión (el me dijo que si no consigo enlazar eso que borre directamente el botón y no me lie) 
+ **LISTO**
 -13 el css bien del menú de admin porque cuesta apretar en el desplegable 
-
+ **LISTO**
 14-arreglar en versión móvil el apartado de categorías y ingredientes del apartado admin porque tapa el menú por detrás   
 preguntas
-
+ **LISTO**
 -15 en versión móvil cambiar el color directamente el texto donde pone admin para diferenciarlo de que es un apartado diferente 
-
+ **LISTO**
 -16 que el admin pueda borrar todas las recetas creadas 
    **LISTO** Repetido punto 4.
 

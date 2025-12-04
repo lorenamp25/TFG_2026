@@ -6,6 +6,8 @@
 :host {
   display: block;
   padding: 1.5rem 0;
+   position: relative;
+  z-index: 0;
 }
 
 /* Texto principal */
@@ -67,6 +69,7 @@ p + div button:hover {
   border-radius: 22px;
   position: relative;
   overflow: hidden;
+ 
 
   background: radial-gradient(circle at top left, rgba(0,255,255,0.12), transparent 55%),
               radial-gradient(circle at bottom right, rgba(0,255,120,0.16), transparent 55%),

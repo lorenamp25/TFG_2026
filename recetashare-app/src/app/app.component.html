@@ -78,6 +78,9 @@
   });
 </script>
 
+@if (menuAbierto) {
+  <div class="menu-backdrop" (click)="cerrarMenu()"></div>
+}
 <router-outlet></router-outlet>
 
 <footer class="pie">

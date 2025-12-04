@@ -2,7 +2,7 @@
 .encabezado {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   width: 100%;
   background: linear-gradient(
     120deg,
@@ -321,7 +321,7 @@
     gap: 0.7rem;
     border-bottom: 1px solid rgba(0, 255, 255, 0.25);
     display: none; /* cerrado por defecto */
-    z-index: 105;  /* por encima del contenido pero solo cuando se abre */
+    z-index: 110;  /* por encima del contenido pero solo cuando se abre */
   }
 
   .navegacion.navegacion--abierta {
@@ -386,8 +386,20 @@
   }
 
   /* 🔧 IMPORTANTE: evitar que el header tape el contenido en móvil */
+ /* HEADER SIEMPRE POR ENCIMA, TAMBIÉN EN MÓVIL */
+@media (max-width: 640px) {
   .encabezado {
-    position: static;   /* ya no es sticky en móvil */
+    position: sticky;  /* o relative si no quieres que sea sticky, pero nunca static */
+    top: 0;
+    z-index: 1000;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
   }
+}
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: transparent; /* si quieres puedes poner rgba(0,0,0,0.4) */
+  z-index: 900;
+}
+
 }
