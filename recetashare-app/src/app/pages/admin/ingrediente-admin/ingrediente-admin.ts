@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { IngredienteTabla } from '../../../components/ingrediente-tabla/ingrediente-tabla';
 import { IngredienteForm } from '../../../components/ingrediente-form/ingrediente-form';
 import { IngredienteService } from '../../../services/ingrediente.service';
+import { ModalService } from '../../../components/modal-component/modal.service';
 
 @Component({
   selector: 'app-ingrediente-admin',
@@ -20,7 +21,7 @@ export class IngredienteAdmin {
   estado: EstadoAccion = EstadoAccion.Listando // Estado inicial: solo muestra la lista
 
   // Inyecta el servicio para gestionar categorías
-  constructor(private ingredienteService: IngredienteService) { }
+  constructor(private ingredienteService: IngredienteService, private modalService: ModalService) { }
 
   // Se ejecuta cuando el componente inicia (similar a ngOnLoad)
   ngOnInit(): void {
@@ -53,6 +54,7 @@ export class IngredienteAdmin {
           .subscribe((ingrediente) => {
             this.ingrediente = null              // Limpia la categoría seleccionada
             this.cargarIngredientes()            // Recarga la lista
+            this.modalService.success('Ingrediente creado', 'El ingrediente ha sido creado correctamente.');
           })
         break
 
@@ -62,6 +64,7 @@ export class IngredienteAdmin {
           .subscribe((ingrediente) => {
             this.ingrediente = null
             this.cargarIngredientes()
+            this.modalService.success('Ingrediente actualizado', 'El ingrediente ha sido actualizado correctamente.');
           })
         break
 
@@ -71,6 +74,7 @@ export class IngredienteAdmin {
           .subscribe(() => {
             this.ingrediente = null
             this.cargarIngredientes()
+            this.modalService.success('Ingrediente eliminado', 'El ingrediente ha sido eliminado correctamente.');
           })
         break
     }

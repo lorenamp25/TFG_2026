@@ -8,21 +8,19 @@ import { RecetaForm } from '../../components/receta-form/receta-form';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.model';
 import { ActivatedRoute } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { StorageService } from '../../services/localstorage.service';
 import { RecetaView } from '../../components/receta-view/receta-view';
-import { DialogInfoComponent } from '../../components/test-dialog/test-dialog.component';
+import { ModalService } from '../../components/modal-component/modal.service';
 
 @Component({
   standalone: true, // Componente independiente
   selector: 'app-receta', // Selector para usar este componente
-  imports: [CommonModule, RecetaTabla, RecetaForm, FormsModule, RecetaView, DialogInfoComponent], // Importa módulos y componentes necesarios
+  imports: [CommonModule, RecetaTabla, RecetaForm, FormsModule, RecetaView], // Importa módulos y componentes necesarios
   templateUrl: './receta.html', // Archivo HTML asociado
   styleUrls: ['./receta.css'], // Archivo CSS asociado
 })
 export class RecetaPage {
-  @ViewChild('testDialog') testDialog!: DialogInfoComponent;
-
   recetas: Receta[] = [] // Lista de recetas obtenidas del backend
   receta: Receta | null = null // Receta seleccionada para editar/eliminar
   estado: EstadoAccion = EstadoAccion.Listando // Estado actual de la interfaz (listando/agregando/etc.)
@@ -35,7 +33,8 @@ export class RecetaPage {
     private recetaService: RecetaService, // Servicio para hacer peticiones relacionadas a recetas
     private categoriaService: CategoriaService, // Servicio de categorías
     private route: ActivatedRoute,
-    public storageService: StorageService
+    public storageService: StorageService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -93,6 +92,8 @@ export class RecetaPage {
         this.recetaService.crearReceta(receta).subscribe((receta) => {
           this.receta = null; // Limpia selección
           this.cargarRecetas(null); // Recarga datos
+
+          this.modalService.success('Receta creada', 'La receta ha sido creada correctamente.');
         });
         break;
 
@@ -101,6 +102,8 @@ export class RecetaPage {
         this.recetaService.actualizarReceta(receta.id, receta).subscribe((receta) => {
           this.receta = null;
           this.cargarRecetas(null);
+
+          this.modalService.success('Receta actualizada', 'La receta ha sido actualizada correctamente.');
         });
         break;
 
@@ -110,12 +113,7 @@ export class RecetaPage {
           this.receta = null;
           this.cargarRecetas(null);
 
-          this.infoMessage = 'Receta eliminada correctamente.';
-          this.testDialog.open();
-          setTimeout(() => {
-            this.infoMessage = null;
-            this.testDialog.close();
-          }, 4000);
+          this.modalService.success('Receta eliminada', 'La receta ha sido eliminada correctamente.');
         });
         break;
     }

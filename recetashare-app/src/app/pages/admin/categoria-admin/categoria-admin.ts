@@ -18,6 +18,7 @@ import { CategoriaTablaComponent } from '../../../components/categoria-tabla/cat
 
 // Importa el formulario de categorías
 import { CategoriaForm } from '../../../components/categoria-form/categoria-form';
+import { ModalService } from '../../../components/modal-component/modal.service';
 
 @Component({
   selector: 'app-categoria-admin',              // Nombre del selector del componente
@@ -31,7 +32,7 @@ export class CategoriaAdmin {
   estado: EstadoAccion = EstadoAccion.Listando // Estado inicial: solo muestra la lista
 
   // Inyecta el servicio para gestionar categorías
-  constructor(private categoriaService: CategoriaService) { }
+  constructor(private categoriaService: CategoriaService, private modalService: ModalService) { }
 
   // Se ejecuta cuando el componente inicia (similar a ngOnLoad)
   ngOnInit(): void {
@@ -64,6 +65,7 @@ export class CategoriaAdmin {
           .subscribe((categoria) => {
             this.categoria = null              // Limpia la categoría seleccionada
             this.cargarCategorias()            // Recarga la lista
+            this.modalService.success('Categoría creada', 'La categoría ha sido creada correctamente.');
           })
         break
 
@@ -73,6 +75,7 @@ export class CategoriaAdmin {
           .subscribe((categoria) => {
             this.categoria = null
             this.cargarCategorias()
+            this.modalService.success('Categoría actualizada', 'La categoría ha sido actualizada correctamente.');
           })
         break
 
@@ -82,6 +85,7 @@ export class CategoriaAdmin {
           .subscribe(() => {
             this.categoria = null
             this.cargarCategorias()
+            this.modalService.success('Categoría eliminada', 'La categoría ha sido eliminada correctamente.');
           })
         break
     }

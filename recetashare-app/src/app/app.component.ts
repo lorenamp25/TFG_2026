@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { RouterOutlet } from '@angular/router';
 import { StorageService } from './services/localstorage.service';
+import { ModalWrapperComponent } from './components/modal-component/modal-wrapper-component';
 // Importa RouterOutlet para poder renderizar rutas dentro del componente raíz
 
 
@@ -10,7 +11,7 @@ import { StorageService } from './services/localstorage.service';
   selector: 'app-root',
   // Nombre de la etiqueta HTML donde se renderiza este componente
 
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ModalWrapperComponent],
   // Permite usar <router-outlet> dentro del template del componente
 
   templateUrl: './app.component.html',

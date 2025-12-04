@@ -1,0 +1,17 @@
+@if (visible) {
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-container" [class]="modalClass">
+    <div class="modal-header">
+      <span class="modal-icon">{{ icon }}</span>
+      <h3 class="modal-title">{{ title }}</h3>
+      <button class="modal-close" (click)="close()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>{{ message }}</p>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-button" (click)="close()">Aceptar</button>
+    </div>
+  </div>
+</div>
+}
