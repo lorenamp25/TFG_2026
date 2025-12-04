@@ -100,7 +100,7 @@
   <div class="container">
     <div>Confirmar Eliminacion</div>
 
-    <app-receta-view (confirmarReceta)="onGuardar($event)" (cancelarAccion)="onCancelar()"
+    <app-receta-view (confirmarReceta)="onGuardar($event)" (cancelarAccion)="onCancelar()" [mostrarAcciones]="true"
       [receta]="receta"></app-receta-view>
   </div>
   }

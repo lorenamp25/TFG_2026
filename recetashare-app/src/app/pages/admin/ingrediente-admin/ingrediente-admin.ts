@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { EstadoAccion } from '../../../models/estadoaccion.enum';
 import { Ingrediente } from '../../../models/ingrediente.model';
-import { CategoriaForm } from '../../../components/categoria-form/categoria-form';
-import { CategoriaTablaComponent } from '../../../components/categoria-tabla/categoria-tabla';
 import { CommonModule } from '@angular/common';
 import { IngredienteTabla } from '../../../components/ingrediente-tabla/ingrediente-tabla';
 import { IngredienteForm } from '../../../components/ingrediente-form/ingrediente-form';

@@ -25,6 +25,7 @@ export class RecetaView implements OnInit {
 
   // Recibe desde el componente padre la receta que debe visualizarse
   @Input() receta!: Receta | null;
+  @Input() mostrarAcciones: boolean = false;
 
   // Evento que se emite cuando el usuario pulsa "Cerrar" o "Volver"
   @Output() cerrarVista = new EventEmitter<void>()
@@ -44,6 +45,7 @@ export class RecetaView implements OnInit {
       this.categoriaService.leerCategoria(this.receta.categoria!).subscribe(categoria => {
         this.categoriaNombre = categoria.nombre;
       });
+      console.log(this.confirmarReceta)
     }
   }
 
