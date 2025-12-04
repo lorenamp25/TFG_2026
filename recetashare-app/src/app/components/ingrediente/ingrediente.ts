@@ -146,6 +146,7 @@ export class IngredientesComponent implements OnInit {
     if (n.includes('avena')) return '🌾';
     if (n.includes('arroz integral')) return '🍚';
     if (n.includes('arroz blanco')) return '🍚';
+   
 
     // Icono por defecto si ninguno coincide
     return '🧂';
