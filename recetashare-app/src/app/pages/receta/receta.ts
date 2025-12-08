@@ -113,7 +113,7 @@ export class RecetaPage {
           this.receta = null;
           this.cargarRecetas(null);
 
-          this.modalService.success('Receta eliminada', 'La receta se ha sido eliminada correctamente.');
+          this.modalService.success('Receta eliminada', 'La receta ha sido eliminada correctamente.');
         });
         break;
     }
