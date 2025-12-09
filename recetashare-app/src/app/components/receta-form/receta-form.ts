@@ -231,6 +231,7 @@ export class RecetaForm {
     receta.ingredientes = this.receta.ingredientes;
     receta.instrucciones = this.receta.instrucciones;
     receta.imagen_file = this.receta.imagen_file;
+    receta.imagen_url = this.receta.imagen_url;
 
     // Emitimos la receta al componente padre
     this.guardarReceta.emit(receta);
