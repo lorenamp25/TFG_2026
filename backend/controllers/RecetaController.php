@@ -99,21 +99,20 @@ class RecetaController
         }
 
         // Procesar imagen si existe
-        if ($input['imagen_cambiada'] === 'true' || $input['imagen_cambiada'] === true) {
-            if (isset($_FILES['imagen_principal']) && $_FILES['imagen_principal']['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = 'uploads/recetas/';
-                if (!file_exists($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
-                }
+        if (isset($_FILES['imagen_principal']) && $_FILES['imagen_principal']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = 'uploads/recetas/';
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
 
-                $fileName = uniqid() . '_' . $_FILES['imagen_principal']['name'];
-                $filePath = $uploadDir . $fileName;
+            $fileName = uniqid() . '_' . $_FILES['imagen_principal']['name'];
+            $filePath = $uploadDir . $fileName;
 
-                if (move_uploaded_file($_FILES['imagen_principal']['tmp_name'], $filePath)) {
-                    $input['imagen_url'] = $filePath;
-                }
+            if (move_uploaded_file($_FILES['imagen_principal']['tmp_name'], $filePath)) {
+                $input['imagen_url'] = $filePath;
             }
         }
+
 
         // Crea instancia del modelo Receta
         $model = new Receta($this->conn);
