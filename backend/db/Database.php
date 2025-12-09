@@ -88,7 +88,9 @@ CREATE TABLE IF NOT EXISTS categorias (
 -- Ingredientes
 CREATE TABLE IF NOT EXISTS ingredientes (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL
+    nombre VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    icono VARCHAR(255)
 );
 
 -- Usuarios
@@ -186,6 +188,60 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
             // Y devuelve false
             return false;
         }
+    }
+
+    // Calcular un icono basado en el nombre del ingrediente (misma heurística que el frontend)
+    private function computeIcono($nombre)
+    {
+        $n = mb_strtolower($nombre, 'UTF-8');
+        // Transliterate accents to ASCII
+        $n = iconv('UTF-8', 'ASCII//TRANSLIT', $n);
+        // Eliminar caracteres no alfanuméricos
+        $n = preg_replace('/[^a-z0-9 ]/', '', $n);
+
+        if (strpos($n, 'harina') !== false) return '🥣';
+        if (strpos($n, 'azucar') !== false || strpos($n, 'azucar') !== false) return '🍬';
+        if (trim($n) === 'sal') return '🧂';
+        if (strpos($n, 'pimienta') !== false) return '🌶️';
+        if (strpos($n, 'aceite') !== false) return '🫒';
+        if (strpos($n, 'huevo') !== false || strpos($n, 'huevos') !== false) return '🥚';
+        if ($n === 'leche' || strpos($n, 'leche') !== false) return '🥛';
+        if (strpos($n, 'mantequilla') !== false) return '🧈';
+        if (strpos($n, 'ajo') !== false) return '🧄';
+        if (strpos($n, 'cebolla') !== false) return '🧅';
+        if (strpos($n, 'tomate') !== false) return '🍅';
+        if (strpos($n, 'queso') !== false) return '🧀';
+        if (strpos($n, 'pollo') !== false || strpos($n, 'pechuga') !== false) return '🍗';
+        if (strpos($n, 'ternera') !== false || strpos($n, 'carne') !== false || strpos($n, 'filete') !== false) return '🥩';
+        if (strpos($n, 'perejil') !== false || strpos($n, 'albahaca') !== false || strpos($n, 'oregano') !== false || strpos($n, 'romero') !== false) return '🌿';
+        if (strpos($n, 'arroz') !== false) return '🍚';
+        if (strpos($n, 'pasta') !== false) return '🍝';
+        if (strpos($n, 'patata') !== false || strpos($n, 'patata') !== false) return '🥔';
+        if (strpos($n, 'zanahoria') !== false) return '🥕';
+        if (strpos($n, 'yogur') !== false) return '🥛';
+        if (strpos($n, 'vinagre') !== false) return '🍾';
+        if (strpos($n, 'vainilla') !== false) return '🌼';
+        if (strpos($n, 'tofu') !== false) return '🍱';
+        if (strpos($n, 'salmon') !== false || strpos($n, 'merluza') !== false || strpos($n, 'gamba') !== false || strpos($n, 'gambas') !== false || strpos($n, 'camaron') !== false) return '🐟';
+        if (strpos($n, 'pan rallado') !== false) return '🍞';
+        if (strpos($n, 'nata') !== false) return '🥛';
+        if (strpos($n, 'miel') !== false) return '🍯';
+        if (strpos($n, 'manzana') !== false) return '🍎';
+        if (strpos($n, 'limon') !== false) return '🍋';
+        if (strpos($n, 'lenteja') !== false) return '🫘';
+        if (strpos($n, 'lechuga') !== false) return '🥬';
+        if (strpos($n, 'gamba') !== false || strpos($n, 'camaron') !== false) return '🦐';
+        if (strpos($n, 'fresa') !== false) return '🍓';
+        if (strpos($n, 'espinaca') !== false || strpos($n, 'espinacas') !== false) return '🥬';
+        if (strpos($n, 'chocolate') !== false) return '🍫';
+        if (strpos($n, 'canela') !== false) return '🌰';
+        if (strpos($n, 'calabacin') !== false) return '🥒';
+        if (strpos($n, 'berenjena') !== false) return '🍆';
+        if (strpos($n, 'avena') !== false) return '🌾';
+        if (strpos($n, 'platano') !== false || strpos($n, 'banana') !== false) return '🍌';
+
+        // Por defecto
+        return '🧂';
     }
 
     // Crear datos de ejemplo (dummy) en la base de datos
@@ -398,7 +454,7 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
 
             // Prepared para insertar ingrediente nuevo
             $insertIng = $this->conn->prepare(
-                "INSERT INTO ingredientes (nombre) VALUES (:nombre) RETURNING id"
+                "INSERT INTO ingredientes (nombre, descripcion, icono) VALUES (:nombre, :descripcion, :icono) RETURNING id"
             );
 
             // Recorremos cada nombre de ingrediente
@@ -407,9 +463,16 @@ CREATE TABLE IF NOT EXISTS solicitudes_cambio (
                 $selectIng->execute([':nombre' => $nombre]);
                 $id = $selectIng->fetchColumn();
 
-                // Si no existe, lo insertamos
+                // Si no existe, lo insertamos (añadiendo descripcion e icono)
                 if (!$id) {
-                    $insertIng->execute([':nombre' => $nombre]);
+                    // calcular icono a partir del nombre (coincide con la lógica de frontend)
+                    $icon = $this->computeIcono($nombre);
+                    $descripcion = $nombre;
+                    $insertIng->execute([
+                        ':nombre' => $nombre,
+                        ':descripcion' => $descripcion,
+                        ':icono' => $icon
+                    ]);
                     $id = $insertIng->fetchColumn();
                 }
 

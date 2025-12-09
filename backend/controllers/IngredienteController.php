@@ -85,6 +85,9 @@ class IngredienteController {
 
         // Asigna al modelo el nombre recibido desde el cliente
         $model->nombre = $input['nombre'];
+        // Asigna descripcion e icono si vienen en la petición
+        $model->descripcion = $input['descripcion'] ?? null;
+        $model->icono = $input['icono'] ?? null;
 
         // Llama al método create() y obtiene el ID insertado
         $id = $model->create();
@@ -114,6 +117,9 @@ class IngredienteController {
 
         // Asigna el nombre recibido (puede ser null si no se envía)
         $model->nombre = $input['nombre'] ?? null;
+        // Asigna descripcion e icono si vienen en la petición
+        $model->descripcion = $input['descripcion'] ?? null;
+        $model->icono = $input['icono'] ?? null;
 
         // Validación: el nombre no puede ser null o vacío
         if (!$model->nombre) {

@@ -10,6 +10,8 @@ class Ingrediente {
     // Propiedades públicas que coinciden con las columnas de la tabla
     public $id;
     public $nombre;
+    public $descripcion;
+    public $icono;
 
     // Constructor: recibe la conexión PDO y la guarda en $conn
     public function __construct($db) {
@@ -21,7 +23,7 @@ class Ingrediente {
     // ---------------------------------------------------------
     public function getAll() {
         // Consulta SQL para obtener todos los ingredientes ordenados del más nuevo al más viejo
-        $query = "SELECT id, nombre FROM " . $this->table_name . " ORDER BY nombre DESC";
+        $query = "SELECT id, nombre, descripcion, icono FROM " . $this->table_name . " ORDER BY nombre DESC";
 
         // Prepara la consulta para evitar inyecciones SQL
         $stmt = $this->conn->prepare($query);
@@ -38,7 +40,7 @@ class Ingrediente {
     // ---------------------------------------------------------
     public function getById($id) {
         // Consulta SQL con parámetro para buscar un ingrediente específico
-        $query = "SELECT id, nombre FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
+        $query = "SELECT id, nombre, descripcion, icono FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
 
         // Prepara la consulta
         $stmt = $this->conn->prepare($query);
@@ -58,16 +60,20 @@ class Ingrediente {
     // ---------------------------------------------------------
     public function create() {
         // Consulta SQL de inserción con parámetro nombrado
-        $query = "INSERT INTO " . $this->table_name . " (nombre) VALUES (:nombre)";
+        $query = "INSERT INTO " . $this->table_name . " (nombre, descripcion, icono) VALUES (:nombre, :descripcion, :icono)";
 
         // Prepara la consulta
         $stmt = $this->conn->prepare($query);
 
         // Limpia el nombre para evitar HTML e inyecciones
         $this->nombre = htmlspecialchars(strip_tags($this->nombre));
+        $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
+        $this->icono = htmlspecialchars(strip_tags($this->icono));
 
-        // Vincula el nombre al parámetro de la consulta
+        // Vincula los parámetros al statement
         $stmt->bindParam(":nombre", $this->nombre);
+        $stmt->bindParam(":descripcion", $this->descripcion);
+        $stmt->bindParam(":icono", $this->icono);
 
         // Ejecuta la consulta
         if ($stmt->execute()) {
@@ -84,17 +90,21 @@ class Ingrediente {
     // ---------------------------------------------------------
     public function update() {
         // Consulta SQL de actualización por ID
-        $query = "UPDATE " . $this->table_name . " SET nombre = :nombre WHERE id = :id";
+        $query = "UPDATE " . $this->table_name . " SET nombre = :nombre, descripcion = :descripcion, icono = :icono WHERE id = :id";
 
         // Prepara la consulta
         $stmt = $this->conn->prepare($query);
 
-        // Limpia el nombre e ID
+        // Limpia el nombre, descripcion, icono e ID
         $this->nombre = htmlspecialchars(strip_tags($this->nombre));
+        $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
+        $this->icono = htmlspecialchars(strip_tags($this->icono));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         // Enlaza los parámetros
         $stmt->bindParam(":nombre", $this->nombre);
+        $stmt->bindParam(":descripcion", $this->descripcion);
+        $stmt->bindParam(":icono", $this->icono);
         $stmt->bindParam(":id", $this->id);
 
         // Ejecuta la actualización

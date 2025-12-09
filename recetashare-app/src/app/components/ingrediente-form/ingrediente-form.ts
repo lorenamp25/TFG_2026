@@ -5,7 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 
 @Component({
-  standalone: true,  
+  standalone: true,
   selector: 'app-ingrediente-form',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './ingrediente-form.html',
@@ -26,7 +26,7 @@ export class IngredienteForm {
   form = new FormGroup({
     id: new FormControl(0),                                            // ID oculto
     nombre: new FormControl('', [Validators.required, Validators.minLength(3)]), // Nombre obligatorio, mínimo 3 letras
-    descripcion: new FormControl('', [Validators.required, Validators.minLength(5)]), // Descripción obligatoria, mínimo 5 letras
+    descripcion: new FormControl(''), // Descripción no obligatoria
     icono: new FormControl('', [Validators.required])                  // Icono obligatorio
   })
 
