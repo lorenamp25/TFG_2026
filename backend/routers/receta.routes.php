@@ -23,7 +23,7 @@ function registerRecetaRoutes($router, $db) {
     });
 
     // Ruta PUT /recetas/{id} → actualizar receta existente
-    $router->register('PUT', 'recetas/{id}', function($id) use ($controller) {
+    $router->register('POST', 'recetas/{id}', function($id) use ($controller) {
         // Lee el JSON enviado para actualizar la receta
         $input = json_decode(file_get_contents("php://input"), true);
         // Llama al método update() del controlador pasando ID + datos
