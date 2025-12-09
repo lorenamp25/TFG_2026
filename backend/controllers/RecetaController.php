@@ -120,7 +120,7 @@ class RecetaController
         // Asigna los valores recibidos al modelo
         $model->titulo = $input['titulo'];
         $model->descripcion = $input['descripcion'] ?? null;
-        $model->tiempo_preparacion = $input['tiempoPreparacion'] ?? null;
+        $model->tiempo_preparacion = $input['tiempo_preparacion'] ?? null;
         $model->dificultad = $input['dificultad'] ?? null;
         $model->categoria = $input['categoria'] ?? null;
         $model->imagen_url = $input['imagen_url'] ?? null;

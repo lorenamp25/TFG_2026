@@ -92,7 +92,6 @@ export class RecetaForm {
   async ngOnInit() {
     // Si llega una receta (modo edición), carga los datos en el formulario
     if (this.receta) {
-      console.log('Cargando receta en formulario:', this.receta);
       this.form.patchValue(this.receta);
 
       if (this.receta.id === 0) {
@@ -231,7 +230,6 @@ export class RecetaForm {
     receta.usuario = this.receta.usuario || this.storageService.getUsuario()
     receta.ingredientes = this.receta.ingredientes
     receta.instrucciones = this.receta.instrucciones
-    receta.tiempo_preparacion = this.receta.tiempo_preparacion
     receta.imagen_file = this.receta.imagen_file
     receta.imagen_url = this.receta.imagen_url
     receta.imagen_cambiada = this.receta.imagen_cambiada
