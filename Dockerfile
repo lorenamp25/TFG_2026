@@ -13,4 +13,4 @@ RUN npm install -g serve
 
 EXPOSE 3000
 
-CMD ["serve", "-s", "dist/recetashare-app", "-l", "3000"]
+CMD ["serve", "-s", "dist/recetashare-app/browser", "-l", "3000", "--single"]
