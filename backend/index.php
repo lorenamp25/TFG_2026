@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json; charset=utf-8');
 // Activa la visualización de errores (útil en desarrollo)
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');

@@ -133,7 +133,7 @@ class AuthController
             $usuario->apellido = $apellido;
             $usuario->email = $email;
 
-            // 👉 AQUÍ encriptamos la contraseña (sin tocar Usuario.php)
+            //  AQUÍ encriptamos la contraseña (sin tocar Usuario.php)
             $usuario->password = password_hash($password, PASSWORD_DEFAULT);
 
             $usuario->fecha_nacimiento = $fecha_nacimiento;

@@ -92,6 +92,8 @@ export class RecetaPage {
         this.recetaService.crearReceta(receta).subscribe((receta) => {
           this.receta = null; // Limpia selección
           this.cargarRecetas(null); // Recarga datos
+          
+//MODALLLLL
 
           this.modalService.success('Receta creada', 'La receta ha sido creada correctamente.');
         });
