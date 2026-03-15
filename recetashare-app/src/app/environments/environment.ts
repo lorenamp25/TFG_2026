@@ -6,7 +6,8 @@ export const environment = {
 
   // URL base para hacer peticiones a la API backend
 
-  apiUrl: 'http://localhost:8000'
+  apiUrl: 'https://backend-production.up.railway.app'
+  //apiUrl: 'http://localhost:8000'
   // apiUrl: 'https://lorena-tfg-backend.onrender.com',
 
   // apiUrl: 'http://localhost:8000'
