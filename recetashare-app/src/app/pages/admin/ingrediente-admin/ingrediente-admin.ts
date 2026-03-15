@@ -86,7 +86,7 @@ export class IngredienteAdmin {
 
   // Cuando el usuario hace clic en editar desde la tabla
   onEditarIngrediente(ingrediente: any) {
-    this.ingrediente = this.ingrediente                 // Guarda la categoría elegida
+    this.ingrediente = ingrediente                 // Guarda la categoría elegida
     this.estado = EstadoAccion.Editando        // Cambia al modo edición
   }
 

@@ -66,6 +66,8 @@ export class Receta {
 
   imagen_preview: string | undefined
 
+  imagen_cambiada: boolean = false
+
   imagen_file?: File
 
   // ID del usuario autor de la receta

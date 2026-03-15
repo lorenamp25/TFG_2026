@@ -85,6 +85,7 @@ class RecetaController
             'dificultad' => $_POST['dificultad'] ?? null,
             'categoria' => $_POST['categoria'] ?? null,
             'imagen_url' => $_POST['imagen_url'] ?? null,
+            'imagen_cambiada' => $_POST['imagen_cambiada'] ?? null,
             'usuario' => isset($_POST['usuario']) ? json_decode($_POST['usuario'], true) : null,
             'ingredientes' => isset($_POST['ingredientes']) ? json_decode($_POST['ingredientes'], true) : [],
             'instrucciones' => isset($_POST['instrucciones']) ? json_decode($_POST['instrucciones'], true) : []
@@ -112,13 +113,14 @@ class RecetaController
             }
         }
 
+
         // Crea instancia del modelo Receta
         $model = new Receta($this->conn);
 
         // Asigna los valores recibidos al modelo
         $model->titulo = $input['titulo'];
         $model->descripcion = $input['descripcion'] ?? null;
-        $model->tiempo_preparacion = $input['tiempoPreparacion'] ?? null;
+        $model->tiempo_preparacion = $input['tiempo_preparacion'] ?? null;
         $model->dificultad = $input['dificultad'] ?? null;
         $model->categoria = $input['categoria'] ?? null;
         $model->imagen_url = $input['imagen_url'] ?? null;
@@ -149,6 +151,42 @@ class RecetaController
     // ----------------------------------------------------------
     public function update($id, $input)
     {
+        $input = [
+            'titulo' => $_POST['titulo'] ?? null,
+            'descripcion' => $_POST['descripcion'] ?? null,
+            'tiempoPreparacion' => $_POST['tiempo_preparacion'] ?? null,
+            'dificultad' => $_POST['dificultad'] ?? null,
+            'categoria' => $_POST['categoria'] ?? null,
+            'imagen_url' => $_POST['imagen_url'] ?? null,
+            'imagen_cambiada' => $_POST['imagen_cambiada'] ?? null,
+            'usuario' => isset($_POST['usuario']) ? json_decode($_POST['usuario'], true) : null,
+            'ingredientes' => isset($_POST['ingredientes']) ? json_decode($_POST['ingredientes'], true) : [],
+            'instrucciones' => isset($_POST['instrucciones']) ? json_decode($_POST['instrucciones'], true) : []
+        ];
+
+        // Validación: el título es obligatorio
+        if (!isset($input['titulo']) || empty(trim($input['titulo']))) {
+            http_response_code(400); // Petición inválida
+            echo json_encode(["error" => "El campo 'titulo' es obligatorio"]);
+            return;
+        }
+
+        // Procesar imagen si existe
+        if ($input['imagen_cambiada'] === 'true' || $input['imagen_cambiada'] === true) {
+            if (isset($_FILES['imagen_principal']) && $_FILES['imagen_principal']['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = 'uploads/recetas/';
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+
+                $fileName = uniqid() . '_' . $_FILES['imagen_principal']['name'];
+                $filePath = $uploadDir . $fileName;
+
+                if (move_uploaded_file($_FILES['imagen_principal']['tmp_name'], $filePath)) {
+                    $input['imagen_url'] = $filePath;
+                }
+            }
+        }
 
         // Crear instancia del modelo Receta
         $model = new Receta($this->conn);

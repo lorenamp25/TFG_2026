@@ -61,10 +61,12 @@ export class RecetaService {
   // ============================================================
   //  ACTUALIZAR RECETA EXISTENTE
   // ============================================================
-  actualizarReceta(id: number, Receta: Receta): Observable<any> {
+  actualizarReceta(id: number, receta: Receta): Observable<any> {
     // PUT /recetas/{id}
-    // Aquí no se usa FormData porque esta llamada no sube imágenes
-    return this.http.put(`${this.base}/recetas/${id}`, Receta);
+    return this.http.post(
+      `${this.base}/recetas/${id}`,
+      this.createFormData(receta)
+    );
   }
 
   // ============================================================
@@ -96,6 +98,9 @@ export class RecetaService {
     if (receta.imagen_file) {
       formData.append('imagen_principal', receta.imagen_file);
     }
+
+    formData.append('imagen_cambiada', receta.imagen_cambiada ? 'true' : 'false');
+    formData.append('imagen_url', receta.imagen_url || '');
 
     return formData;
   }

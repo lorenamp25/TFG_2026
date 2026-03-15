@@ -75,6 +75,7 @@ export class RecetaPage {
       this.recetaService.listarRecetas().subscribe((response: any) => {
         this.selectedCategoria = 'all';
         this.recetas = response; // Guarda las recetas recibidas
+        console.log('Recetas cargadas:', this.recetas);
         this.estado = EstadoAccion.Listando; // Vuelve al estado de listado
       });
     }

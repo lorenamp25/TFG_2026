@@ -72,4 +72,14 @@ registerUsuarioRoutes($router, $db);
 
 // Finalmente, procesa la petición actual
 // Analiza el método (GET, POST, PUT, DELETE...) y la URL solicitada
+
+// $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+// if ($method === 'POST') {
+//     if (isset($_POST['_method']) && strtoupper($_POST['_method']) === 'PUT') {
+//         $method = 'PUT';
+//     } elseif (!empty($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']) && strtoupper($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']) === 'PUT') {
+//         $method = 'PUT';
+//     }
+// }
+
 $router->resolve($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

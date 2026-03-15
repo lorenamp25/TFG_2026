@@ -20,6 +20,8 @@ import { Categoria } from '../../models/categoria.model';
 import { Ingrediente } from '../../models/ingrediente.model';
 import { IngredienteService } from '../../services/ingrediente.service';
 import { StorageService } from '../../services/localstorage.service';
+import { ModalService } from '../modal-component/modal.service';
+import { getImageUrl } from '../../modules/common';
 
 // Decorador que define los metadatos del componente
 @Component({
@@ -82,18 +84,34 @@ export class RecetaForm {
   constructor(
     private categoriaService: CategoriaService,
     private ingredienteService: IngredienteService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private modalService: ModalService
   ) { }
 
   // Ciclo de vida: se ejecuta cuando inicia el componente
-  ngOnInit() {
+  async ngOnInit() {
     // Si llega una receta (modo edición), carga los datos en el formulario
     if (this.receta) {
       this.form.patchValue(this.receta);
 
-      // Si la receta es nueva (id = 0), se asigna el usuario actual
       if (this.receta.id === 0) {
+        // Si la receta es nueva (id = 0), se asigna el usuario actual
         this.receta.usuario = this.storageService.getUsuario();
+      } else {
+        // Edicion de una receta
+        if (this.receta.imagen_url) {
+          // intentar obtener File y preview
+          const { file, dataUrl } = await getFileFromUrl(getImageUrl(this.receta.imagen_url));
+          if (file) {
+            this.receta.imagen_file = file;        // ahora es un File listo para enviar
+          }
+          if (dataUrl) {
+            this.receta.imagen_preview = dataUrl; // preview (data URL)
+          } else {
+            // fallback: usar URL absoluta (no es File)
+            this.receta.imagen_preview = this.receta.imagen_url;
+          }
+        }
       }
     }
 
@@ -156,18 +174,18 @@ export class RecetaForm {
     // 1) Validación de campos del formulario
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      alert('Rellena todos los campos obligatorios del formulario');
+      this.modalService.error('Receta', 'Rellena todos los campos obligatorios del formulario');
       return;
     }
 
     if (!this.receta) {
-      alert('Error interno: falta el objeto receta');
+      this.modalService.error('Receta', 'Error interno: falta el objeto receta');
       return;
     }
 
     // 2) Imagen obligatoria
     if (!this.receta.imagen_file && !this.receta.imagen_preview) {
-      alert('Debes seleccionar una imagen para la receta');
+      this.modalService.error('Receta', 'Debes seleccionar una imagen para la receta');
       return;
     }
 
@@ -193,7 +211,7 @@ export class RecetaForm {
 
     // 4) Validación de INSTRUCCIONES
     if (!this.receta.instrucciones || this.receta.instrucciones.length === 0) {
-      alert('Añade al menos una instrucción');
+      this.modalService.error('Receta', 'Añade al menos una instrucción');
       return;
     }
 
@@ -202,17 +220,19 @@ export class RecetaForm {
     );
 
     if (instruccionesInvalidas) {
-      alert('Todas las instrucciones deben tener una descripción.');
+      this.modalService.error('Receta', 'Todas las instrucciones deben tener una descripción.');
       return;
     }
 
     // 5) Si todo OK, montamos la receta final
     let receta = this.form.value as Receta;
 
-    receta.usuario = this.receta.usuario || this.storageService.getUsuario();
-    receta.ingredientes = this.receta.ingredientes;
-    receta.instrucciones = this.receta.instrucciones;
-    receta.imagen_file = this.receta.imagen_file;
+    receta.usuario = this.receta.usuario || this.storageService.getUsuario()
+    receta.ingredientes = this.receta.ingredientes
+    receta.instrucciones = this.receta.instrucciones
+    receta.imagen_file = this.receta.imagen_file
+    receta.imagen_url = this.receta.imagen_url
+    receta.imagen_cambiada = this.receta.imagen_cambiada
 
     // Emitimos la receta al componente padre
     this.guardarReceta.emit(receta);
@@ -264,9 +284,10 @@ export class RecetaForm {
 
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.receta!.imagen_preview = e.target.result;
+          this.receta!.imagen_preview = e.target.result
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file)
+        this.receta.imagen_cambiada = true
       }
     }
   }
@@ -306,5 +327,42 @@ export class RecetaForm {
   onInstruccionImagenSeleccionada(event: Event, instruccion: any) {
     const input = event.target as HTMLInputElement;
     // Aquí se podría implementar la lógica de subir/preview por cada instrucción
+  }
+}
+
+/** Devuelve un File a partir de una URL pública y también un dataURL para preview */
+async function getFileFromUrl(url: string, defaultName = 'imagen.jpg'): Promise<{ file?: File; dataUrl?: string }> {
+  try {
+    const res = await fetch(url, { mode: 'cors' }); // requiere CORS en el servidor de imágenes
+    if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+
+    const blob = await res.blob();
+
+    // obtener nombre desde la url si aparece
+    let filename = defaultName;
+    try {
+      const urlObj = new URL(url);
+      const parts = urlObj.pathname.split('/');
+      if (parts.length) {
+        const last = parts[parts.length - 1];
+        if (last) filename = decodeURIComponent(last.split('?')[0]) || defaultName;
+      }
+    } catch (e) { /* ignore */ }
+
+    // crear File
+    const file = new File([blob], filename, { type: blob.type || 'image/jpeg' });
+
+    // generar dataURL para preview
+    const dataUrl = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+
+    return { file, dataUrl };
+  } catch (err) {
+    console.warn('getFileFromUrl error', err);
+    return {}; // fallback: nada
   }
 }
