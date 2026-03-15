@@ -6,13 +6,13 @@ RUN apt-get update && apt-get install -y libpq-dev \
 
 RUN a2enmod rewrite
 
-COPY backend/ /var/www/html/
+COPY . /var/www/html/
 
-WORKDIR /var/www/html/
+WORKDIR /var/www/html/backend
 
 RUN chown -R www-data:www-data /var/www/html
 
-RUN printf '<Directory /var/www/html/>\nAllowOverride All\n</Directory>' > /etc/apache2/conf-available/rewrite.conf \
+RUN printf '<Directory /var/www/html>\nAllowOverride All\n</Directory>' > /etc/apache2/conf-available/rewrite.conf \
  && a2enconf rewrite
 
 EXPOSE 80
